@@ -1,11 +1,11 @@
-linux (5.19.11-1~bpo11+1) UNRELEASED; urgency=medium
+linux (5.19.11-1~bpo11+1) bullseye-backports; urgency=medium
 
   * Rebuild for bullseye-backports:
     - Change ABI number to 0.deb11.2
     - Disable building rtla, since bullseye's libtraceevent and libtracefs
       are too old
 
- -- Ben Hutchings <benh@debian.org>  Mon, 03 Oct 2022 02:55:36 +0200
+ -- Ben Hutchings <benh@debian.org>  Mon, 03 Oct 2022 23:59:12 +0200
 
 linux (5.19.11-1) unstable; urgency=medium
 
