@@ -98,7 +98,7 @@ Index: debian-kernel/drivers/staging/android/ashmem.c
  #include "ashmem.h"
  
  #define ASHMEM_NAME_PREFIX "dev/ashmem/"
-@@ -953,3 +954,5 @@ out:
+@@ -965,3 +966,5 @@ out:
  	return ret;
  }
  device_initcall(ashmem_init);
