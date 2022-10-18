@@ -1,4 +1,4 @@
-linux (5.10.148-1) UNRELEASED; urgency=medium
+linux (5.10.149-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.10.141
@@ -432,6 +432,11 @@ linux (5.10.148-1) UNRELEASED; urgency=medium
     - wifi: cfg80211: update hidden BSSes to avoid WARN_ON
     - Input: xpad - add supported devices as contributed on github
     - Input: xpad - fix wireless 360 controller breaking after suspend
+    https://www.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.10.149
+    - Revert "fs: check FMODE_LSEEK to control internal pipe splicing"
+    - mac80211: mlme: find auth challenge directly
+    - wifi: mac80211: don't parse mbssid in assoc response
+    - wifi: mac80211: fix MBSSID parsing use-after-free (CVE-2022-42719)
 
   [ Aurelien Jarno ]
   * [arm64] Add support for misalignment fixups for multiword loads from next
@@ -442,11 +447,6 @@ linux (5.10.148-1) UNRELEASED; urgency=medium
   * Bump ABI to 19
   * Refresh "Export symbols needed by Android drivers"
   * [rt] Update to 5.10.140-rt73
-
-  [ Uwe Kleine-König ]
-  * mac80211: mlme: find auth challenge directly
-  * wifi: mac80211: don't parse mbssid in assoc response
-  * wifi: mac80211: fix MBSSID parsing use-after-free (CVE-2022-42719)
 
  -- Aurelien Jarno <aurel32@debian.org>  Sun, 18 Sep 2022 23:15:57 +0200
 
