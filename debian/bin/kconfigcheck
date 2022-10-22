@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+
+import argparse
+import re
+
+from debian_linux.kconfig import KconfigFile, KConfigEntryTristate
+
+
+def compare(ref, config):
+    kconfig_ref = KconfigFile()
+    kconfig_ref.read(ref)
+    kconfig = KconfigFile()
+    kconfig.read(config)
+
+    for entry_ref in kconfig_ref.values():
+        entry = kconfig.get(entry_ref.name)
+
+        # XXX: Convert into Enum
+        if entry_ref.value in (
+                KConfigEntryTristate.VALUE_YES,
+                KConfigEntryTristate.VALUE_MOD,
+            ):
+            if entry is None:
+                print('Missing:')
+                print('-', entry_ref)
+                print(10*'-')
+            elif entry.value not in (
+                    KConfigEntryTristate.VALUE_YES,
+                    KConfigEntryTristate.VALUE_MOD,
+                ):
+                print('Mismatch:')
+                print('-', entry_ref)
+                print('+', entry)
+                print(10*'-')
+
+        elif entry_ref.value in (
+                KConfigEntryTristate.VALUE_NO,
+            ):
+            if entry is None:
+                # Don't care
+                pass
+            elif entry.value not in (
+                    KConfigEntryTristate.VALUE_NO,
+                ):
+                print('Mismatch:')
+                print('-', entry_ref)
+                print('+', entry)
+                print(10*'-')
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'ref',
+        metavar='REFERENCE',
+        type=open,
+    )
+    parser.add_argument(
+        'config',
+        metavar='CONFIG',
+        type=open,
+    )
+    args = parser.parse_args()
+
+    compare(args.ref, args.config)
