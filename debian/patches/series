@@ -85,6 +85,7 @@ features/arm64/arm64-dts-rockchip-kobol-helios64-Add-mmc-aliases.patch
 features/arm64/arm64-dts-rockchip-Add-support-for-two-PWM-fans-on-h.patch
 features/arm64/arm64-dts-rockchip-Add-support-for-PCIe-on-helios64.patch
 features/arm64/arm64-dts-raspberry-Add-support-for-the-CM4.patch
+features/arm64/arm64-compat-Implement-misalignment-fixups-for-multi.patch
 features/x86/x86-memtest-WARN-if-bad-RAM-found.patch
 features/x86/x86-make-x32-syscall-support-conditional.patch
 
@@ -94,6 +95,8 @@ bugfix/all/fs-add-module_softdep-declarations-for-hard-coded-cr.patch
 debian/makefile-do-not-check-for-libelf-when-building-oot-module.patch
 bugfix/all/partially-revert-net-socket-implement-64-bit-timestamps.patch
 bugfix/all/wireguard-ignore-config_android.patch
+bugfix/all/Revert-drm-amdgpu-move-nbio-sdma_doorbell_range-into.patch
+bugfix/all/Revert-drm-amdgpu-make-sure-to-init-common-IP-before.patch
 
 # Miscellaneous features
 
@@ -114,11 +117,8 @@ features/all/db-mok-keyring/KEYS-Make-use-of-platform-keyring-for-module-signatu
 debian/i386-686-pae-pci-set-pci-nobios-by-default.patch
 debian/ntfs-mark-it-as-broken.patch
 bugfix/all/vfs-move-cap_convert_nscap-call-into-vfs_setxattr.patch
-bugfix/all/posix-cpu-timers-Cleanup-CPU-timers-before-freeing-t.patch
-bugfix/all/netfilter-nf_tables-do-not-allow-SET_ID-to-refer-to-.patch
-bugfix/all/netfilter-nf_tables-do-not-allow-CHAIN_ID-to-refer-t.patch
-bugfix/all/netfilter-nf_tables-do-not-allow-RULE_ID-to-refer-to.patch
-bugfix/all/net_sched-cls_route-remove-from-list-when-handle-is-.patch
+bugfix/all/io_uring-af_unix-defer-registered-files-gc-to-io_uring-release.patch
+bugfix/all/ext4-fix-check-for-block-being-out-of-directory-size.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch
@@ -135,7 +135,6 @@ bugfix/all/libcpupower-hide-private-function.patch
 bugfix/all/cpupower-fix-checks-for-cpu-existence.patch
 bugfix/all/tools-perf-pmu-events-fix-reproducibility.patch
 bugfix/all/bpftool-fix-version-string-in-recursive-builds.patch
-bugfix/all/tools-include-uapi-fix-errno.h.patch
 
 # overlay: allow mounting in user namespaces
 debian/overlayfs-permit-mounts-in-userns.patch
