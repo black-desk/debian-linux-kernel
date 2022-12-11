@@ -138,7 +138,7 @@ class Gencontrol(Base):
 
             self.bundle.add_packages(
                 udeb_packages,
-                (arch, 'real'),
+                (arch,),
                 makeflags_local, arch=arch,
             )
 
@@ -177,7 +177,7 @@ class Gencontrol(Base):
 
     def do_flavour_packages(self, arch, featureset,
                             flavour, vars, makeflags, extra):
-        ruleid = (arch, featureset, flavour, 'real')
+        ruleid = (arch, featureset, flavour)
 
         config_build = self.config.merge('build', arch, featureset, flavour)
         if not config_build.get('signed-code', False):

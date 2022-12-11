@@ -172,7 +172,7 @@ class Gencontrol(Base):
         super().do_main_makefile(makeflags, extra)
 
     def do_main_packages(self, vars, makeflags, extra):
-        self.bundle.add('main', ('real', ), makeflags, vars)
+        self.bundle.add('main', (), makeflags, vars)
 
         # Only build the metapackages if their names won't exactly match
         # the packages they depend on
@@ -180,13 +180,13 @@ class Gencontrol(Base):
             and vars['source_suffix'] != '-' + vars['version']
 
         if self.config.merge('packages').get('docs', True):
-            self.bundle.add('docs', ('real', ), makeflags, vars)
+            self.bundle.add('docs', (), makeflags, vars)
             if do_meta:
-                self.bundle.add('docs.meta', ('real', ), makeflags, vars)
+                self.bundle.add('docs.meta', (), makeflags, vars)
         if self.config.merge('packages').get('source', True):
-            self.bundle.add('sourcebin', ('real', ), makeflags, vars)
+            self.bundle.add('sourcebin', (), makeflags, vars)
             if do_meta:
-                self.bundle.add('sourcebin.meta', ('real', ), makeflags, vars)
+                self.bundle.add('sourcebin.meta', (), makeflags, vars)
 
     def do_indep_featureset_setup(self, vars, makeflags, featureset, extra):
         makeflags['LOCALVERSION'] = vars['localversion']
@@ -206,7 +206,7 @@ class Gencontrol(Base):
 
     def do_indep_featureset_packages(self, featureset,
                                      vars, makeflags, extra):
-        self.bundle.add('headers.featureset', (featureset, 'real'), makeflags, vars)
+        self.bundle.add('headers.featureset', (featureset,), makeflags, vars)
 
     arch_makeflags = (
         ('kernel-arch', 'KERNEL_ARCH', False),
@@ -254,25 +254,25 @@ class Gencontrol(Base):
 
             self.bundle.add_packages(
                 udeb_packages,
-                (arch, 'real'),
+                (arch,),
                 makeflags_local, arch=arch, check_packages=not build_signed,
             )
 
         if build_signed:
-            self.bundle.add('signed-template', (arch, 'real'), makeflags, vars, arch=arch)
+            self.bundle.add('signed-template', (arch,), makeflags, vars, arch=arch)
 
         if self.config.merge('packages').get('libc-dev', True):
-            self.bundle.add('libc-dev', (arch, 'real'), makeflags, vars)
+            self.bundle.add('libc-dev', (arch,), makeflags, vars)
 
         if self.config['base', arch].get('featuresets') and \
            self.config.merge('packages').get('source', True):
-            self.bundle.add('config', (arch, 'real'), makeflags, vars)
+            self.bundle.add('config', (arch,), makeflags, vars)
 
         if self.config.merge('packages').get('tools-unversioned', True):
-            self.bundle.add('tools-unversioned', (arch, 'real'), makeflags, vars)
+            self.bundle.add('tools-unversioned', (arch,), makeflags, vars)
 
         if self.config.merge('packages').get('tools-versioned', True):
-            self.bundle.add('tools-versioned', (arch, 'real'), makeflags, vars)
+            self.bundle.add('tools-versioned', (arch,), makeflags, vars)
 
     def do_featureset_setup(self, vars, makeflags, arch, featureset, extra):
         vars['localversion_headers'] = vars['localversion']
@@ -345,7 +345,7 @@ class Gencontrol(Base):
 
     def do_flavour_packages(self, arch, featureset,
                             flavour, vars, makeflags, extra):
-        ruleid = (arch, featureset, flavour, 'real')
+        ruleid = (arch, featureset, flavour)
 
         packages_headers = (
             self.bundle.add('headers', ruleid, makeflags, vars, arch=arch)
@@ -504,16 +504,16 @@ class Gencontrol(Base):
 
         # Make sure signed-template is build after linux
         if build_signed:
-            self.makefile.add_deps(f'build-arch_{arch}_real_signed-template',
-                                   [f'build-arch_{arch}_{featureset}_{flavour}_real'])
-            self.makefile.add_deps(f'binary-arch_{arch}_real_signed-template',
-                                   [f'binary-arch_{arch}_{featureset}_{flavour}_real'])
+            self.makefile.add_deps(f'build-arch_{arch}_signed-template',
+                                   [f'build-arch_{arch}_{featureset}_{flavour}_image'])
+            self.makefile.add_deps(f'binary-arch_{arch}_signed-template',
+                                   [f'binary-arch_{arch}_{featureset}_{flavour}_image'])
 
         # Make sure udeb is build after linux
-        self.makefile.add_deps(f'build-arch_{arch}_real_udeb',
-                               [f'build-arch_{arch}_{featureset}_{flavour}_real'])
-        self.makefile.add_deps(f'binary-arch_{arch}_real_udeb',
-                               [f'binary-arch_{arch}_{featureset}_{flavour}_real'])
+        self.makefile.add_deps(f'build-arch_{arch}_udeb',
+                               [f'build-arch_{arch}_{featureset}_{flavour}_image'])
+        self.makefile.add_deps(f'binary-arch_{arch}_udeb',
+                               [f'binary-arch_{arch}_{featureset}_{flavour}_image'])
 
         tests_control = self.process_package(
             self.templates['image.tests-control'][0], vars)

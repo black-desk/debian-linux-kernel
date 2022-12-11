@@ -288,7 +288,10 @@ class PackagesBundle:
             makeflags = target['makeflags']
             ttype = target['type']
 
-            rule = '_'.join(ruleid)
+            if ruleid:
+                rule = '_'.join(ruleid)
+            else:
+                rule = ''
             self.makefile.add_rules(f'setup_{rule}_{name}',
                                     f'setup_{name}', makeflags, packages, packages_extra)
             self.makefile.add_rules(f'build-{ttype}_{rule}_{name}',
@@ -438,7 +441,7 @@ class Gencontrol(object):
                 i.append(package)
                 extra_arches[arch] = i
         for arch in sorted(extra_arches.keys()):
-            self.bundle.add_packages(packages_extra, (arch, 'real'),
+            self.bundle.add_packages(packages_extra, (arch,),
                                      MakeFlags(), check_packages=False)
 
     def do_indep_featureset(self, featureset, vars,
