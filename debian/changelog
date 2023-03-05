@@ -2,6 +2,8 @@ linux (6.1.12-1~bpo11+1) UNRELEASED; urgency=medium
 
   * Rebuild for bullseye-backports:
     - Change ABI number to 0.deb11.5
+    - media: cx18: Avoid strlen() call that triggers ICE in gcc 10 (fixes
+      FTBFS; see #1027456)
 
  -- Ben Hutchings <benh@debian.org>  Sun, 05 Mar 2023 03:05:11 +0100
 
