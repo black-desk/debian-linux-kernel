@@ -1,5 +1,5 @@
 [abi]
-abiname: 0.deb11.6
+abiname: 0.deb11.5
 ignore-changes:
  __cpuhp_*
  __udp_gso_segment
