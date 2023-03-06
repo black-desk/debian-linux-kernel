@@ -1,11 +1,12 @@
-linux (6.2-1~exp1) UNRELEASED; urgency=medium
+linux (6.3-1~exp1) UNRELEASED; urgency=medium
+
+  * New upstream release: https://kernelnewbies.org/Linux_6.3
 
   * New upstream release: https://kernelnewbies.org/Linux_6.2
+    - libcpupower1: Update symbols file for 6.2
+    - [rt] Update to 6.2-rt3
 
-  * libcpupower1: Update symbols file for 6.2
-  * [rt] Update to 6.2-rt3
-
- -- Diederik de Haas <didi.debian@cknow.org>  Sat, 08 Apr 2023 18:28:38 +0200
+ -- Diederik de Haas <didi.debian@cknow.org>  Sun, 23 Apr 2023 21:37:21 +0200
 
 linux (6.1.25-1) unstable; urgency=medium
 
