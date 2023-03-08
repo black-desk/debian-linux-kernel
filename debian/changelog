@@ -1,6 +1,7 @@
 linux (6.3-1~exp1) UNRELEASED; urgency=medium
 
   * New upstream release: https://kernelnewbies.org/Linux_6.3
+    - linux-kbuild: Stop building bin2c in 6.3
 
   * New upstream release: https://kernelnewbies.org/Linux_6.2
     - libcpupower1: Update symbols file for 6.2
