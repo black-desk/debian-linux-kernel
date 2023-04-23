@@ -3,6 +3,8 @@ linux (6.1.20-2~bpo11+1) UNRELEASED; urgency=medium
   * Rebuild for bullseye-backports:
     - Re-enable rtla, as its Build-Depends are properly versioned and
       available
+    - d/salsa-ci.yml: Disable piuparts job which does not handle backports
+      dependencies (salsa-ci-team/pipeline#58)
 
  -- Ben Hutchings <benh@debian.org>  Sat, 22 Apr 2023 16:38:32 +0200
 

@@ -156,8 +156,10 @@ autopkgtest:
 blhc:
     extends: .test-blhc
 
-piuparts:
-    extends: .test-piuparts
+# piuparts doesn't handle backports dependencies properly
+# (salsa-ci-team/pipeline#58)
+#piuparts:
+#    extends: .test-piuparts
 
 missing-breaks:
     extends: .test-missing-breaks
