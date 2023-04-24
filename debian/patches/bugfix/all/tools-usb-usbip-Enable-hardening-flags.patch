@@ -1,0 +1,29 @@
+From 71a5a78b6e4811a02dca6d2bf297a718aa15c9a2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>
+Date: Mon, 24 Apr 2023 13:46:41 +0200
+Subject: [PATCH] tools/usb/usbip: Enable hardening flags
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
+---
+ tools/usb/usbip/configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/usb/usbip/configure.ac b/tools/usb/usbip/configure.ac
+index 607d05c5ccfd..1d6506ee5e9c 100644
+--- a/tools/usb/usbip/configure.ac
++++ b/tools/usb/usbip/configure.ac
+@@ -98,7 +98,7 @@ AC_ARG_WITH([fortify],
+ 			    dnl [ACTION-IF-GIVEN]
+ 			    [if test "$withval" = "yes"; then
+ 				AC_MSG_RESULT([yes])
+-				CFLAGS="$CFLAGS -D_FORTIFY_SOURCE -O"
++				CFLAGS="$CFLAGS -D_FORTIFY_SOURCE=2 -O"
+ 			     else
+ 			     	AC_MSG_RESULT([no])
+ 				CFLAGS="$CFLAGS -U_FORTIFY_SOURCE"
+-- 
+2.39.2
+
