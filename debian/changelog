@@ -1,3 +1,10 @@
+linux (6.3.7-1~bpo12+1) UNRELEASED; urgency=medium
+
+  * Rebuild for bookworm-backports:
+    - Set ABI to 0.deb12.1
+
+ -- Ben Hutchings <benh@debian.org>  Thu, 15 Jun 2023 23:13:42 +0200
+
 linux (6.3.7-1) unstable; urgency=medium
 
   * New upstream stable update:
