@@ -1,0 +1,15 @@
+# Required to have Module.symvers
+CONFIG_MODULES=y
+CONFIG_MODVERSIONS=y
+# Required for EFI
+CONFIG_ACPI=y
+# Required for EFI_STUB
+CONFIG_EFI=y
+# Checked for signed packages
+CONFIG_EFI_STUB=y
+# Required for SECURITY_LOCKDOWN_LSM
+CONFIG_SECURITY=y
+# Required for LOCK_DOWN_IN_EFI_SECURE_BOOT
+CONFIG_SECURITY_LOCKDOWN_LSM=y
+# Checked for signed packages
+CONFIG_LOCK_DOWN_IN_EFI_SECURE_BOOT=y
