@@ -1,9 +1,9 @@
-linux (6.4.4-1~bpo12+1) UNRELEASED; urgency=medium
+linux (6.4.4-1~bpo12+1) bookworm-backports; urgency=medium
 
   * Rebuild for bookworm-backports:
     - Revert "Compile with gcc-13 on all architectures"
 
- -- Ben Hutchings <benh@debian.org>  Sun, 23 Jul 2023 01:22:45 +0200
+ -- Ben Hutchings <benh@debian.org>  Thu, 03 Aug 2023 17:37:23 +0200
 
 linux (6.4.4-1) unstable; urgency=medium
 
