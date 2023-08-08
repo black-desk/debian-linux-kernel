@@ -1,3 +1,67 @@
+linux (6.1.38-4~bpo11+1) bullseye-backports; urgency=medium
+
+  * Rebuild for bullseye-backports:
+    - Set ABI to 0.deb11.11
+
+ -- Ben Hutchings <benh@debian.org>  Tue, 08 Aug 2023 20:26:19 +0200
+
+linux (6.1.38-4) bookworm-security; urgency=high
+
+  * Fix "init, x86: Move mem_encrypt_init() into arch_cpu_finalize_init()"
+    backport
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Tue, 08 Aug 2023 13:18:01 +0200
+
+linux (6.1.38-3) bookworm-security; urgency=high
+
+  [ Salvatore Bonaccorso ]
+  * [x86] Add mitigations for Gather Data Sampling (GDS) (CVE-2022-40982)
+    - init: Provide arch_cpu_finalize_init()
+    - x86/cpu: Switch to arch_cpu_finalize_init()
+    - ARM: cpu: Switch to arch_cpu_finalize_init()
+    - ia64/cpu: Switch to arch_cpu_finalize_init()
+    - loongarch/cpu: Switch to arch_cpu_finalize_init()
+    - m68k/cpu: Switch to arch_cpu_finalize_init()
+    - mips/cpu: Switch to arch_cpu_finalize_init()
+    - sh/cpu: Switch to arch_cpu_finalize_init()
+    - sparc/cpu: Switch to arch_cpu_finalize_init()
+    - um/cpu: Switch to arch_cpu_finalize_init()
+    - init: Remove check_bugs() leftovers
+    - init: Invoke arch_cpu_finalize_init() earlier
+    - init, x86: Move mem_encrypt_init() into arch_cpu_finalize_init()
+    - x86/init: Initialize signal frame size late
+    - x86/fpu: Remove cpuinfo argument from init functions
+    - x86/fpu: Mark init functions __init
+    - x86/fpu: Move FPU initialization into arch_cpu_finalize_init()
+    - x86/speculation: Add Gather Data Sampling mitigation
+    - x86/speculation: Add force option to GDS mitigation
+    - x86/speculation: Add Kconfig option for GDS
+    - KVM: Add GDS_NO support to KVM
+    - x86/mem_encrypt: Unbreak the AMD_MEM_ENCRYPT=n build
+    - x86/xen: Fix secondary processors' FPU initialization
+    - x86/mm: fix poking_init() for Xen PV guests
+    - x86/mm: Use mm_alloc() in poking_init()
+    - mm: Move mm_cachep initialization to mm_init()
+    - x86/mm: Initialize text poking earlier
+    - Documentation/x86: Fix backwards on/off logic about YMM support
+  * [x86] Add a Speculative RAS Overflow (SRSO) mitigation (CVE-2023-20569)
+    - x86/bugs: Increase the x86 bugs vector size to two u32s
+    - x86/srso: Add a Speculative RAS Overflow mitigation
+    - x86/srso: Add IBPB_BRTYPE support
+    - x86/srso: Add SRSO_NO support
+    - x86/srso: Add IBPB
+    - x86/srso: Add IBPB on VMEXIT
+    - x86/srso: Fix return thunks in generated code
+    - x86/srso: Add a forgotten NOENDBR annotation
+  * Bump ABI to 11
+
+  [ Ben Hutchings ]
+  * [x86] Add missing pieces of SRSO mitigation:
+    - x86/cpu, kvm: Add support for CPUID_80000021_EAX
+    - x86/srso: Tie SBPB bit setting to microcode patch detection
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Mon, 07 Aug 2023 23:01:57 +0200
+
 linux (6.1.38-2~bpo11+1) bullseye-backports; urgency=medium
 
   * Rebuild for bullseye-backports:
