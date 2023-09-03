@@ -16,6 +16,10 @@ ifeq ($(DISTRIBUTOR),)
 DISTRIBUTOR := Debian
 endif
 
+include /usr/share/dpkg/pkg-info.mk
+
+KERNELRELEASE_VERSION = $(DEB_VERSION_UPSTREAM_REVISION)
+
 include debian/rules.defs
 include /usr/share/dpkg/pkg-info.mk
 
@@ -139,7 +143,7 @@ $(STAMPS_DIR)/setup_$(ARCH)_$(FEATURESET)_$(FLAVOUR): $(STAMPS_DIR)/source_$(FEA
 	mkdir '$(DIR)'
 	cp '$(CONFIG)' '$(DIR)/.config'
 	echo 'override ARCH = $(KERNEL_ARCH)' >> '$(DIR)/.kernelvariables'
-	echo 'override KERNELRELEASE = $(ABINAME)$(LOCALVERSION_IMAGE)' >> '$(DIR)/.kernelvariables'
+	echo 'override KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)' >> '$(DIR)/.kernelvariables'
 	echo 'CCACHE = ccache' >> '$(DIR)/.kernelvariables'
 ifeq (./,$(dir $(COMPILER)))
 	echo 'CC = $$(if $$(DEBIAN_KERNEL_USE_CCACHE),$$(CCACHE)) $$(CROSS_COMPILE)$(COMPILER)' >> '$(DIR)/.kernelvariables'
@@ -180,15 +184,15 @@ $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR):
 	debian/bin/buildcheck.py $(DIR) $(ARCH) $(FEATURESET) $(FLAVOUR)
 	@$(stamp)
 
-$(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): REAL_VERSION = $(ABINAME)$(LOCALVERSION)
+$(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)
 $(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): DIR=$(BUILD_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 $(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): INSTALL_DIR=$(BUILD_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
-$(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): DT_INSTALL_DIR = $(INSTALL_DIR)/usr/lib/linux-image-$(REAL_VERSION)
+$(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): DT_INSTALL_DIR = $(INSTALL_DIR)/usr/lib/linux-image-$(KERNELRELEASE)
 $(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR): $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
-	install -D -m644 '$(DIR)/$(IMAGE_FILE)' $(INSTALL_DIR)/boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
+	install -D -m644 '$(DIR)/$(IMAGE_FILE)' $(INSTALL_DIR)/boot/$(IMAGE_INSTALL_STEM)-$(KERNELRELEASE)
 ifeq ($(IMAGE_FILE),vmlinux)
 # This is the unprocessed ELF image, so we need to strip debug symbols
-	$(CROSS_COMPILE)strip --strip-debug $(INSTALL_DIR)/boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
+	$(CROSS_COMPILE)strip --strip-debug $(INSTALL_DIR)/boot/$(IMAGE_INSTALL_STEM)-$(KERNELRELEASE)
 endif
 	+$(MAKE_CLEAN) -C $(DIR) modules_install DEPMOD='$(CURDIR)/debian/bin/no-depmod' INSTALL_MOD_PATH='$(CURDIR)/$(INSTALL_DIR)' INSTALL_MOD_STRIP=1
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
@@ -197,8 +201,8 @@ ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips6
 	# dtbs_install sets the executable bit on dtb[o] files, which they shouldn't have
 	find $(DT_INSTALL_DIR) -type f \( -name '*.dtb' -o -name '*.dtbo' \) -exec chmod 644 {} \;
 endif
-	rm -f $(INSTALL_DIR)/lib/modules/$(REAL_VERSION)/build
-	rm -f $(INSTALL_DIR)/lib/modules/$(REAL_VERSION)/source
+	rm -f $(INSTALL_DIR)/lib/modules/$(KERNELRELEASE)/build
+	rm -f $(INSTALL_DIR)/lib/modules/$(KERNELRELEASE)/source
 	@$(stamp)
 
 $(STAMPS_DIR)/build-doc: DIR=$(BUILD_DIR)/build-doc
@@ -224,7 +228,7 @@ endif
 	dh_lintian
 	dh_compress
 	dh_fixperms
-	dh_installdeb
+	dh_installdeb --define VERSION=$(KERNELRELEASE_VERSION)
 	dh_gencontrol -- $(GENCONTROL_ARGS)
 	dh_md5sums
 	dh_builddeb -- $(BUILDDEB_ARGS)
@@ -303,7 +307,7 @@ binary_headers-common: $(STAMPS_DIR)/source_$(FEATURESET)
 
 build_headers:
 
-binary_headers: REAL_VERSION = $(ABINAME)$(LOCALVERSION)
+binary_headers: KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)
 binary_headers: PACKAGE_NAME_COMMON = linux-headers-$(ABINAME)-common$(LOCALVERSION_HEADERS)
 binary_headers: PACKAGE_NAME_KBUILD = linux-kbuild-$(ABINAME)
 binary_headers: BASE_DIR = /usr/src/$(PACKAGE_NAME)
@@ -333,9 +337,9 @@ binary_headers: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	dh_link /usr/lib/$(PACKAGE_NAME_KBUILD)/scripts $(BASE_DIR)/scripts
 	dh_link /usr/lib/$(PACKAGE_NAME_KBUILD)/tools $(BASE_DIR)/tools
 
-	mkdir -p $(DESTDIR)/lib/modules/$(REAL_VERSION)
-	ln -s /usr/src/$(PACKAGE_NAME) $(DESTDIR)/lib/modules/$(REAL_VERSION)/build
-	ln -s /usr/src/$(PACKAGE_NAME_COMMON) $(DESTDIR)/lib/modules/$(REAL_VERSION)/source
+	mkdir -p $(DESTDIR)/lib/modules/$(KERNELRELEASE)
+	ln -s /usr/src/$(PACKAGE_NAME) $(DESTDIR)/lib/modules/$(KERNELRELEASE)/build
+	ln -s /usr/src/$(PACKAGE_NAME_COMMON) $(DESTDIR)/lib/modules/$(KERNELRELEASE)/source
 
 	+$(MAKE_SELF) install-base
 
@@ -380,7 +384,7 @@ setup_image: $(STAMPS_DIR)/setup_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 
 build_image: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 
-binary_image: REAL_VERSION = $(ABINAME)$(LOCALVERSION)
+binary_image: KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)
 binary_image: INSTALL_DIR = $(DESTDIR)/boot
 binary_image: DIR = $(BUILD_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 binary_image: DIR2 = $(BUILD_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
@@ -394,13 +398,13 @@ binary_image:
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
 	dh_install --sourcedir=$(DIR2) usr
 endif
-	sed '/CONFIG_\(MODULE_SIG_\(ALL\|KEY\)\|SYSTEM_TRUSTED_KEYS\|BUILD_SALT\)[ =]/d' $(DIR)/.config > $(DESTDIR)/boot/config-$(REAL_VERSION)
+	sed '/CONFIG_\(MODULE_SIG_\(ALL\|KEY\)\|SYSTEM_TRUSTED_KEYS\|BUILD_SALT\)[ =]/d' $(DIR)/.config > $(DESTDIR)/boot/config-$(KERNELRELEASE)
 	echo "ffffffffffffffff B The real System.map is in the linux-image-<version>-dbg package" \
-		> $(DESTDIR)/boot/System.map-$(REAL_VERSION)
+		> $(DESTDIR)/boot/System.map-$(KERNELRELEASE)
 	rm $(DESTDIR)/lib/firmware -rf
 	+$(MAKE_SELF) \
 	  binary_image_bug \
-	  DESTDIR='$(DESTDIR)' PACKAGE_NAME='$(PACKAGE_NAME)' REAL_VERSION='$(REAL_VERSION)'
+	  DESTDIR='$(DESTDIR)' PACKAGE_NAME='$(PACKAGE_NAME)'
 	dh_strip --no-automatic-dbgsym -Xvmlinux -Xvmlinuz
 	ln -sf linux-image.NEWS debian/$(PACKAGE_NAME).NEWS
 	+$(MAKE_SELF) install-base
@@ -409,11 +413,11 @@ binary_image_bug:
 	dh_installdirs usr/share/bug/$(PACKAGE_NAME)
 	dh_install debian/templates/image.bug/* usr/share/bug/$(PACKAGE_NAME)
 	chmod 755 $(DESTDIR)/usr/share/bug/$(PACKAGE_NAME)/script
-	printf "RELEASE='$(REAL_VERSION)'\nDISTRIBUTOR='$(DISTRIBUTOR)'\nSOURCEVERSION='$(SOURCEVERSION)'\nPACKAGE_NAME='$(PACKAGE_NAME)'\nPACKAGE_VERSION='$(SOURCEVERSION)'" > $(DESTDIR)/usr/share/bug/$(PACKAGE_NAME)/info
+	printf "RELEASE='$(KERNELRELEASE)'\nDISTRIBUTOR='$(DISTRIBUTOR)'\nSOURCEVERSION='$(SOURCEVERSION)'\nPACKAGE_NAME='$(PACKAGE_NAME)'\nPACKAGE_VERSION='$(SOURCEVERSION)'" > $(DESTDIR)/usr/share/bug/$(PACKAGE_NAME)/info
 
 build_image-dbg: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 
-binary_image-dbg: REAL_VERSION = $(ABINAME)$(LOCALVERSION)
+binary_image-dbg: KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)
 binary_image-dbg: DEBUG_DIR = $(DESTDIR)/usr/lib/debug
 binary_image-dbg: DIR = $(BUILD_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 binary_image-dbg: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
@@ -421,8 +425,8 @@ binary_image-dbg: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	dh_testroot
 	dh_prep
 	dh_installdirs usr/lib/debug usr/lib/debug/boot usr/share/lintian/overrides/
-	install -m644 $(DIR)/vmlinux $(DEBUG_DIR)/boot/vmlinux-$(REAL_VERSION)
-	install -m644 $(DIR)/System.map $(DEBUG_DIR)/boot/System.map-$(REAL_VERSION)
+	install -m644 $(DIR)/vmlinux $(DEBUG_DIR)/boot/vmlinux-$(KERNELRELEASE)
+	install -m644 $(DIR)/System.map $(DEBUG_DIR)/boot/System.map-$(KERNELRELEASE)
 
 # cmd_sign=: Don't sign modules
 # suffix-y=: Don't compress modules
@@ -433,7 +437,7 @@ binary_image-dbg: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 		INSTALL_MOD_PATH=$(DEBUG_DIR)
 
 # Verify we don't have any signed modules installed
-	@if find $(DEBUG_DIR)/lib/modules/$(REAL_VERSION) -name '*.ko' | xargs grep -q '~Module signature appended~'; then \
+	@if find $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE) -name '*.ko' | xargs grep -q '~Module signature appended~'; then \
 		echo; \
 		echo 'Signed modules to be installed into debug package $(PACKAGE_NAME)'; \
 		echo; \
@@ -441,21 +445,21 @@ binary_image-dbg: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	fi
 
 # Verify we don't have any compressed modules installed
-	@if ! find $(DEBUG_DIR)/lib/modules/$(REAL_VERSION) -name '*.ko.*' -exec false {} +; then \
+	@if ! find $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE) -name '*.ko.*' -exec false {} +; then \
 		echo; \
 		echo 'Compressed modules to be installed into debug package $(PACKAGE_NAME)'; \
 		echo; \
 		exit 1; \
 	fi
 
-	find $(DEBUG_DIR)/lib/modules/$(REAL_VERSION)/ -mindepth 1 -maxdepth 1 \! -name kernel -exec rm {} \+
+	find $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE)/ -mindepth 1 -maxdepth 1 \! -name kernel -exec rm {} \+
 	rm $(DEBUG_DIR)/lib/firmware -rf
 ifeq ($(VDSO),True)
 	+$(MAKE_CLEAN) -C $(DIR) vdso_install INSTALL_MOD_PATH=$(DEBUG_DIR)
 # Create .build-id links.  Some architectures already do so, but in the
 # wrong place, so delete those first.
-	rm -rf $(DEBUG_DIR)/lib/modules/$(REAL_VERSION)/vdso/.build-id
-	find $(DEBUG_DIR)/lib/modules/$(REAL_VERSION)/vdso/ -type f | while read vdso; do \
+	rm -rf $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE)/vdso/.build-id
+	find $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE)/vdso/ -type f | while read vdso; do \
 		if buildid="$$(readelf -n "$$vdso" | sed -rne 's/^\s+Build ID: (.*)$$/\1/p')" && [ "$$buildid" ]; then \
 			mkdir -p "$(DEBUG_DIR)/.build-id/$${buildid:0:2}"; \
 			ln -s -r "$$vdso" "$(DEBUG_DIR)/.build-id/$${buildid:0:2}/$${buildid:2}.debug"; \
@@ -464,9 +468,9 @@ ifeq ($(VDSO),True)
 endif
 # Add symlinks to vmlinux from the locations expected by kdump-tools,
 # systemtap and others
-	ln -s boot/vmlinux-$(REAL_VERSION) $(DEBUG_DIR)/
-	mkdir -p $(DEBUG_DIR)/lib/modules/$(REAL_VERSION)
-	ln -s ../../../boot/vmlinux-$(REAL_VERSION) $(DEBUG_DIR)/lib/modules/$(REAL_VERSION)/vmlinux
+	ln -s boot/vmlinux-$(KERNELRELEASE) $(DEBUG_DIR)/
+	mkdir -p $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE)
+	ln -s ../../../boot/vmlinux-$(KERNELRELEASE) $(DEBUG_DIR)/lib/modules/$(KERNELRELEASE)/vmlinux
 	+$(MAKE_SELF) install-base
 
 build_signed-template:
@@ -505,24 +509,24 @@ binary_signed-template:
 build_installer:
 build_installer-test:
 
+binary_installer binary_installer-test: KERNELRELEASE = $(KERNELRELEASE_VERSION)$(LOCALVERSION)
 binary_installer binary_installer-test: export KW_DEFCONFIG_DIR=debian/installer
 binary_installer binary_installer-test: export KW_CONFIG_DIR=debian/installer
 binary_installer binary_installer-test: export SOURCEDIR = $(BUILD_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
-binary_installer binary_installer-test: REAL_VERSION = $(ABINAME)$(LOCALVERSION)
 
 binary_installer: DH_OPTIONS_IMAGE = -p$(IMAGE_PACKAGE_NAME) --sourcedir=$(SOURCEDIR)
 binary_installer: $(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	dh_testdir
 	dh_prep
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.builtin
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.order
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install boot/$(IMAGE_INSTALL_STEM)-$(KERNELRELEASE)
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(KERNELRELEASE)/modules.builtin
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(KERNELRELEASE)/modules.order
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/linux-image-$(REAL_VERSION)
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/linux-image-$(KERNELRELEASE)
 endif
-	kernel-wedge copy-modules $(ABINAME) $(FLAVOUR) $(REAL_VERSION)
-	kernel-wedge find-dups $(REAL_VERSION)
-	kernel-wedge find-unpackaged $(REAL_VERSION) $(REAL_VERSION)
+	kernel-wedge copy-modules $(ABINAME) $(FLAVOUR) $(KERNELRELEASE)
+	kernel-wedge find-dups $(KERNELRELEASE)
+	kernel-wedge find-unpackaged $(KERNELRELEASE) $(KERNELRELEASE)
 	kernel-wedge check $$(dh_listpackages)
 	dh_fixperms
 	dh_gencontrol
@@ -533,9 +537,9 @@ binary_installer-test:
 	if [ -n "$$(dh_listpackages)" ]; then \
 		dh_testdir; \
 		dh_prep; \
-		kernel-wedge copy-modules $(ABINAME) $(FLAVOUR) $(REAL_VERSION); \
-		kernel-wedge find-dups $(REAL_VERSION); \
-		kernel-wedge find-unpackaged $(REAL_VERSION) $(REAL_VERSION); \
+		kernel-wedge copy-modules $(ABINAME) $(FLAVOUR) $(KERNELRELEASE); \
+		kernel-wedge find-dups $(KERNELRELEASE); \
+		kernel-wedge find-unpackaged $(KERNELRELEASE) $(KERNELRELEASE); \
 		kernel-wedge check $$(dh_listpackages); \
 	fi
 

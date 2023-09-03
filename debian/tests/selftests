@@ -7,7 +7,7 @@ getconfig() {
 }
 
 # Look up current ABI name and 'localversion' (featureset/flavour) suffixes
-abiname=$(getconfig version abiname)
+abiname=$(dpkg-parsechangelog -SVersion)
 arch=$(dpkg --print-architecture)
 localversion=()
 for featureset in $(getconfig base $arch featuresets); do

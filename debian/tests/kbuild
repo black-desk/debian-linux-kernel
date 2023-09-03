@@ -24,7 +24,7 @@ obj-m += foo.o
 EOF
 
 arch="$(dpkg --print-architecture)"
-abiname="$(debian/bin/getconfig.py version abiname)"
+abiname="$(dpkg-parsechangelog -SVersion)"
 if flavour="$(debian/bin/getconfig.py base $arch none quick-flavour)"; then
     echo "I: Found quick flavour $flavour"
 elif flavour="$(debian/bin/getconfig.py base $arch none default-flavour)"; then

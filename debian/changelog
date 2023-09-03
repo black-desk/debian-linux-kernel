@@ -19,6 +19,9 @@ linux (6.6-1~exp1) UNRELEASED; urgency=medium
     - Set MODULE_COMPRESS_XZ.
   * Drop deprecated build profile stage1. (closes: #1051365)
   * Generate information for signed template package early.
+  * Change kernel release for every upload, so module can't be shared between
+    different versions:
+    - Change kernel release to include complete version.
 
   [ Emanuele Rocca ]
   * [arm64] Enable support for Renesas RZ/G2UL (ARCH_R9A07G043), RZ/V2L
