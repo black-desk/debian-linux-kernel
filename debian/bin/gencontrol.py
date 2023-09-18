@@ -23,9 +23,6 @@ locale.setlocale(locale.LC_CTYPE, "C.UTF-8")
 
 class Gencontrol(Base):
     config_schema = {
-        'abi': {
-            'ignore-changes': config.SchemaItemList(),
-        },
         'build': {
             'signed-code': config.SchemaItemBoolean(),
             'vdso': config.SchemaItemBoolean(),
