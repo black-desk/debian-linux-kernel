@@ -5,7 +5,12 @@ image_path=/boot/@image-stem@-$version
 
 rm -f /lib/modules/$version/.fresh-install
 
-if [ "$1" != upgrade ] && command -v linux-update-symlinks >/dev/null; then
+# XXX: Emulate upgrade by remove/install
+if [ "$1" = upgrade ]; then
+    set -- remove
+fi
+
+if command -v linux-update-symlinks >/dev/null; then
     linux-update-symlinks remove $version $image_path
 fi
 
@@ -14,7 +19,7 @@ if [ -d /etc/kernel/postrm.d ]; then
 	      --arg=$image_path /etc/kernel/postrm.d
 fi
 
-if [ "$1" = purge ]; then
+if [ "$1" = remove ]; then
     for extra_file in modules.dep modules.isapnpmap modules.pcimap \
                       modules.usbmap modules.parportmap \
                       modules.generic_string modules.ieee1394map \
@@ -25,7 +30,7 @@ if [ "$1" = purge ]; then
 		      modules.softdep modules.devname; do
 	eval rm -f /lib/modules/$version/$extra_file
     done
-    rmdir /lib/modules/$version || true
+    rmdir /lib/modules/$version 2>/dev/null || true
 fi
 
 exit 0

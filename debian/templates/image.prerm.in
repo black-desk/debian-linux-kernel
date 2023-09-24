@@ -3,11 +3,18 @@
 version=#VERSION#@localversion@
 image_path=/boot/@image-stem@-$version
 
+if [ "$1" = remove ]; then
+    linux-check-removal $version
+fi
+
+# XXX: Emulate upgrade by remove/install
+if [ "$1" = upgrade ]; then
+    set -- remove
+fi
+
 if [ "$1" != remove ]; then
     exit 0
 fi
-
-linux-check-removal $version
 
 if [ -d /etc/kernel/prerm.d ]; then
     DEB_MAINT_PARAMS="$*" run-parts --report --exit-on-error --arg=$version \

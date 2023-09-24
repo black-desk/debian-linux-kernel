@@ -3,6 +3,11 @@
 version=#VERSION#@localversion@
 image_path=/boot/@image-stem@-$version
 
+# XXX: Emulate upgrade by remove/install
+if [ "$1" = upgrade ]; then
+    set -- install
+fi
+
 if [ "$1" = abort-upgrade ]; then
     exit 0
 fi
