@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 26 Oct 2012 18:50:54 +0100
 Subject: [PATCH 236/353] sched: Add support for lazy preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=091e3b619256c38a1ca8760bea7e44d40b465fef
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b21510125dae14531a0909b4814996d467365e91
 
 It has become an obsession to mitigate the determinism vs. throughput
 loss of RT. Looking at the mainline semantics of preemption points
@@ -419,7 +419,7 @@ index 41219ea235eb..e581ce1edc12 100644
  }
  EXPORT_SYMBOL(migrate_enable);
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index bd9a375c45f4..430248f46f72 100644
+index 3f6a613be8c3..b735b6088124 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -4151,7 +4151,7 @@ check_preempt_tick(struct cfs_rq *cfs_rq, struct sched_entity *curr)
@@ -529,7 +529,7 @@ index 637c408fb2dc..87a05bb90124 100644
  extern void init_rt_bandwidth(struct rt_bandwidth *rt_b, u64 period, u64 runtime);
  
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index b1c82b1dc3a6..d137601eed0e 100644
+index e1300bb4e770..253b10739adf 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -2153,6 +2153,7 @@ tracing_generic_entry_update(struct trace_entry *entry, unsigned long flags,
@@ -601,7 +601,7 @@ index b1c82b1dc3a6..d137601eed0e 100644
  }
  
 diff --git a/kernel/trace/trace.h b/kernel/trace/trace.h
-index 0923d1b18d1f..80a2d3f56c35 100644
+index f4d83b552a47..00fbf2cb505c 100644
 --- a/kernel/trace/trace.h
 +++ b/kernel/trace/trace.h
 @@ -127,6 +127,7 @@ struct kretprobe_trace_entry_head {

@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 16 Sep 2019 12:33:59 +0200
 Subject: [PATCH 296/353] posix-timers: Unlock expiry lock in the early return
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6786bf935fdb78423332e7a435b63a52809facde
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=20c4691b8dae85f8fe18244d3a42fa688695a57f
 
 [ Upstream commit 356a2781375ec58521a9bc3f500488745990c242 ]
 

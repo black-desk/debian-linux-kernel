@@ -2,7 +2,7 @@ From: Scott Wood <swood@redhat.com>
 Date: Sat, 27 Jul 2019 00:56:32 -0500
 Subject: [PATCH 298/353] sched: __set_cpus_allowed_ptr: Check cpus_mask, not
  cpus_ptr
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=4e8e6aa43a48f6597b211cf6f6b1642c21051eaf
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=bd77ad6ab39c833766e94c7284e62ce449302b3b
 
 [ Upstream commit e5606fb7b042db634ed62b4dd733d62e050e468f ]
 

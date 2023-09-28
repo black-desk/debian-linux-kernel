@@ -4,7 +4,7 @@ Subject: [PATCH 167/353] rt: Improve the serial console PASS_LIMIT
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0d67046491f07ce337099d9076f5d0af41457f4e
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=a67db57db5df64f7ac3c63046a3adf81be641d91
 
 Beyond the warning:
 

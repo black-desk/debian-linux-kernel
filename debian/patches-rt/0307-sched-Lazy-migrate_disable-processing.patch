@@ -1,7 +1,7 @@
 From: Scott Wood <swood@redhat.com>
 Date: Sat, 12 Oct 2019 01:52:13 -0500
 Subject: [PATCH 307/353] sched: Lazy migrate_disable processing
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e59f409c017d0df927609e4fe742e7db56c48fe5
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9f9583fe8d84cac4299c6416a31c6829a7d83305
 
 [ Upstream commit 425c5b38779a860062aa62219dc920d374b13c17 ]
 
@@ -44,7 +44,7 @@ Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
  7 files changed, 129 insertions(+), 182 deletions(-)
 
 diff --git a/include/linux/cpu.h b/include/linux/cpu.h
-index bddccdcd00ba..7f41ac9cf2ad 100644
+index 90985dbce8f4..0ce8ca019734 100644
 --- a/include/linux/cpu.h
 +++ b/include/linux/cpu.h
 @@ -124,8 +124,6 @@ extern void cpu_hotplug_disable(void);

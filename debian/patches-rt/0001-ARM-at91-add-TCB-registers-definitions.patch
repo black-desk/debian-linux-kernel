@@ -1,7 +1,7 @@
 From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Date: Thu, 13 Sep 2018 13:30:18 +0200
 Subject: [PATCH 001/353] ARM: at91: add TCB registers definitions
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d5cb3db0db4af2d71851e972bde6defcd16e3d57
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=bb14b1fa780d1d08653379fb436e41bcaa6c4f7a
 
 Add registers and bits definitions for the timer counter blocks found on
 Atmel ARM SoCs.

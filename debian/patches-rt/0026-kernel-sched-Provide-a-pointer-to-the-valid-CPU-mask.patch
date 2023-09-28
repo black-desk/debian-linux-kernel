@@ -5,7 +5,7 @@ Subject: [PATCH 026/353] kernel: sched: Provide a pointer to the valid CPU
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=00783413cf324a173918f6f46c53eb248a11de23
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e42c584ea2c1e091640aba05235a05396d21a14f
 
 In commit 4b53a3412d66 ("sched/core: Remove the tsk_nr_cpus_allowed()
 wrapper") the tsk_nr_cpus_allowed() wrapper was removed. There was not
@@ -209,7 +209,7 @@ index bb670249bebf..deced4654e66 100644
  			  current->pid, current->comm,
  			  cpumask_pr_args(proc_mask));
 diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
-index 33ff9eca28f6..6115a9902435 100644
+index 245f9505a9ac..f5f97eeb4056 100644
 --- a/drivers/infiniband/hw/hfi1/sdma.c
 +++ b/drivers/infiniband/hw/hfi1/sdma.c
 @@ -853,14 +853,13 @@ struct sdma_engine *sdma_select_user_engine(struct hfi1_devdata *dd,
@@ -572,7 +572,7 @@ index 29ed5d8d30d6..9243d0049714 100644
  				     !dl_task(task) ||
  				     !task_on_rq_queued(task))) {
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index d19981efd980..bd9a375c45f4 100644
+index 2814b6b085bc..3f6a613be8c3 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
 @@ -1691,7 +1691,7 @@ static void task_numa_compare(struct task_numa_env *env,

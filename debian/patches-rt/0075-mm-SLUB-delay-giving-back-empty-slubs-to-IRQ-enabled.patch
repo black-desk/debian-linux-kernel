@@ -2,7 +2,7 @@ From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 21 Jun 2018 17:29:19 +0200
 Subject: [PATCH 075/353] mm/SLUB: delay giving back empty slubs to IRQ enabled
  regions
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0bed7d4f488bcf540f7876a275217b9c398254bb
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b746db62eb868ea40c5f45ec18e5398b70f02765
 
 __free_slab() is invoked with disabled interrupts which increases the
 irq-off time while __free_pages() is doing the work.
@@ -17,7 +17,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  1 file changed, 69 insertions(+), 5 deletions(-)
 
 diff --git a/mm/slub.c b/mm/slub.c
-index 97d2bd78534b..c62e0bf85d8e 100644
+index cfb6e3ef42a6..ead93b7fbd69 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
 @@ -1350,6 +1350,12 @@ static bool freelist_corrupted(struct kmem_cache *s, struct page *page,
