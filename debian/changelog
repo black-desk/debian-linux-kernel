@@ -589,6 +589,7 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
 
   [ Ben Hutchings ]
   * [rt] Update to 4.19.292-rt128
+  * Bump ABI to 26
 
  -- Ben Hutchings <benh@debian.org>  Sun, 24 Sep 2023 20:12:37 +0200
 
