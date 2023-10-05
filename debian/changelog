@@ -517,7 +517,7 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - igmp: limit igmpv3_newpack() packet size to IP_MAX_MTU
     - netfilter: ipset: add the missing IP_SET_HASH_WITH_NET0 macro for
       ip_set_hash_netportnet.c (CVE-2023-42753)
-    - netfilter: xt_u32: validate user space input
+    - netfilter: xt_u32: validate user space input (CVE-2023-39192)
     - netfilter: xt_sctp: validate the flag_info count
     - skbuff: skb_segment, Call zero copy functions before using skbuff frags
     - igb: set max size RX buffer when store bad packet is enabled
