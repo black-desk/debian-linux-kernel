@@ -327,7 +327,7 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - virtio-mmio: Use to_virtio_mmio_device() to simply code
     - virtio-mmio: don't break lifecycle of vm_dev
     - btrfs: fix BUG_ON condition in btrfs_cancel_balance
-    - net: xfrm: Fix xfrm_address_filter OOB read
+    - net: xfrm: Fix xfrm_address_filter OOB read (CVE-2023-39194)
     - net: af_key: fix sadb_x_filter validation (regression in 4.19.148)
     - xfrm: fix slab-use-after-free in decode_session6
     - ip6_vti: fix slab-use-after-free in decode_session6
