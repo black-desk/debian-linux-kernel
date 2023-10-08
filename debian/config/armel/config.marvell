@@ -522,6 +522,11 @@ CONFIG_POWER_RESET_QNAP=y
 CONFIG_POWER_RESET_RESTART=y
 
 ##
+## file: drivers/ptp/Kconfig
+##
+CONFIG_PTP_1588_CLOCK=m
+
+##
 ## file: drivers/regulator/Kconfig
 ##
 CONFIG_REGULATOR=y
@@ -740,6 +745,8 @@ CONFIG_CC_OPTIMIZE_FOR_SIZE=y
 ##
 ## file: kernel/trace/Kconfig
 ##
+#. Adds ~90K to image
+# CONFIG_FUNCTION_TRACER is not set
 # CONFIG_FUNCTION_GRAPH_TRACER is not set
 # CONFIG_STACK_TRACER is not set
 # CONFIG_FTRACE_SYSCALLS is not set
@@ -796,6 +803,12 @@ CONFIG_IPV6=m
 ## file: net/mpls/Kconfig
 ##
 # CONFIG_NET_MPLS_GSO is not set
+
+##
+## file: net/mptcp/Kconfig
+##
+#. Adds ~40K to image
+# CONFIG_MPTCP is not set
 
 ##
 ## file: net/packet/Kconfig

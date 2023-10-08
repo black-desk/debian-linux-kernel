@@ -1,8 +1,8 @@
-From 7c32690ea7972a0a99d4c81ee5431d825d26ebdc Mon Sep 17 00:00:00 2001
+From 9a952b320d3ddfb609b0ff33bb492708430ca639 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 19 Jul 2022 20:08:01 +0200
-Subject: [PATCH 19/52] printk: Bring back the RT bits.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Subject: [PATCH 19/64] printk: Bring back the RT bits.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 This is a revert of the commits:
 | 07a22b61946f0 Revert "printk: add functions to prefer direct printing"
@@ -30,11 +30,9 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  kernel/watchdog_hld.c       |   4 +
  12 files changed, 636 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/tty/sysrq.c b/drivers/tty/sysrq.c
-index d2b2720db6ca..18e623325887 100644
 --- a/drivers/tty/sysrq.c
 +++ b/drivers/tty/sysrq.c
-@@ -581,6 +581,7 @@ void __handle_sysrq(int key, bool check_mask)
+@@ -581,6 +581,7 @@
  
  	rcu_sysrq_start();
  	rcu_read_lock();
@@ -42,7 +40,7 @@ index d2b2720db6ca..18e623325887 100644
  	/*
  	 * Raise the apparent loglevel to maximum so that the sysrq header
  	 * is shown to provide the user with positive feedback.  We do not
-@@ -622,6 +623,7 @@ void __handle_sysrq(int key, bool check_mask)
+@@ -622,6 +623,7 @@
  		pr_cont("\n");
  		console_loglevel = orig_log_level;
  	}
@@ -50,8 +48,6 @@ index d2b2720db6ca..18e623325887 100644
  	rcu_read_unlock();
  	rcu_sysrq_end();
  
-diff --git a/include/linux/console.h b/include/linux/console.h
-index 8c1686e2c233..143653090c48 100644
 --- a/include/linux/console.h
 +++ b/include/linux/console.h
 @@ -16,6 +16,7 @@
@@ -62,7 +58,7 @@ index 8c1686e2c233..143653090c48 100644
  
  struct vc_data;
  struct console_font_op;
-@@ -153,6 +154,22 @@ struct console {
+@@ -153,6 +154,22 @@
  	uint	ospeed;
  	u64	seq;
  	unsigned long dropped;
@@ -85,11 +81,9 @@ index 8c1686e2c233..143653090c48 100644
  	void	*data;
  	struct	 console *next;
  };
-diff --git a/include/linux/printk.h b/include/linux/printk.h
-index 8c81806c2e99..f8c4e4fa6d7d 100644
 --- a/include/linux/printk.h
 +++ b/include/linux/printk.h
-@@ -168,6 +168,9 @@ extern void __printk_safe_exit(void);
+@@ -168,6 +168,9 @@
   */
  #define printk_deferred_enter __printk_safe_enter
  #define printk_deferred_exit __printk_safe_exit
@@ -99,7 +93,7 @@ index 8c81806c2e99..f8c4e4fa6d7d 100644
  
  /*
   * Please don't use printk_ratelimit(), because it shares ratelimiting state
-@@ -219,6 +222,18 @@ static inline void printk_deferred_exit(void)
+@@ -219,6 +222,18 @@
  {
  }
  
@@ -118,11 +112,9 @@ index 8c81806c2e99..f8c4e4fa6d7d 100644
  static inline int printk_ratelimit(void)
  {
  	return 0;
-diff --git a/kernel/hung_task.c b/kernel/hung_task.c
-index c71889f3f3fc..e2d2344cb9f4 100644
 --- a/kernel/hung_task.c
 +++ b/kernel/hung_task.c
-@@ -127,6 +127,8 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
+@@ -128,6 +128,8 @@
  	 * complain:
  	 */
  	if (sysctl_hung_task_warnings) {
@@ -131,7 +123,7 @@ index c71889f3f3fc..e2d2344cb9f4 100644
  		if (sysctl_hung_task_warnings > 0)
  			sysctl_hung_task_warnings--;
  		pr_err("INFO: task %s:%d blocked for more than %ld seconds.\n",
-@@ -142,6 +144,8 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
+@@ -144,6 +146,8 @@
  
  		if (sysctl_hung_task_all_cpu_backtrace)
  			hung_task_show_all_bt = true;
@@ -140,7 +132,7 @@ index c71889f3f3fc..e2d2344cb9f4 100644
  	}
  
  	touch_nmi_watchdog();
-@@ -212,12 +216,17 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
+@@ -214,12 +218,17 @@
  	}
   unlock:
  	rcu_read_unlock();
@@ -159,11 +151,9 @@ index c71889f3f3fc..e2d2344cb9f4 100644
  	}
  
  	if (hung_task_call_panic)
-diff --git a/kernel/panic.c b/kernel/panic.c
-index ca5452afb456..c38594846501 100644
 --- a/kernel/panic.c
 +++ b/kernel/panic.c
-@@ -653,6 +653,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
+@@ -653,6 +653,8 @@
  {
  	disable_trace_on_warning();
  
@@ -172,7 +162,7 @@ index ca5452afb456..c38594846501 100644
  	if (file)
  		pr_warn("WARNING: CPU: %d PID: %d at %s:%d %pS\n",
  			raw_smp_processor_id(), current->pid, file, line,
-@@ -681,6 +683,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
+@@ -681,6 +683,8 @@
  
  	/* Just a warning, don't kill lockdep. */
  	add_taint(taint, LOCKDEP_STILL_OK);
@@ -181,11 +171,9 @@ index ca5452afb456..c38594846501 100644
  }
  
  #ifndef __WARN_FLAGS
-diff --git a/kernel/printk/internal.h b/kernel/printk/internal.h
-index d947ca6c84f9..e7d8578860ad 100644
 --- a/kernel/printk/internal.h
 +++ b/kernel/printk/internal.h
-@@ -20,6 +20,8 @@ enum printk_info_flags {
+@@ -20,6 +20,8 @@
  	LOG_CONT	= 8,	/* text is a fragment of a continuation line */
  };
  
@@ -194,15 +182,12 @@ index d947ca6c84f9..e7d8578860ad 100644
  __printf(4, 0)
  int vprintk_store(int facility, int level,
  		  const struct dev_printk_info *dev_info,
-diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
-index e4f1e7478b52..02d4aa71a3e5 100644
 --- a/kernel/printk/printk.c
 +++ b/kernel/printk/printk.c
-@@ -220,6 +220,36 @@ int devkmsg_sysctl_set_loglvl(struct ctl_table *table, int write,
- }
+@@ -221,6 +221,36 @@
  #endif /* CONFIG_PRINTK && CONFIG_SYSCTL */
  
-+/*
+ /*
 + * Used to synchronize printing kthreads against direct printing via
 + * console_trylock/console_unlock.
 + *
@@ -232,10 +217,11 @@ index e4f1e7478b52..02d4aa71a3e5 100644
 +/* Block console kthreads to avoid processing new messages. */
 +bool block_console_kthreads;
 +
- /*
++/*
   * Helper macros to handle lockdep when locking/unlocking console_sem. We use
   * macros instead of functions so that _RET_IP_ contains useful information.
-@@ -268,14 +298,49 @@ static bool panic_in_progress(void)
+  */
+@@ -268,14 +298,49 @@
  }
  
  /*
@@ -248,8 +234,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
 + * Tracks whether kthread printers are all blocked. A value of true implies
 + * that the console is locked via console_lock() or the console is suspended.
 + * Writing to this variable requires holding @console_sem.
-  */
--static int console_locked, console_suspended;
++ */
 +static bool console_kthreads_blocked;
 +
 +/*
@@ -274,7 +259,8 @@ index e4f1e7478b52..02d4aa71a3e5 100644
 + * Unblock all kthread printers from a schedulable context.
 + *
 + * Requires holding @console_sem.
-+ */
+  */
+-static int console_locked, console_suspended;
 +static void console_kthreads_unblock(void)
 +{
 +	struct console *con;
@@ -292,7 +278,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  
  /*
   *	Array of consoles built from command line options (console=)
-@@ -358,7 +423,75 @@ static int console_msg_format = MSG_FORMAT_DEFAULT;
+@@ -358,7 +423,75 @@
  /* syslog_lock protects syslog_* variables and write access to clear_seq. */
  static DEFINE_MUTEX(syslog_lock);
  
@@ -368,7 +354,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  DECLARE_WAIT_QUEUE_HEAD(log_wait);
  /* All 3 protected by @syslog_lock. */
  /* the next printk record to read by syslog(READ) or /proc/kmsg */
-@@ -2249,10 +2382,10 @@ asmlinkage int vprintk_emit(int facility, int level,
+@@ -2249,10 +2382,10 @@
  	printed_len = vprintk_store(facility, level, dev_info, fmt, args);
  
  	/* If called from the scheduler, we can not call up(). */
@@ -381,7 +367,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  		 * printing of all remaining records to all consoles so that
  		 * this context can return as soon as possible. Hopefully
  		 * another printk() caller will take over the printing.
-@@ -2296,6 +2429,8 @@ EXPORT_SYMBOL(_printk);
+@@ -2300,6 +2433,8 @@
  static bool pr_flush(int timeout_ms, bool reset_on_progress);
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress);
  
@@ -390,7 +376,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  #else /* CONFIG_PRINTK */
  
  #define CONSOLE_LOG_MAX		0
-@@ -2330,6 +2465,8 @@ static void call_console_driver(struct console *con, const char *text, size_t le
+@@ -2334,6 +2469,8 @@
  static bool suppress_message_printing(int level) { return false; }
  static bool pr_flush(int timeout_ms, bool reset_on_progress) { return true; }
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress) { return true; }
@@ -399,7 +385,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  
  #endif /* CONFIG_PRINTK */
  
-@@ -2548,6 +2685,14 @@ static int console_cpu_notify(unsigned int cpu)
+@@ -2552,6 +2689,14 @@
  		/* If trylock fails, someone else is doing the printing */
  		if (console_trylock())
  			console_unlock();
@@ -414,7 +400,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	}
  	return 0;
  }
-@@ -2567,7 +2712,7 @@ void console_lock(void)
+@@ -2594,7 +2739,7 @@
  	down_console_sem();
  	if (console_suspended)
  		return;
@@ -423,7 +409,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	console_may_schedule = 1;
  }
  EXPORT_SYMBOL(console_lock);
-@@ -2588,15 +2733,30 @@ int console_trylock(void)
+@@ -2618,30 +2763,36 @@
  		up_console_sem();
  		return 0;
  	}
@@ -456,10 +442,6 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  }
  EXPORT_SYMBOL(is_console_locked);
  
-@@ -2619,18 +2779,9 @@ static bool abandon_console_lock_in_panic(void)
- 	return atomic_read(&panic_cpu) != raw_smp_processor_id();
- }
- 
 -/*
 - * Check if the given console is currently capable and allowed to print
 - * records.
@@ -477,7 +459,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  		return false;
  
  	/*
-@@ -2639,15 +2790,43 @@ static inline bool console_is_usable(struct console *con)
+@@ -2650,15 +2801,43 @@
  	 * cope (CON_ANYTIME) don't call them until this CPU is officially up.
  	 */
  	if (!cpu_online(raw_smp_processor_id()) &&
@@ -523,7 +505,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	up_console_sem();
  }
  
-@@ -2665,17 +2844,19 @@ static void __console_unlock(void)
+@@ -2676,17 +2855,19 @@
   *
   * @handover will be set to true if a printk waiter has taken over the
   * console_lock, in which case the caller is no longer holding the
@@ -548,7 +530,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	struct printk_info info;
  	struct printk_record r;
  	unsigned long flags;
-@@ -2684,7 +2865,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
+@@ -2695,7 +2876,8 @@
  
  	prb_rec_init_rd(&r, &info, text, CONSOLE_LOG_MAX);
  
@@ -558,7 +540,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  
  	if (!prb_read_valid(prb, con->seq, &r))
  		return false;
-@@ -2692,7 +2874,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
+@@ -2703,7 +2885,8 @@
  	if (con->seq != r.info->seq) {
  		con->dropped += r.info->seq - con->seq;
  		con->seq = r.info->seq;
@@ -568,7 +550,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  			suppress_panic_printk = 1;
  			pr_warn_once("Too many dropped messages. Suppress messages on non-panic CPUs to prevent livelock.\n");
  		}
-@@ -2714,31 +2897,61 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
+@@ -2725,32 +2908,62 @@
  		len = record_print_text(&r, console_msg_format & MSG_FORMAT_SYSLOG, printk_time);
  	}
  
@@ -619,7 +601,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	return true;
  }
  
-+/*
+ /*
 + * Print a record for a given console, but allow another printk() caller to
 + * take over the console_lock and continue printing.
 + *
@@ -643,10 +625,11 @@ index e4f1e7478b52..02d4aa71a3e5 100644
 +	return __console_emit_next_record(con, text, ext_text, dropped_text, handover);
 +}
 +
- /*
++/*
   * Print out all remaining records to all consoles.
   *
-@@ -2757,8 +2970,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
+  * @do_cond_resched is set by the caller. It can be true only in schedulable
+@@ -2768,8 +2981,8 @@
   * were flushed to all usable consoles. A returned false informs the caller
   * that everything was not flushed (either there were no usable consoles or
   * another context has taken over printing or it is a panic situation and this
@@ -657,7 +640,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
   *
   * Requires the console_lock.
   */
-@@ -2775,6 +2988,10 @@ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handove
+@@ -2786,6 +2999,10 @@
  	*handover = false;
  
  	do {
@@ -668,7 +651,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  		any_progress = false;
  
  		for_each_console(con) {
-@@ -2786,13 +3003,11 @@ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handove
+@@ -2797,13 +3014,11 @@
  
  			if (con->flags & CON_EXTENDED) {
  				/* Extended consoles do not print "dropped messages". */
@@ -686,7 +669,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  			}
  			if (*handover)
  				return false;
-@@ -2907,10 +3122,13 @@ void console_unblank(void)
+@@ -2918,10 +3133,13 @@
  	if (oops_in_progress) {
  		if (down_trylock_console_sem() != 0)
  			return;
@@ -701,7 +684,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	console_may_schedule = 0;
  	for_each_console(c)
  		if ((c->flags & CON_ENABLED) && c->unblank)
-@@ -3186,6 +3404,10 @@ void register_console(struct console *newcon)
+@@ -3197,6 +3415,10 @@
  	}
  
  	newcon->dropped = 0;
@@ -712,7 +695,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	if (newcon->flags & CON_PRINTBUFFER) {
  		/* Get a consistent copy of @syslog_seq. */
  		mutex_lock(&syslog_lock);
-@@ -3195,6 +3417,10 @@ void register_console(struct console *newcon)
+@@ -3206,6 +3428,10 @@
  		/* Begin with next message. */
  		newcon->seq = prb_next_seq(prb);
  	}
@@ -723,7 +706,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	console_unlock();
  	console_sysfs_notify();
  
-@@ -3218,6 +3444,7 @@ EXPORT_SYMBOL(register_console);
+@@ -3229,6 +3455,7 @@
  
  int unregister_console(struct console *console)
  {
@@ -731,7 +714,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	struct console *con;
  	int res;
  
-@@ -3255,7 +3482,20 @@ int unregister_console(struct console *console)
+@@ -3266,7 +3493,20 @@
  		console_drivers->flags |= CON_CONSDEV;
  
  	console->flags &= ~CON_ENABLED;
@@ -752,7 +735,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	console_sysfs_notify();
  
  	if (console->exit)
-@@ -3351,6 +3591,20 @@ static int __init printk_late_init(void)
+@@ -3362,6 +3602,20 @@
  }
  late_initcall(printk_late_init);
  
@@ -773,7 +756,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  #if defined CONFIG_PRINTK
  /* If @con is specified, only wait for that console. Otherwise wait for all. */
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress)
-@@ -3433,11 +3687,208 @@ static bool pr_flush(int timeout_ms, bool reset_on_progress)
+@@ -3444,11 +3698,208 @@
  	return __pr_flush(NULL, timeout_ms, reset_on_progress);
  }
  
@@ -984,7 +967,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  
  static DEFINE_PER_CPU(int, printk_pending);
  
-@@ -3445,10 +3896,14 @@ static void wake_up_klogd_work_func(struct irq_work *irq_work)
+@@ -3456,10 +3907,14 @@
  {
  	int pending = this_cpu_xchg(printk_pending, 0);
  
@@ -1000,7 +983,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  	}
  
  	if (pending & PRINTK_PENDING_WAKEUP)
-@@ -3473,10 +3928,11 @@ static void __wake_up_klogd(int val)
+@@ -3484,10 +3939,11 @@
  	 * prepare_to_wait_event(), which is called after ___wait_event() adds
  	 * the waiter but before it has checked the wait condition.
  	 *
@@ -1014,7 +997,7 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  		this_cpu_or(printk_pending, val);
  		irq_work_queue(this_cpu_ptr(&wake_up_klogd_work));
  	}
-@@ -3494,7 +3950,17 @@ void defer_console_output(void)
+@@ -3527,7 +3983,17 @@
  	 * New messages may have been added directly to the ringbuffer
  	 * using vprintk_store(), so wake any waiters as well.
  	 */
@@ -1033,8 +1016,6 @@ index e4f1e7478b52..02d4aa71a3e5 100644
  }
  
  void printk_trigger_flush(void)
-diff --git a/kernel/printk/printk_safe.c b/kernel/printk/printk_safe.c
-index ef0f9a2044da..caac4de1ea59 100644
 --- a/kernel/printk/printk_safe.c
 +++ b/kernel/printk/printk_safe.c
 @@ -8,7 +8,9 @@
@@ -1047,7 +1028,7 @@ index ef0f9a2044da..caac4de1ea59 100644
  
  #include "internal.h"
  
-@@ -50,3 +52,33 @@ asmlinkage int vprintk(const char *fmt, va_list args)
+@@ -45,3 +47,33 @@
  	return vprintk_default(fmt, args);
  }
  EXPORT_SYMBOL(vprintk);
@@ -1081,11 +1062,9 @@ index ef0f9a2044da..caac4de1ea59 100644
 +		timeout_ms -= 1;
 +	}
 +}
-diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
-index 5653560573e2..dcbbcf93d608 100644
 --- a/kernel/rcu/tree_stall.h
 +++ b/kernel/rcu/tree_stall.h
-@@ -642,6 +642,7 @@ static void print_cpu_stall(unsigned long gps)
+@@ -642,6 +642,7 @@
  	 * See Documentation/RCU/stallwarn.rst for info on how to debug
  	 * RCU CPU stall warnings.
  	 */
@@ -1093,7 +1072,7 @@ index 5653560573e2..dcbbcf93d608 100644
  	trace_rcu_stall_warning(rcu_state.name, TPS("SelfDetected"));
  	pr_err("INFO: %s self-detected stall on CPU\n", rcu_state.name);
  	raw_spin_lock_irqsave_rcu_node(rdp->mynode, flags);
-@@ -676,6 +677,7 @@ static void print_cpu_stall(unsigned long gps)
+@@ -676,6 +677,7 @@
  	 */
  	set_tsk_need_resched(current);
  	set_preempt_need_resched();
@@ -1101,11 +1080,9 @@ index 5653560573e2..dcbbcf93d608 100644
  }
  
  static void check_cpu_stall(struct rcu_data *rdp)
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index 3bba88c7ffc6..57cedc330660 100644
 --- a/kernel/reboot.c
 +++ b/kernel/reboot.c
-@@ -82,6 +82,7 @@ void kernel_restart_prepare(char *cmd)
+@@ -82,6 +82,7 @@
  {
  	blocking_notifier_call_chain(&reboot_notifier_list, SYS_RESTART, cmd);
  	system_state = SYSTEM_RESTART;
@@ -1113,7 +1090,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -282,6 +283,7 @@ static void kernel_shutdown_prepare(enum system_states state)
+@@ -282,6 +283,7 @@
  	blocking_notifier_call_chain(&reboot_notifier_list,
  		(state == SYSTEM_HALT) ? SYS_HALT : SYS_POWER_OFF, NULL);
  	system_state = state;
@@ -1121,7 +1098,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -836,9 +838,11 @@ static int __orderly_reboot(void)
+@@ -836,9 +838,11 @@
  	ret = run_cmd(reboot_cmd);
  
  	if (ret) {
@@ -1133,7 +1110,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	}
  
  	return ret;
-@@ -851,6 +855,7 @@ static int __orderly_poweroff(bool force)
+@@ -851,6 +855,7 @@
  	ret = run_cmd(poweroff_cmd);
  
  	if (ret && force) {
@@ -1141,7 +1118,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  		pr_warn("Failed to start orderly shutdown: forcing the issue\n");
  
  		/*
-@@ -860,6 +865,7 @@ static int __orderly_poweroff(bool force)
+@@ -860,6 +865,7 @@
  		 */
  		emergency_sync();
  		kernel_power_off();
@@ -1149,7 +1126,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	}
  
  	return ret;
-@@ -917,6 +923,8 @@ EXPORT_SYMBOL_GPL(orderly_reboot);
+@@ -917,6 +923,8 @@
   */
  static void hw_failure_emergency_poweroff_func(struct work_struct *work)
  {
@@ -1158,7 +1135,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  	/*
  	 * We have reached here after the emergency shutdown waiting period has
  	 * expired. This means orderly_poweroff has not been able to shut off
-@@ -933,6 +941,8 @@ static void hw_failure_emergency_poweroff_func(struct work_struct *work)
+@@ -933,6 +941,8 @@
  	 */
  	pr_emerg("Hardware protection shutdown failed. Trying emergency restart\n");
  	emergency_restart();
@@ -1167,7 +1144,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  }
  
  static DECLARE_DELAYED_WORK(hw_failure_emergency_poweroff_work,
-@@ -971,11 +981,13 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
+@@ -971,11 +981,13 @@
  {
  	static atomic_t allow_proceed = ATOMIC_INIT(1);
  
@@ -1182,7 +1159,7 @@ index 3bba88c7ffc6..57cedc330660 100644
  
  	/*
  	 * Queue a backup emergency shutdown in the event of
-@@ -983,6 +995,8 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
+@@ -983,6 +995,8 @@
  	 */
  	hw_failure_emergency_poweroff(ms_until_forced);
  	orderly_poweroff(true);
@@ -1191,11 +1168,9 @@ index 3bba88c7ffc6..57cedc330660 100644
  }
  EXPORT_SYMBOL_GPL(hw_protection_shutdown);
  
-diff --git a/kernel/watchdog.c b/kernel/watchdog.c
-index 8e61f21e7e33..41596c415111 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
-@@ -424,6 +424,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
+@@ -424,6 +424,8 @@
  		/* Start period for the next softlockup warning. */
  		update_report_ts();
  
@@ -1204,7 +1179,7 @@ index 8e61f21e7e33..41596c415111 100644
  		pr_emerg("BUG: soft lockup - CPU#%d stuck for %us! [%s:%d]\n",
  			smp_processor_id(), duration,
  			current->comm, task_pid_nr(current));
-@@ -442,6 +444,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
+@@ -442,6 +444,8 @@
  		add_taint(TAINT_SOFTLOCKUP, LOCKDEP_STILL_OK);
  		if (softlockup_panic)
  			panic("softlockup: hung tasks");
@@ -1213,11 +1188,9 @@ index 8e61f21e7e33..41596c415111 100644
  	}
  
  	return HRTIMER_RESTART;
-diff --git a/kernel/watchdog_hld.c b/kernel/watchdog_hld.c
-index 247bf0b1582c..701f35f0e2d4 100644
 --- a/kernel/watchdog_hld.c
 +++ b/kernel/watchdog_hld.c
-@@ -135,6 +135,8 @@ static void watchdog_overflow_callback(struct perf_event *event,
+@@ -135,6 +135,8 @@
  		if (__this_cpu_read(hard_watchdog_warn) == true)
  			return;
  
@@ -1226,7 +1199,7 @@ index 247bf0b1582c..701f35f0e2d4 100644
  		pr_emerg("Watchdog detected hard LOCKUP on cpu %d\n",
  			 this_cpu);
  		print_modules();
-@@ -155,6 +157,8 @@ static void watchdog_overflow_callback(struct perf_event *event,
+@@ -155,6 +157,8 @@
  		if (hardlockup_panic)
  			nmi_panic(regs, "Hard LOCKUP");
  
@@ -1235,6 +1208,3 @@ index 247bf0b1582c..701f35f0e2d4 100644
  		__this_cpu_write(hard_watchdog_warn, true);
  		return;
  	}
--- 
-2.40.1
-

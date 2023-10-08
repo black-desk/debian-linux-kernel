@@ -49,4 +49,15 @@
 0049-POWERPC-Allow-to-enable-RT.patch
 0050-sysfs-Add-sys-kernel-realtime-entry.patch
 0051-Add-localversion-for-RT-release.patch
-0052-Linux-6.1.33-rt11-REBASE.patch
+0052-Linux-6.1.46-rt13-REBASE.patch
+0053-io-mapping-don-t-disable-preempt-on-RT-in-io_mapping.patch
+0054-locking-rwbase-Mitigate-indefinite-writer-starvation.patch
+0055-revert-softirq-Let-ksoftirqd-do-its-job.patch
+0057-debugobjects-locking-Annotate-debug_object_fill_pool.patch
+0058-sched-avoid-false-lockdep-splat-in-put_task_struct.patch
+0059-seqlock-Do-the-lockdep-annotation-before-locking-in-.patch
+0060-mm-page_alloc-Use-write_seqlock_irqsave-instead-writ.patch
+0061-bpf-Remove-in_atomic-from-bpf_link_put.patch
+0062-posix-timers-Ensure-timer-ID-search-loop-limit-is-va.patch
+0063-drm-i915-Do-not-disable-preemption-for-resets.patch
+0064-Linux-6.1.54-rt15-REBASE.patch

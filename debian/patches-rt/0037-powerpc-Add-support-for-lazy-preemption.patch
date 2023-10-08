@@ -1,8 +1,8 @@
-From a1bf050734d1a0dbf532345b288b4adb5c5e32af Mon Sep 17 00:00:00 2001
+From f81f53033c56d4f4d920ac374e4f5b9df51ff581 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 1 Nov 2012 10:14:11 +0100
-Subject: [PATCH 37/52] powerpc: Add support for lazy preemption
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Subject: [PATCH 37/64] powerpc: Add support for lazy preemption
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 Implement the powerpc pieces for lazy preempt.
 
@@ -14,7 +14,7 @@ Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
  3 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index 2b1141645d9e..ca5cfdec7c4a 100644
+index 6050e6e10d32..0eff864d6ec3 100644
 --- a/arch/powerpc/Kconfig
 +++ b/arch/powerpc/Kconfig
 @@ -242,6 +242,7 @@ config PPC
@@ -84,7 +84,7 @@ index af58f1ed3952..520864de8bb2 100644
  /* Bits in local_flags */
  /* Don't move TLF_NAPPING without adjusting the code in entry_32.S */
 diff --git a/arch/powerpc/kernel/interrupt.c b/arch/powerpc/kernel/interrupt.c
-index 0ec1581619db..e333feb12c98 100644
+index cf770d86c03c..2c454731c250 100644
 --- a/arch/powerpc/kernel/interrupt.c
 +++ b/arch/powerpc/kernel/interrupt.c
 @@ -186,7 +186,7 @@ interrupt_exit_user_prepare_main(unsigned long ret, struct pt_regs *regs)
@@ -96,7 +96,7 @@ index 0ec1581619db..e333feb12c98 100644
  			schedule();
  		} else {
  			/*
-@@ -398,11 +398,15 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
+@@ -397,11 +397,15 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
  		/* Returning to a kernel context with local irqs enabled. */
  		WARN_ON_ONCE(!(regs->msr & MSR_EE));
  again:
@@ -114,5 +114,5 @@ index 0ec1581619db..e333feb12c98 100644
  		}
  
 -- 
-2.40.1
+2.41.0
 

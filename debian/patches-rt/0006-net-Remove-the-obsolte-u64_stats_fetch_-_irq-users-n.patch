@@ -1,9 +1,9 @@
-From e2ed46d7f09981cc8edc19440511f77bba0e6284 Mon Sep 17 00:00:00 2001
+From e857a2d475589bd2ec0f109db01aa89f14487f65 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:17:37 +0200
-Subject: [PATCH 06/52] net: Remove the obsolte u64_stats_fetch_*_irq() users
+Subject: [PATCH 06/64] net: Remove the obsolte u64_stats_fetch_*_irq() users
  (net).
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -18,9 +18,9 @@ Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
  net/bridge/br_multicast.c      |  4 ++--
  net/bridge/br_vlan.c           |  4 ++--
  net/core/dev.c                 |  4 ++--
- net/core/devlink.c             |  4 ++--
  net/core/drop_monitor.c        |  8 ++++----
  net/core/gen_stats.c           | 16 ++++++++--------
+ net/devlink/leftover.c         |  4 ++--
  net/dsa/slave.c                |  4 ++--
  net/ipv4/af_inet.c             |  4 ++--
  net/ipv6/seg6_local.c          |  4 ++--
@@ -88,10 +88,10 @@ index 9ffd40b8270c..bc75fa1e4666 100644
  		u64_stats_add(&stats->rx_packets, rxpackets);
  		u64_stats_add(&stats->rx_bytes, rxbytes);
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 93d430693ca0..93c10ae3a50b 100644
+index a2e3c6470ab3..75139898dfec 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -10474,12 +10474,12 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
+@@ -10476,12 +10476,12 @@ void dev_fetch_sw_netstats(struct rtnl_link_stats64 *s,
  
  		stats = per_cpu_ptr(netstats, cpu);
  		do {
@@ -106,23 +106,6 @@ index 93d430693ca0..93c10ae3a50b 100644
  
  		s->rx_packets += rx_packets;
  		s->rx_bytes   += rx_bytes;
-diff --git a/net/core/devlink.c b/net/core/devlink.c
-index 2aa77d4b80d0..be239f866eae 100644
---- a/net/core/devlink.c
-+++ b/net/core/devlink.c
-@@ -8307,10 +8307,10 @@ static void devlink_trap_stats_read(struct devlink_stats __percpu *trap_stats,
- 
- 		cpu_stats = per_cpu_ptr(trap_stats, i);
- 		do {
--			start = u64_stats_fetch_begin_irq(&cpu_stats->syncp);
-+			start = u64_stats_fetch_begin(&cpu_stats->syncp);
- 			rx_packets = u64_stats_read(&cpu_stats->rx_packets);
- 			rx_bytes = u64_stats_read(&cpu_stats->rx_bytes);
--		} while (u64_stats_fetch_retry_irq(&cpu_stats->syncp, start));
-+		} while (u64_stats_fetch_retry(&cpu_stats->syncp, start));
- 
- 		u64_stats_add(&stats->rx_packets, rx_packets);
- 		u64_stats_add(&stats->rx_bytes, rx_bytes);
 diff --git a/net/core/drop_monitor.c b/net/core/drop_monitor.c
 index f084a4a6b7ab..11aa6e8a3098 100644
 --- a/net/core/drop_monitor.c
@@ -207,6 +190,23 @@ index c8d137ef5980..b71ccaec0991 100644
  }
  
  static int
+diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
+index 63188d6a50fe..11095a4fee3d 100644
+--- a/net/devlink/leftover.c
++++ b/net/devlink/leftover.c
+@@ -8307,10 +8307,10 @@ static void devlink_trap_stats_read(struct devlink_stats __percpu *trap_stats,
+ 
+ 		cpu_stats = per_cpu_ptr(trap_stats, i);
+ 		do {
+-			start = u64_stats_fetch_begin_irq(&cpu_stats->syncp);
++			start = u64_stats_fetch_begin(&cpu_stats->syncp);
+ 			rx_packets = u64_stats_read(&cpu_stats->rx_packets);
+ 			rx_bytes = u64_stats_read(&cpu_stats->rx_bytes);
+-		} while (u64_stats_fetch_retry_irq(&cpu_stats->syncp, start));
++		} while (u64_stats_fetch_retry(&cpu_stats->syncp, start));
+ 
+ 		u64_stats_add(&stats->rx_packets, rx_packets);
+ 		u64_stats_add(&stats->rx_bytes, rx_bytes);
 diff --git a/net/dsa/slave.c b/net/dsa/slave.c
 index 5fe075bf479e..28ee63ec1d1d 100644
 --- a/net/dsa/slave.c
@@ -227,7 +227,7 @@ index 5fe075bf479e..28ee63ec1d1d 100644
  		data[1] += tx_bytes;
  		data[2] += rx_packets;
 diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index ebb737ac9e89..a757099994bc 100644
+index 04853c83c85c..82b46fb51530 100644
 --- a/net/ipv4/af_inet.c
 +++ b/net/ipv4/af_inet.c
 @@ -1702,9 +1702,9 @@ u64 snmp_get_cpu_field64(void __percpu *mib, int cpu, int offt,
@@ -263,7 +263,7 @@ index 8370726ae7bf..487f8e98deaa 100644
  		counters.packets += packets;
  		counters.bytes += bytes;
 diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index 30efa26f977f..43d6aca83145 100644
+index b8c6f6a668fc..605bdb673d1e 100644
 --- a/net/mac80211/sta_info.c
 +++ b/net/mac80211/sta_info.c
 @@ -2397,9 +2397,9 @@ static inline u64 sta_get_tidstats_msdu(struct ieee80211_sta_rx_stats *rxstats,
@@ -307,10 +307,10 @@ index f1f43894efb8..dc5165d3eec4 100644
  		stats->rx_packets	+= local.rx_packets;
  		stats->rx_bytes		+= local.rx_bytes;
 diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 03af6a2ffd56..fb7cabc71366 100644
+index 17a1b731a76b..2be696513629 100644
 --- a/net/netfilter/ipvs/ip_vs_ctl.c
 +++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -2296,13 +2296,13 @@ static int ip_vs_stats_percpu_show(struct seq_file *seq, void *v)
+@@ -2299,13 +2299,13 @@ static int ip_vs_stats_percpu_show(struct seq_file *seq, void *v)
  		u64 conns, inpkts, outpkts, inbytes, outbytes;
  
  		do {
@@ -327,10 +327,10 @@ index 03af6a2ffd56..fb7cabc71366 100644
  		seq_printf(seq, "%3X %8LX %8LX %8LX %16LX %16LX\n",
  			   i, (u64)conns, (u64)inpkts,
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 31775d54f4b4..3de4bb691e10 100644
+index 3c5cac9bd9b7..32423597bca0 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1546,10 +1546,10 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
+@@ -1687,10 +1687,10 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
  	for_each_possible_cpu(cpu) {
  		cpu_stats = per_cpu_ptr(stats, cpu);
  		do {
@@ -344,7 +344,7 @@ index 31775d54f4b4..3de4bb691e10 100644
  		total.bytes += bytes;
  	}
 diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 5920fdca1287..dbb1440244cd 100644
+index 3c7b24535409..0953f531f984 100644
 --- a/net/openvswitch/datapath.c
 +++ b/net/openvswitch/datapath.c
 @@ -716,9 +716,9 @@ static void get_dp_stats(const struct datapath *dp, struct ovs_dp_stats *stats,
@@ -389,5 +389,5 @@ index d4a2db0b2299..0a0e4c283f02 100644
  			masks_and_count[i].counter += counter;
  		}
 -- 
-2.40.1
+2.41.0
 

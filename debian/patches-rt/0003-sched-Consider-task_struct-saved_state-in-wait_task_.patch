@@ -1,9 +1,9 @@
-From e4d8b49393059ed6cd746b5f464a410d30cdfa7a Mon Sep 17 00:00:00 2001
+From 628071a70bbd14331d5345a569ae7d4347641a67 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 22 Jun 2022 12:27:05 +0200
-Subject: [PATCH 03/52] sched: Consider task_struct::saved_state in
+Subject: [PATCH 03/64] sched: Consider task_struct::saved_state in
  wait_task_inactive().
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 Ptrace is using wait_task_inactive() to wait for the tracee to reach a
 certain task state. On PREEMPT_RT that state may be stored in
@@ -27,7 +27,7 @@ Link: https://lkml.kernel.org/r/Yt%2FpQAFQ1xKNK0RY@linutronix.de
  1 file changed, 76 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b23dcbeacdf3..5e678008ca45 100644
+index 0f6a92737c91..26736f3e87e3 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -3277,6 +3277,76 @@ int migrate_swap(struct task_struct *cur, struct task_struct *p,
@@ -148,5 +148,5 @@ index b23dcbeacdf3..5e678008ca45 100644
  
  			set_current_state(TASK_UNINTERRUPTIBLE);
 -- 
-2.40.1
+2.41.0
 

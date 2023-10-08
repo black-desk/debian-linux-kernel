@@ -1,8 +1,8 @@
-From 656ad2ab119a4de42db93f2b820e4b12f97118a5 Mon Sep 17 00:00:00 2001
+From f763f51132eecc28068f211cd5324dc0741d8698 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Aug 2022 16:17:57 +0200
-Subject: [PATCH 07/52] bpf: Remove the obsolte u64_stats_fetch_*_irq() users.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Subject: [PATCH 07/64] bpf: Remove the obsolte u64_stats_fetch_*_irq() users.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 Now that the 32bit UP oddity is gone and 32bit uses always a sequence
 count, there is no need for the fetch_irq() variants anymore.
@@ -29,7 +29,7 @@ Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
-index 6c61dba26f4d..f07117a94bbb 100644
+index 0c8b7733573e..c0915e2424f1 100644
 --- a/kernel/bpf/syscall.c
 +++ b/kernel/bpf/syscall.c
 @@ -2115,11 +2115,11 @@ static void bpf_prog_get_stats(const struct bpf_prog *prog,
@@ -47,5 +47,5 @@ index 6c61dba26f4d..f07117a94bbb 100644
  		cnt += tcnt;
  		misses += tmisses;
 -- 
-2.40.1
+2.41.0
 

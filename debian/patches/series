@@ -104,9 +104,7 @@ features/arm64/quartz64/arm64-dts-rockchip-Add-SOQuartz-Model-A-baseboard.patch
 bugfix/all/disable-some-marvell-phys.patch
 bugfix/all/fs-add-module_softdep-declarations-for-hard-coded-cr.patch
 bugfix/all/media-cx18-avoid-strlen-call-that-triggers-ice-in-gc.patch
-bugfix/all/Revert-drm-amd-display-edp-do-not-add-non-edid-timin.patch
-bugfix/all/drm-use-mgr-dev-in-drm_dbg_kms-in-drm_dp_add_payload.patch
-bugfix/all/mm-mmap-fix-vm_locked-check-in-do_vmi_align_munmap.patch
+bugfix/all/misc-rtsx-Fix-some-platforms-can-not-boot-and-move-t.patch
 
 # Miscellaneous features
 
@@ -124,48 +122,29 @@ features/all/db-mok-keyring/trust-machine-keyring-by-default.patch
 # Security fixes
 debian/i386-686-pae-pci-set-pci-nobios-by-default.patch
 debian/ntfs-mark-it-as-broken.patch
-bugfix/all/netfilter-nf_tables-do-not-ignore-genmask-when-looki.patch
-bugfix/all/netfilter-nf_tables-prevent-OOB-access-in-nft_byteor.patch
-bugfix/x86/x86-cpu-amd-Move-the-errata-checking-functionality-u.patch
-bugfix/x86/x86-cpu-amd-Add-a-Zenbleed-fix.patch
-bugfix/x86/gds/init-provide-arch_cpu_finalize_init.patch
-bugfix/x86/gds/x86-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/arm-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/ia64-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/loongarch-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/m68k-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/mips-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/sh-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/sparc-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/um-cpu-switch-to-arch_cpu_finalize_init.patch
-bugfix/x86/gds/init-remove-check_bugs-leftovers.patch
-bugfix/x86/gds/init-invoke-arch_cpu_finalize_init-earlier.patch
-bugfix/x86/gds/init-x86-move-mem_encrypt_init-into-arch_cpu_finalize_init.patch
-bugfix/x86/gds/x86-init-initialize-signal-frame-size-late.patch
-bugfix/x86/gds/x86-fpu-remove-cpuinfo-argument-from-init-functions.patch
-bugfix/x86/gds/x86-fpu-mark-init-functions-__init.patch
-bugfix/x86/gds/x86-fpu-move-fpu-initialization-into-arch_cpu_finalize_init.patch
-bugfix/x86/gds/x86-speculation-add-gather-data-sampling-mitigation.patch
-bugfix/x86/gds/x86-speculation-add-force-option-to-gds-mitigation.patch
-bugfix/x86/gds/x86-speculation-add-kconfig-option-for-gds.patch
-bugfix/x86/gds/kvm-add-gds_no-support-to-kvm.patch
-bugfix/x86/gds/x86-mem_encrypt-unbreak-the-amd_mem_encrypt-n-build.patch
-bugfix/x86/gds/x86-xen-fix-secondary-processors-fpu-initialization.patch
-bugfix/x86/gds/x86-mm-fix-poking_init-for-xen-pv-guests.patch
-bugfix/x86/gds/x86-mm-use-mm_alloc-in-poking_init.patch
-bugfix/x86/gds/mm-move-mm_cachep-initialization-to-mm_init.patch
-bugfix/x86/gds/x86-mm-initialize-text-poking-earlier.patch
-bugfix/x86/gds/documentation-x86-fix-backwards-on-off-logic-about-ymm-support.patch
-bugfix/x86/srso/x86-bugs-increase-the-x86-bugs-vector-size-to-two-u32s.patch
-bugfix/x86/srso/x86-cpu-kvm-add-support-for-cpuid_80000021_eax.patch
-bugfix/x86/srso/x86-srso-add-a-speculative-ras-overflow-mitigation.patch
-bugfix/x86/srso/x86-srso-add-ibpb_brtype-support.patch
-bugfix/x86/srso/x86-srso-add-srso_no-support.patch
-bugfix/x86/srso/x86-srso-add-ibpb.patch
-bugfix/x86/srso/x86-srso-add-ibpb-on-vmexit.patch
-bugfix/x86/srso/x86-srso-fix-return-thunks-in-generated-code.patch
-bugfix/x86/srso/x86-srso-add-a-forgotten-noendbr-annotation.patch
-bugfix/x86/srso/x86-srso-tie-sbpb-bit-setting-to-microcode-patch-detection.patch
+bugfix/all/netfilter-nf_tables-don-t-skip-expired-elements-duri.patch
+bugfix/all/netfilter-nf_tables-gc-transaction-api-to-avoid-race.patch
+bugfix/all/netfilter-nf_tables-adapt-set-backend-to-use-gc-tran.patch
+bugfix/all/netfilter-nft_set_hash-mark-set-element-as-dead-when.patch
+bugfix/all/netfilter-nf_tables-remove-busy-mark-and-gc-batch-ap.patch
+bugfix/all/netfilter-nf_tables-don-t-fail-inserts-if-duplicate-.patch
+bugfix/all/netfilter-nf_tables-fix-gc-transaction-races-with-ne.patch
+bugfix/all/netfilter-nf_tables-gc-transaction-race-with-netns-d.patch
+bugfix/all/netfilter-nf_tables-gc-transaction-race-with-abort-p.patch
+bugfix/all/netfilter-nf_tables-use-correct-lock-to-protect-gc_l.patch
+bugfix/all/netfilter-nf_tables-defer-gc-run-if-previous-batch-i.patch
+bugfix/all/netfilter-nft_set_rbtree-skip-sync-gc-for-new-elemen.patch
+bugfix/all/netfilter-nft_set_rbtree-use-read-spinlock-to-avoid-.patch
+bugfix/all/netfilter-nft_set_pipapo-call-nft_trans_gc_queue_syn.patch
+bugfix/all/netfilter-nft_set_pipapo-stop-gc-iteration-if-gc-tra.patch
+bugfix/all/netfilter-nft_set_hash-try-later-when-gc-hits-eagain.patch
+bugfix/all/netfilter-nf_tables-fix-memleak-when-more-than-255-e.patch
+bugfix/all/netfilter-nf_tables-disallow-element-removal-on-anon.patch
+bugfix/all/netfilter-conntrack-fix-extension-size-table.patch
+bugfix/all/netfilter-bpf-adjust-timeouts-of-non-confirmed-cts-i.patch
+bugfix/all/netfilter-nf_tables-disable-toggling-dormant-table-s.patch
+bugfix/all/netfilter-ipset-fix-race-between-ipset_cmd_create-an.patch
+bugfix/all/ipv4-fix-null-deref-in-ipv4_link_failure.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch
@@ -185,5 +164,37 @@ bugfix/all/tools-perf-fix-missing-ldflags-for-some-programs.patch
 
 # debian-installer fixes
 bugfix/powerpc/fbdev-offb-Update-expected-device-name.patch
+
+# Backport of Microsoft Azure Network Adapter to 6.6
+features/all/ethernet-microsoft/0001-net-Remove-the-obsolte-u64_stats_fetch_-_irq-users-d.patch
+features/all/ethernet-microsoft/0002-net-mana-Assign-interrupts-to-CPUs-based-on-NUMA-nod.patch
+features/all/ethernet-microsoft/0003-net-mana-Add-support-for-auxiliary-device.patch
+features/all/ethernet-microsoft/0004-net-mana-Record-the-physical-address-for-doorbell-pa.patch
+features/all/ethernet-microsoft/0005-net-mana-Handle-vport-sharing-between-devices.patch
+features/all/ethernet-microsoft/0006-net-mana-Set-the-DMA-device-max-segment-size.patch
+features/all/ethernet-microsoft/0007-net-mana-Export-Work-Queue-functions-for-use-by-RDMA.patch
+features/all/ethernet-microsoft/0008-net-mana-Record-port-number-in-netdev.patch
+features/all/ethernet-microsoft/0009-net-mana-Move-header-files-to-a-common-location.patch
+features/all/ethernet-microsoft/0010-net-mana-Define-max-values-for-SGL-entries.patch
+features/all/ethernet-microsoft/0011-net-mana-Define-and-process-GDMA-response-code-GDMA_.patch
+features/all/ethernet-microsoft/0012-net-mana-Define-data-structures-for-protection-domai.patch
+features/all/ethernet-microsoft/0013-net-mana-Fix-return-type-of-mana_start_xmit.patch
+features/all/ethernet-microsoft/0014-net-mana-Fix-accessing-freed-irq-affinity_hint.patch
+features/all/ethernet-microsoft/0015-net-mana-Add-new-MANA-VF-performance-counters-for-ea.patch
+features/all/ethernet-microsoft/0016-net-mana-Remove-redundant-pci_clear_master.patch
+features/all/ethernet-microsoft/0017-net-mana-Use-napi_build_skb-in-RX-path.patch
+features/all/ethernet-microsoft/0018-net-mana-Refactor-RX-buffer-allocation-code-to-prepa.patch
+features/all/ethernet-microsoft/0019-net-mana-Enable-RX-path-to-handle-various-MTU-sizes.patch
+features/all/ethernet-microsoft/0020-net-mana-Add-support-for-jumbo-frame.patch
+features/all/ethernet-microsoft/0021-net-mana-Check-if-netdev-napi_alloc_frag-returns-sin.patch
+features/all/ethernet-microsoft/0022-net-mana-Fix-perf-regression-remove-rx_cqes-tx_cqes-.patch
+features/all/ethernet-microsoft/0023-net-mana-Add-support-for-vlan-tagging.patch
+features/all/ethernet-microsoft/0024-RDMA-mana_ib-Use-v2-version-of-cfg_rx_steer_req-to-e.patch
+features/all/ethernet-microsoft/0025-net-mana-use-vmalloc_array-and-vcalloc.patch
+features/all/ethernet-microsoft/0026-net-mana-Batch-ringing-RX-queue-doorbell-on-receivin.patch
+features/all/ethernet-microsoft/0027-net-mana-Use-the-correct-WQE-count-for-ringing-RQ-do.patch
+features/all/ethernet-microsoft/0028-net-mana-Configure-hwc-timeout-from-hardware.patch
+features/all/ethernet-microsoft/0029-net-mana-Rename-mana_refill_rxoob-and-remove-some-em.patch
+features/all/ethernet-microsoft/0030-net-mana-Add-gdma-stats-to-ethtool-output-for-mana.patch
 
 # ABI maintenance

@@ -1,8 +1,8 @@
-From a70dcaf4da14481ec8dbedf3f1c9e194bfec3ceb Mon Sep 17 00:00:00 2001
+From cb43115a55121a32100f9a16e4b74c7f0d06a658 Mon Sep 17 00:00:00 2001
 From: Junxiao Chang <junxiao.chang@intel.com>
 Date: Mon, 20 Feb 2023 09:12:20 +0100
-Subject: [PATCH 15/52] softirq: Wake ktimers thread also in softirq.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.33-rt11.tar.xz
+Subject: [PATCH 15/64] softirq: Wake ktimers thread also in softirq.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
 
 If the hrtimer is raised while a softirq is processed then it does not
 wake the corresponding ktimers thread. This is due to the optimisation in the
@@ -46,5 +46,5 @@ index ab1fe34326ba..82f3e68fbe22 100644
  	tick_irq_exit();
  }
 -- 
-2.40.1
+2.41.0
 
