@@ -1,7 +1,7 @@
 From: Scott Wood <swood@redhat.com>
 Date: Sat, 27 Jul 2019 00:56:34 -0500
 Subject: [PATCH 300/353] sched: migrate disable: Protect cpus_ptr with lock
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=319b72380f4ec167719cf69dc8f1c7c991b1939c
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=fc8e4f1cc2f3abf9cc3971027f31a4a9bd06252e
 
 [ Upstream commit 27ee52a891ed2c7e2e2c8332ccae0de7c2674b09 ]
 

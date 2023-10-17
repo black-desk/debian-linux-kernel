@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 22 Dec 2021 20:35:22 +0100
 Subject: [PATCH 339/353] net: Add missing xmit_lock_owner hunks.
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=a27fe4f68f19f482c2a29ebab5452defc0039bd8
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=68df051e5159d114a4d59768b7eb18ddcfad3333
 
 The patch
 	net: move xmit_recursion to per-task variable on -RT

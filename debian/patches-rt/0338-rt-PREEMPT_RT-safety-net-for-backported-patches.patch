@@ -1,7 +1,7 @@
 From: Clark Williams <clark.williams@gmail.com>
 Date: Sun, 30 Jan 2022 15:46:27 -0600
 Subject: [PATCH 338/353] rt: PREEMPT_RT safety net for backported patches
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ee2584c060b8ac2434a1914d95cdf51dda9ade46
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=160fa77c536554bc2ac4101165e08fcea20c4c11
 
 While doing some 4.19-rt cleanup work, I stumbled across the fact that parts of
 two backported patches were dependent on CONFIG_PREEMPT_RT, rather than

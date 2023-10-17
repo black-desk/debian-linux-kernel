@@ -2,7 +2,7 @@ From: Daniel Wagner <dwagner@suse.de>
 Date: Mon, 16 Dec 2019 16:15:57 +0100
 Subject: [PATCH 312/353] lib/smp_processor_id: Adjust
  check_preemption_disabled()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9ae30fcc618d1472088c48f9489ff951078b5be9
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b39c205bcc00e8e06847e70c53b9296c1c6350f1
 
 [ Upstream commit af3c1c5fdf177870fb5e6e16b24e374696ab28f5 ]
 

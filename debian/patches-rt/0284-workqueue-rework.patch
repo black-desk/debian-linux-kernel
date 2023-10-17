@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 29 May 2019 18:52:27 +0200
 Subject: [PATCH 284/353] workqueue: rework
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ed7a2eee7755e39d3ebc41a644577e1f6bb6a0b4
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=446a0ea7ba568eb525a6d844a3d63af61938c91f
 
 [ Upstream commit d15a862f24df983458533aebd6fa207ecdd1095a ]
 

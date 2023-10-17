@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 21 Feb 2020 18:57:11 +0100
 Subject: [PATCH 319/353] drm/vmwgfx: Drop preempt_disable() in
  vmw_fifo_ping_host()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=2fe0e69c4b843499b2babb0b98dfa44ddc89ad28
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3bcd1483dc34dbbdae3e8a3b18c3f8ca74528a7b
 
 [ Upstream commit b901491e7b9b7a676818d84e482b69be72fc142f ]
 

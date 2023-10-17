@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 26 Feb 2019 14:53:49 +0100
 Subject: [PATCH 240/353] x86: lazy-preempt: use proper return label on
  32bit-x86
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b54480e4bc09daeec3814b53abd010c09382329c
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e5a2575f742539bf93fda1e7aa031f19cfef6e63
 
 The lazy-preempt uses the wrong return label in case preemption isn't
 possible. This results crash while returning to the kernel.

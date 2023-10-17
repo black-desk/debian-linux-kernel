@@ -1,7 +1,7 @@
 From: Anna-Maria Gleixner <anna-maria@linutronix.de>
 Date: Mon, 31 Oct 2022 16:50:04 +0100
 Subject: [PATCH 348/353] timers: Prepare support for PREEMPT_RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=dc61211c4b62d2bcb13533bba5e423d51b1b3a5b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=48373efeb1484f41395f79a5dc353fb0d884c256
 
 Upstream commit 030dcdd197d77374879bb5603d091eee7d8aba80
 

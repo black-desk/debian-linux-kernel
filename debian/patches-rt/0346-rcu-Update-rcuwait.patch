@@ -1,7 +1,7 @@
 From: Daniel Wagner <wagi@monom.org>
 Date: Mon, 24 Oct 2022 10:58:29 +0200
 Subject: [PATCH 346/353] rcu: Update rcuwait
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e3aaaa4b009398dc04efb41a8a3175721a841cca
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=48b3af1997e42edd8c9362e3aaa2c6be0d0c58c6
 
 This is an all in one commit backporting updates for rcuwait:
  - 03f4b48edae7 ("rcuwait: Annotate task_struct with __rcu")

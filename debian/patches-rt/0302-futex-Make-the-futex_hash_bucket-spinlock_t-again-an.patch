@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 7 Oct 2019 16:45:18 +0200
 Subject: [PATCH 302/353] futex: Make the futex_hash_bucket spinlock_t again
  and bring back its old state
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=775663c19c0f892ad25212e60ebe03e5d7dfc0f9
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d143526c0a98bd7f1ca42b5a34463a445379914a
 
 [ Upstream commit 954ad80c23edfe71f4e8ce70b961eac884320c3a ]
 

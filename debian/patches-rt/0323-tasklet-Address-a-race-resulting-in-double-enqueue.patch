@@ -1,7 +1,7 @@
 From: Zhang Xiao <xiao.zhang@windriver.com>
 Date: Tue, 17 Mar 2020 12:47:43 +0100
 Subject: [PATCH 323/353] tasklet: Address a race resulting in double-enqueue
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0fa904f228cdd1bc7e9d30075d2440ff784d3144
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3e7266f7842e7279d590e09fbb3b6c7d1da78d78
 
 The kernel bugzilla has the following race condition reported:
 

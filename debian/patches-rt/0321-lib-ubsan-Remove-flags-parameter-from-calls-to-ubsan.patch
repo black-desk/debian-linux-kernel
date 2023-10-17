@@ -2,7 +2,7 @@ From: Tiejun Chen <tiejunc@vmware.com>
 Date: Mon, 30 Mar 2020 18:45:23 -0400
 Subject: [PATCH 321/353] lib/ubsan: Remove flags parameter from calls to
  ubsan_prologue() and ubsan_epilogue()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=20411284728aa923b0a52cb8c948fe6a48c470bb
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=eeda8e45a62582559feaff9ee0f6dbd2e18dc0de
 
 Fails to build with CONFIG_UBSAN=y
 

@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 9 Apr 2014 10:37:23 +0200
 Subject: [PATCH 178/353] block: mq: use cpu_light()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6474c7f8ffe431c499718bb59f27ea6bb1e3bd20
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c201299daf44bae770b0b8b7da0928ec8a68edb4
 
 there is a might sleep splat because get_cpu() disables preemption and
 later we grab a lock. As a workaround for this we use get_cpu_light().

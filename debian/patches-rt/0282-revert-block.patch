@@ -1,7 +1,7 @@
 From: "Steven Rostedt (VMware)" <rostedt@goodmis.org>
 Date: Fri, 20 Sep 2019 17:50:54 -0400
 Subject: [PATCH 282/353] revert-block
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=1267a5641c576c6feb9e32a32b986cf9fe6d8d86
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=49b764587a448287293ceda9b2c73a984c79d886
 
 Revert swork version of: block: blk-mq: move blk_queue_usage_counter_release() into process context
 

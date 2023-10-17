@@ -2,7 +2,7 @@ From: Marc Zyngier <marc.zyngier@arm.com>
 Date: Fri, 27 Jul 2018 13:38:54 +0100
 Subject: [PATCH 008/353] irqchip/gic-v3-its: Move pending table allocation to
  init time
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=216cedbda43feb5700b90d904d64e9b7f484dfac
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b1ab676374a7572bca8ace6c2b2dc6c38a2677e6
 
 Signed-off-by: Marc Zyngier <marc.zyngier@arm.com>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>

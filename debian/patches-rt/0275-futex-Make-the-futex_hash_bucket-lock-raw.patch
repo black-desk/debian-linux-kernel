@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 26 Jun 2019 11:59:44 +0200
 Subject: [PATCH 275/353] futex: Make the futex_hash_bucket lock raw
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=02e7d951c6c07d157301b136c942fa2b26a88c13
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f2487a487a3e338ee32c45b947efd46267c2beab
 
 [ Upstream commit f646521aadedab78801c9befe193e2e8a0c99298 ]
 

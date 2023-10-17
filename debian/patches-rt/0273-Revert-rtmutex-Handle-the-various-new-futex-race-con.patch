@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 26 Jun 2019 17:44:21 +0200
 Subject: [PATCH 273/353] Revert "rtmutex: Handle the various new futex race
  conditions"
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=30aff77e69c857bf0b427807d41eb78056ba43ac
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0e29ede736fd0e38038d659eab008b3a8c7f8287
 
 [ Upstream commit 9e0265c21af4d6388d47dcd5ce20f76ec3a2e468 ]
 

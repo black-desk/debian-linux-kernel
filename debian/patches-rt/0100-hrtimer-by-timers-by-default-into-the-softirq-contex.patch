@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 3 Jul 2009 08:44:31 -0500
 Subject: [PATCH 100/353] hrtimer: by timers by default into the softirq
  context
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=44653299fff9efc46221585ea93804074e72c6fd
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c2ec9b3e1bac69e9d65b3a6179161847f341c170
 
 We can't have hrtimers callbacks running in hardirq context on RT. Therefore
 the timers are deferred to the softirq context by default.
@@ -129,7 +129,7 @@ index 3f6a613be8c3..802471dbb24d 100644
  	cfs_b->distribute_running = 0;
  }
 diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index a068884c369f..b15428ede6cf 100644
+index 0768ba9d2860..41e73baf41ab 100644
 --- a/kernel/sched/rt.c
 +++ b/kernel/sched/rt.c
 @@ -45,8 +45,8 @@ void init_rt_bandwidth(struct rt_bandwidth *rt_b, u64 period, u64 runtime)

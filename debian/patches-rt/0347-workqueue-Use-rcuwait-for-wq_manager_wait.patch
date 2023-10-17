@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 19 Aug 2022 11:24:45 +0200
 Subject: [PATCH 347/353] workqueue: Use rcuwait for wq_manager_wait
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=77c7710d4cba9466d1fb19cd1424a0c88306f1dd
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=24405c5a41e7ff21587ec3e8a9c1a371aa378283
 
 Upstream commit d8bb65ab70f702531aaaa11d9710f9450078e295
 

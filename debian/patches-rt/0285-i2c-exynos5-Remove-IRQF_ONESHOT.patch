@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 13 Aug 2019 12:30:12 +0200
 Subject: [PATCH 285/353] i2c: exynos5: Remove IRQF_ONESHOT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=58c911e3c718d077369117aab3112246e7a1ac1f
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=06f9a8db4496b66a1e38fbcd51b567242c18fa2c
 
 [ Upstream commit 4b217df0ab3f7910c96e42091cc7d9f221d05f01 ]
 

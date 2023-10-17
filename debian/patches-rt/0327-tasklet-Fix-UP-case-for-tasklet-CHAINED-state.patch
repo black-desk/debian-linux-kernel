@@ -1,7 +1,7 @@
 From: Tom Zanussi <zanussi@kernel.org>
 Date: Tue, 9 Jun 2020 11:04:08 -0500
 Subject: [PATCH 327/353] tasklet: Fix UP case for tasklet CHAINED state
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f575971229668c1322048115c02feb35582485ab
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=cd0c435eacbcb0cc92c367a7afe9862431d145e9
 
 commit 62d0a2a30cd0 (tasklet: Address a race resulting in
 double-enqueue) addresses a problem that can result in a tasklet being

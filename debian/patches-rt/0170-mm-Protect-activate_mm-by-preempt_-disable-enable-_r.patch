@@ -2,7 +2,7 @@ From: Yong Zhang <yong.zhang0@gmail.com>
 Date: Tue, 15 May 2012 13:53:56 +0800
 Subject: [PATCH 170/353] mm: Protect activate_mm() by
  preempt_[disable&enable]_rt()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=936617d27f492fad88358e41da267aab30b575af
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=28d341ed7d9668a1158d1d86f174d7fa40cd7f71
 
 User preempt_*_rt instead of local_irq_*_rt or otherwise there will be
 warning on ARM like below:

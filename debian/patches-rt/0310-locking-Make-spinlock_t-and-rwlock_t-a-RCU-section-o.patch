@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 19 Nov 2019 09:25:04 +0100
 Subject: [PATCH 310/353] locking: Make spinlock_t and rwlock_t a RCU section
  on RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=01c79078253e27134210f4e5e820fb5f6768c74b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=aef56e80fc5d3853e111ad3ecdbd4dbd84e9571f
 
 [ Upstream commit 84440022a0e1c8c936d61f8f97593674a295d409 ]
 

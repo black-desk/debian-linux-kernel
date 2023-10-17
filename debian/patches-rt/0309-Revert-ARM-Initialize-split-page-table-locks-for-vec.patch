@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 18 Oct 2019 13:04:15 +0200
 Subject: [PATCH 309/353] Revert "ARM: Initialize split page table locks for
  vector page"
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=2ffb4504b6d28181ecd6f228780bfb2226e34f07
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d5ebc5613f5240498f48cc4b74293f176ff888d0
 
 [ Upstream commit 247074c44d8c3e619dfde6404a52295d8d671d38 ]
 

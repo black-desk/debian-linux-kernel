@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Wed, 31 Oct 2012 12:04:11 +0100
 Subject: [PATCH 241/353] arm: Add support for lazy preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=a0c9ecb6f508922da2c4c2813741d676c1c31e95
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=90b7c0741ffe3c22daa0a45303bbccfe573d9ad4
 
 Implement the arm pieces for lazy preempt.
 

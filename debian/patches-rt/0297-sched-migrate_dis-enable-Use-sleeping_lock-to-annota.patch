@@ -5,7 +5,7 @@ Subject: [PATCH 297/353] =?UTF-8?q?sched:=20migrate=5Fdis/enable:=20Use=20?=
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3acd5140ba171e61ab3c798485f253750953233c
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=a68816f5a0f4a92fe140b83d9632956e253e4c91
 
 [ Upstream commit 4230dd3824c3e1785504e6f757ce79a4b55651fa ]
 

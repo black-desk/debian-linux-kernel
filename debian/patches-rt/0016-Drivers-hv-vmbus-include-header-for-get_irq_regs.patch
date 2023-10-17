@@ -4,7 +4,7 @@ Subject: [PATCH 016/353] Drivers: hv: vmbus: include header for get_irq_regs()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ea40ebc952c52b4a92ad347b2ab78b7e9c84342f
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9389c0808a4bb8088261ae1ff44a372a82324974
 
 On !RT the header file get_irq_regs() gets pulled in via other header files. On
 RT it does not and the build fails:

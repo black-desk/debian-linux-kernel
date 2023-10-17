@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 26 Jun 2019 17:44:27 +0200
 Subject: [PATCH 274/353] Revert "futex: workaround migrate_disable/enable in
  different context"
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e765920f807db9c3faf0b3a587b62a3107a021e1
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=62ca064599dbce249088948953ad0cfd41b99525
 
 [ Upstream commit a71221d81cc4873891ae44f3aa02df596079b786 ]
 

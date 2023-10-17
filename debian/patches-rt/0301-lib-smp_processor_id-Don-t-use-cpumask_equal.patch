@@ -1,7 +1,7 @@
 From: Waiman Long <longman@redhat.com>
 Date: Thu, 3 Oct 2019 16:36:08 -0400
 Subject: [PATCH 301/353] lib/smp_processor_id: Don't use cpumask_equal()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=218aefc94405b9aba5371c7b76f34b0a5b866d35
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=1def13a4e09e350230759500f9bcfc4328c6f465
 
 [ Upstream commit 659252061477862f45b79e1de169e6030f5c8918 ]
 

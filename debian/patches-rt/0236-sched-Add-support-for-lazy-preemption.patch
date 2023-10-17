@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 26 Oct 2012 18:50:54 +0100
 Subject: [PATCH 236/353] sched: Add support for lazy preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b21510125dae14531a0909b4814996d467365e91
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=407d4f8bb32018a7c26d7f2a5f24993f25ec7cdc
 
 It has become an obsession to mitigate the determinism vs. throughput
 loss of RT. Looking at the mainline semantics of preemption points
@@ -215,7 +215,7 @@ index 62dbecfe9132..57a3d99dc067 100644
  #ifndef CONFIG_HAVE_ARCH_WITHIN_STACK_FRAMES
  static inline int arch_within_stack_frames(const void * const stack,
 diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 1cc4d2da954c..72864a11cec0 100644
+index 963c19f03bef..61011ac41b41 100644
 --- a/include/linux/trace_events.h
 +++ b/include/linux/trace_events.h
 @@ -64,6 +64,7 @@ struct trace_entry {
@@ -529,7 +529,7 @@ index 637c408fb2dc..87a05bb90124 100644
  extern void init_rt_bandwidth(struct rt_bandwidth *rt_b, u64 period, u64 runtime);
  
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index e1300bb4e770..253b10739adf 100644
+index 923c131e5f80..a188b848442f 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -2153,6 +2153,7 @@ tracing_generic_entry_update(struct trace_entry *entry, unsigned long flags,
@@ -550,7 +550,7 @@ index e1300bb4e770..253b10739adf 100644
  		(test_preempt_need_resched() ? TRACE_FLAG_PREEMPT_RESCHED : 0);
  
  	entry->migrate_disable = (tsk) ? __migrate_disabled(tsk) & 0xFF : 0;
-@@ -3364,15 +3366,17 @@ get_total_entries(struct trace_buffer *buf,
+@@ -3371,15 +3373,17 @@ get_total_entries(struct trace_buffer *buf,
  
  static void print_lat_help_header(struct seq_file *m)
  {
@@ -577,7 +577,7 @@ index e1300bb4e770..253b10739adf 100644
  }
  
  static void print_event_info(struct trace_buffer *buf, struct seq_file *m)
-@@ -3410,15 +3414,17 @@ static void print_func_help_header_irq(struct trace_buffer *buf, struct seq_file
+@@ -3417,15 +3421,17 @@ static void print_func_help_header_irq(struct trace_buffer *buf, struct seq_file
  		   tgid ? tgid_space : space);
  	seq_printf(m, "#                          %s / _----=> need-resched\n",
  		   tgid ? tgid_space : space);

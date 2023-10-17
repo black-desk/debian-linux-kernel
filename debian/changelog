@@ -653,7 +653,7 @@ linux (4.19.296-1) UNRELEASED; urgency=medium
     - xen/events: replace evtchn_rwlock with RCU (CVE-2023-34324)
 
   [ Ben Hutchings ]
-  * [rt] Update to 4.19.292-rt128
+  * [rt] Update to 4.19.295-rt129
   * Bump ABI to 26
 
  -- Ben Hutchings <benh@debian.org>  Sun, 24 Sep 2023 20:12:37 +0200

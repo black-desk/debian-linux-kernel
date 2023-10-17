@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 11 Mar 2013 17:09:55 +0100
 Subject: [PATCH 216/353] x86/highmem: Add a "already used pte" check
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6ab725f754d0b355bf6ac4a53fb2346588d7e5ab
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=311581152c5a28f984c6287220292696d264f298
 
 This is a copy from kmap_atomic_prot().
 

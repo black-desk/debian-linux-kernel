@@ -1,7 +1,7 @@
 From: Clark Williams <williams@redhat.com>
 Date: Fri, 17 Dec 2021 14:31:31 -0600
 Subject: [PATCH 198/353] net: move xmit_recursion to per-task variable on -RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=514954718e8f5d801cb2750f82b1833e6f06d73f
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=30f565565cd4a8354737fdb3a81da92952b1b514
 
 A softirq on -RT can be preempted. That means one task is in
 __dev_queue_xmit(), gets preempted and another task may enter

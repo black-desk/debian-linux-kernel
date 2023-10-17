@@ -2,7 +2,7 @@ From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Date: Thu, 13 Sep 2018 13:30:20 +0200
 Subject: [PATCH 003/353] clocksource/drivers: timer-atmel-tcb: add clockevent
  device on separate channel
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b53a2acdbb48b047f36b73b0eefcf5793b79c5f0
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9b18360bc43f6dbe5932626353e37d67f3d06ced
 
 Add an other clockevent device that uses a separate TCB channel when
 available.
