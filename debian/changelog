@@ -1,4 +1,4 @@
-linux (4.19.295-1) UNRELEASED; urgency=medium
+linux (4.19.296-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.290
@@ -119,8 +119,6 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - jfs: jfs_dmap: Validate db_l2nbperpage while mounting
     - PCI/PM: Avoid putting EloPOS E2/S2/H2 PCIe Ports in D3cold
     - PCI: Add function 1 DMA alias quirk for Marvell 88SE9235
-    - [arm64] PCI: qcom: Disable write access to read only registers for IP
-      v2.3.3
     - PCI: rockchip: Add poll and timeout to wait for PHY PLLs to be locked
     - md/raid0: add discard support for the 'original' layout
     - fs: dlm: return positive pid value for F_GETLK
@@ -261,8 +259,6 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - [armhf] dts: imx: add usb alias
     - [armhf] dts: imx6sll: fixup of operating points
     - [armhf] dts: nxp/imx6sll: fix wrong property name in usbphy node
-    - drivers core: Use sysfs_emit and sysfs_emit_at for show(device *...)
-      functions (CVE-2022-20166)
     - drm/edid: fix objtool warning in drm_cvt_modes()
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.292
     - ipv6: adjust ndisc_is_useropt() to also return true for PIO
@@ -389,7 +385,6 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - mmc: block: Fix in_flight[issue_type] value error
     - sched/rt: pick_next_rt_entity(): check list_entry (CVE-2023-1077)
     - netfilter: nf_queue: fix socket leak (regression in 4.19.233)
-    - rtnetlink: Reject negative ifindexes in RTM_NEWLINK
     - scsi: snic: Fix double free in snic_tgt_create()
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.294
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.295
@@ -587,6 +582,75 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - net/sched: cls_fw: No longer copy tcf_result on update to avoid use-
       after-free (CVE-2023-4128, CVE-2023-4207)
     - net/sched: Retire rsvp classifier (CVE-2023-42755)
+    https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.296
+    - NFS/pNFS: Report EINVAL errors from connect() to the server
+    - ata: ahci: Drop pointless VPRINTK() calls and convert the remaining ones
+    - ata: libahci: clear pending interrupt status
+    - netfilter: nf_tables: disallow element removal on anonymous sets
+    - ipv4: fix null-deref in ipv4_link_failure (CVE-2023-42754)
+    - [arm64] net: hns3: add 5ms delay before clear firmware reset irq source
+    - net: add atomic_long_t to net_device_stats fields
+    - net: bridge: use DEV_STATS_INC()
+    - team: fix null-ptr-deref when team device type is changed
+    - [x86] Input: i8042 - add quirk for TUXEDO Gemini 17 Gen1/Clevo PD70PN
+    - scsi: qla2xxx: Add protection mask module parameters
+    - scsi: qla2xxx: Remove unsupported ql2xenabledif option
+    - scsi: megaraid_sas: Load balance completions across all MSI-X
+    - scsi: megaraid_sas: Fix deadlock on firmware crashdump
+    - ext4: remove the 'group' parameter of ext4_trim_extent
+    - ext4: add new helper interface ext4_try_to_trim_range()
+    - ext4: scope ret locally in ext4_try_to_trim_range()
+    - ext4: change s_last_trim_minblks type to unsigned long
+    - ext4: mark group as trimmed only if it was fully scanned
+    - ext4: replace the traditional ternary conditional operator with with
+      max()/min()
+    - ext4: move setting of trimmed bit into ext4_try_to_trim_range()
+    - ext4: do not let fstrim block system suspend
+    - [armhf] dts: ti: omap: motorola-mapphone: Fix abe_clkctrl warning on boot
+    - ring-buffer: Avoid softlockup in ring_buffer_resize()
+    - ata: libata-eh: do not clear ATA_PFLAG_EH_PENDING in ata_eh_reset()
+    - nvme-pci: do not set the NUMA node of device if it has none
+    - [x86] watchdog: iTCO_wdt: No need to stop the timer in probe
+    - [x86] watchdog: iTCO_wdt: Set NO_REBOOT if the watchdog is not already
+      running
+    - net: Fix unwanted sign extension in netdev_stats_to_stats64()
+    - scsi: megaraid_sas: Enable msix_load_balance for Invader and later
+      controllers
+    - serial: 8250_port: Check IRQ data before use (regression in 4.19.283)
+    - nilfs2: fix potential use after free in nilfs_gccache_submit_read_data()
+    - [x86] ALSA: hda: Disable power save for solving pop issue on Lenovo
+      ThinkCentre M70q
+    - ata: libata-scsi: ignore reserved bits for REPORT SUPPORTED OPERATION
+      CODES
+    - [x86] i2c: i801: unregister tco_pdev in i801_probe() error path
+    - btrfs: properly report 0 avail for very full file systems
+    - net: thunderbolt: Fix TCPv6 GSO checksum calculation
+    - ata: libata-core: Fix ata_port_request_pm() locking
+    - ata: libata-core: Fix port and device removal
+    - ata: libata-core: Do not register PM operations for SAS ports
+    - ata: libata-sata: increase PMP SRST timeout to 10s
+    - ata: libata: disallow dev-initiated LPM transitions to unsupported states
+    - media: dvb: symbol fixup for dvb_attach() - again
+    - qed/red_ll2: Fix undefined behavior bug in struct qed_ll2_info
+    - wifi: mwifiex: Fix tlv_buf_left calculation
+    - net: replace calls to sock->ops->connect() with kernel_connect()
+    - ubi: Refuse attaching if mtd's erasesize is 0
+    - wifi: mwifiex: Fix oob check condition in mwifiex_process_rx_packet
+    - regmap: rbtree: Fix wrong register marked as in-cache when creating new
+      node
+    - scsi: target: core: Fix deadlock due to recursive locking
+    - ipv4, ipv6: Fix handling of transhdrlen in __ip{,6}_append_data()
+    - net: usb: smsc75xx: Fix uninit-value access in __smsc75xx_read_reg
+    - tcp: fix quick-ack counting to count actual ACKs of new data
+    - tcp: fix delayed ACKs for MSS boundary condition
+    - sctp: update transport state when processing a dupcook packet
+    - sctp: update hb timer immediately after users change hb_interval
+    - IB/mlx4: Fix the size of a buffer in add_port_entries()
+    - RDMA/cma: Fix truncation compilation warning in make_cma_ports
+    - RDMA/mlx5: Fix NULL string error
+    - dccp: fix dccp_v4_err()/dccp_v6_err() again
+    - rtnetlink: Reject negative ifindexes in RTM_NEWLINK
+    - xen/events: replace evtchn_rwlock with RCU (CVE-2023-34324)
 
   [ Ben Hutchings ]
   * [rt] Update to 4.19.292-rt128
