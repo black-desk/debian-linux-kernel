@@ -311,4 +311,3 @@ debian/i386-686-pae-pci-set-pci-nobios-by-default.patch
 debian/ntfs-mark-it-as-broken.patch
 
 # ABI maintenance
-debian/abi/x86-cpu-avoid-abi-change-for-gds-mitigations.patch
