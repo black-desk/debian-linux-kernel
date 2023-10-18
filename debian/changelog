@@ -329,7 +329,7 @@ linux (4.19.296-1) UNRELEASED; urgency=medium
     - ip6_vti: fix slab-use-after-free in decode_session6
     - ip_vti: fix potential slab-use-after-free in decode_session6
     - xfrm: add NULL check in xfrm_update_ae_params (CVE-2023-3772)
-    - netfilter: nft_dynset: disallow object maps
+    - netfilter: nft_dynset: disallow object maps (CVE-2023-4244)
     - team: Fix incorrect deletion of ETH_P_8021AD protocol vid from slaves
     - sock: Fix misuse of sk_under_memory_pressure()
     - net: do not allow gso_size to be set to GSO_BY_FRAGS
