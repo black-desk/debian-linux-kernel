@@ -550,7 +550,7 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - net: sched: sch_qfq: Fix UAF in qfq_dequeue() (CVE-2023-4921)
     - igbvf: Change IGBVF_MIN to allow set rx/tx value between 64 and 80
     - igb: Change IGB_MIN to allow set rx/tx value between 64 and 80
-    - netfilter: nfnetlink_osf: avoid OOB read
+    - netfilter: nfnetlink_osf: avoid OOB read (CVE-2023-39189)
     - btrfs: don't start transaction when joining with TRANS_JOIN_NOSTART
     - perf hists browser: Fix hierarchy mode header
     - ixgbe: fix timestamp configuration code
