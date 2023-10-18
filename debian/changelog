@@ -521,6 +521,7 @@ linux (4.19.295-1) UNRELEASED; urgency=medium
     - netfilter: xt_sctp: validate the flag_info count (CVE-2023-39193)
     - skbuff: skb_segment, Call zero copy functions before using skbuff frags
     - igb: set max size RX buffer when store bad packet is enabled
+      (CVE-2023-45871)
     - PM / devfreq: Fix leak in devfreq_dev_release()
     - ALSA: pcm: Fix missing fixup call in compat hw_refine ioctl
     - ipmi_si: fix a memleak in try_smi_init()
