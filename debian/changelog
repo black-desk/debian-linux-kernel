@@ -234,9 +234,9 @@ linux (4.19.296-1) UNRELEASED; urgency=medium
     - net: add missing data-race annotations around sk->sk_peek_off
     - net: add missing data-race annotation for sk_ll_usec
     - net/sched: cls_u32: No longer copy tcf_result on update to avoid use-
-      after-free (CVE-2023-4128, CVE-2023-4208)
+      after-free (CVE-2023-4208)
     - net/sched: cls_route: No longer copy tcf_result on update to avoid use-
-      after-free (CVE-2023-4128, CVE-2023-4206)
+      after-free (CVE-2023-4206)
     - ip6mr: Fix skb_under_panic in ip6mr_cache_report()
     - tcp_metrics: fix addr_same() helper
     - tcp_metrics: annotate data-races around tm->tcpm_stamp
@@ -580,7 +580,7 @@ linux (4.19.296-1) UNRELEASED; urgency=medium
       delayed items
     - nfsd: fix change_info in NFSv4 RENAME replies
     - net/sched: cls_fw: No longer copy tcf_result on update to avoid use-
-      after-free (CVE-2023-4128, CVE-2023-4207)
+      after-free (CVE-2023-4207)
     - net/sched: Retire rsvp classifier (CVE-2023-42755)
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.296
     - NFS/pNFS: Report EINVAL errors from connect() to the server
