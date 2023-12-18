@@ -1,7 +1,7 @@
 From: Scott Wood <swood@redhat.com>
 Date: Sat, 12 Oct 2019 01:52:13 -0500
-Subject: [PATCH 307/353] sched: Lazy migrate_disable processing
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0d28e2984ac916377ab8446d41bd0134fd18e5d4
+Subject: [PATCH 307/354] sched: Lazy migrate_disable processing
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=104a8d5ac32336672fc1c91430484a409480a54c
 
 [ Upstream commit 425c5b38779a860062aa62219dc920d374b13c17 ]
 

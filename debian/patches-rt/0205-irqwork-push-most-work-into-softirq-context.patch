@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 23 Jun 2015 15:32:51 +0200
-Subject: [PATCH 205/353] irqwork: push most work into softirq context
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=296c674ddb330593272c66a64a7058b50e756a95
+Subject: [PATCH 205/354] irqwork: push most work into softirq context
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=eb0998611c7277dba88615014ab425ae2e570c2f
 
 Initially we defered all irqwork into softirq because we didn't want the
 latency spikes if perf or another user was busy and delayed the RT task.

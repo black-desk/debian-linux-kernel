@@ -1,8 +1,8 @@
 From: "Luis Claudio R. Goncalves" <lclaudio@uudg.org>
 Date: Tue, 25 Jun 2019 11:28:04 -0300
-Subject: [PATCH 277/353] mm/zswap: Do not disable preemption in
+Subject: [PATCH 277/354] mm/zswap: Do not disable preemption in
  zswap_frontswap_store()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f3914909bd038f15a10f3375852e1d8946ef40f6
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=601fa45afd0fa48834bd5163bf4bacadc84a083a
 
 [ Upstream commit 4e4cf4be79635e67144632d9135286381acbc95a ]
 

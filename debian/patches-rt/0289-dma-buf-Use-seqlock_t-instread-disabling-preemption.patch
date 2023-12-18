@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 14 Aug 2019 16:38:43 +0200
-Subject: [PATCH 289/353] dma-buf: Use seqlock_t instread disabling preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=be599349d20929acb4935cd1bb695f8e3bfc1ff4
+Subject: [PATCH 289/354] dma-buf: Use seqlock_t instread disabling preemption
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3541735c6861ccf2a8866c3e87f80dc74cbbd1e9
 
 [ Upstream commit 240610aa31094f51f299f06eb8dae8d4cd8d4500 ]
 

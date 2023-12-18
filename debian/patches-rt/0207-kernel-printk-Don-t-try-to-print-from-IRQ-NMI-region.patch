@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 19 May 2016 17:45:27 +0200
-Subject: [PATCH 207/353] kernel/printk: Don't try to print from IRQ/NMI region
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9af3c4761d12a520c14a53feb494f1306bef6131
+Subject: [PATCH 207/354] kernel/printk: Don't try to print from IRQ/NMI region
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=30a5aa0fc8ff5cdce911ebeb8ccba88b0eb0a879
 
 On -RT we try to acquire sleeping locks which might lead to warnings
 from lockdep or a warn_on() from spin_try_lock() (which is a rtmutex on

@@ -1,8 +1,8 @@
 From: Julien Grall <julien.grall@arm.com>
 Date: Wed, 21 Aug 2019 10:24:09 +0100
-Subject: [PATCH 294/353] hrtimer: Prevent using hrtimer_grab_expiry_lock() on
+Subject: [PATCH 294/354] hrtimer: Prevent using hrtimer_grab_expiry_lock() on
  migration_base
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3fc370116a4e0e1a76ea370bae86bde700264395
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c9c02fa98266e69c518e20d0d1494fb15edad54c
 
 [ Upstream commit cef1b87f98823af923a386f3f69149acb212d4a1 ]
 

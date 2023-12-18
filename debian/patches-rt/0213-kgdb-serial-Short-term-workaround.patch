@@ -1,7 +1,7 @@
 From: Jason Wessel <jason.wessel@windriver.com>
 Date: Thu, 28 Jul 2011 12:42:23 -0500
-Subject: [PATCH 213/353] kgdb/serial: Short term workaround
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=4c2c3059455f4f6ad95dea14e851ff6ae94304cf
+Subject: [PATCH 213/354] kgdb/serial: Short term workaround
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d90cb44b6f5b1ec19886f854fab66322b7ef9811
 
 On 07/27/2011 04:37 PM, Thomas Gleixner wrote:
 >  - KGDB (not yet disabled) is reportedly unusable on -rt right now due
@@ -24,7 +24,7 @@ Jason.
  3 files changed, 7 insertions(+)
 
 diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 91508bab892d..e4d6e8412a02 100644
+index 766bdb1717d5..7ab066606b25 100644
 --- a/drivers/tty/serial/8250/8250_port.c
 +++ b/drivers/tty/serial/8250/8250_port.c
 @@ -32,6 +32,7 @@
@@ -35,7 +35,7 @@ index 91508bab892d..e4d6e8412a02 100644
  #include <linux/uaccess.h>
  #include <linux/pm_runtime.h>
  #include <linux/ktime.h>
-@@ -3314,6 +3315,8 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
+@@ -3317,6 +3318,8 @@ void serial8250_console_write(struct uart_8250_port *up, const char *s,
  
  	if (port->sysrq || oops_in_progress)
  		locked = 0;

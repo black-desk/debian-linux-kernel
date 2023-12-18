@@ -1,8 +1,8 @@
 From: Gregor Beck <gbeck@esigma-technology.com>
 Date: Fri, 3 Sep 2021 14:19:11 +0200
-Subject: [PATCH 337/353] fscache: fix initialisation of cookie hash table raw
+Subject: [PATCH 337/354] fscache: fix initialisation of cookie hash table raw
  spinlocks
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ab9ea499061843d5ebc8c871d29a55b288a1b212
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=040b29fbec4a4cc847a95edeca4c0e8d6a337b40
 
 The original patch, 602660600bcd ("fscache: initialize cookie hash
 table raw spinlocks"), subtracted 1 from the shift and so still left

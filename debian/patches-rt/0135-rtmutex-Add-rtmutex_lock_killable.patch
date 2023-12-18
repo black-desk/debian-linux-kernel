@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 9 Jun 2011 11:43:52 +0200
-Subject: [PATCH 135/353] rtmutex: Add rtmutex_lock_killable()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=12e5eb3c4c70f7172a24141af9c6295509ff55b3
+Subject: [PATCH 135/354] rtmutex: Add rtmutex_lock_killable()
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=cd8cf60ded2114c07a4b126eb7a21da84b9d996c
 
 Add "killable" type to rtmutex. We need this since rtmutex are used as
 "normal" mutexes which do use this type.

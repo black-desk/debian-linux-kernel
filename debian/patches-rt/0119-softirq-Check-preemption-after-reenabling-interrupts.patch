@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Sun, 13 Nov 2011 17:17:09 +0100
-Subject: [PATCH 119/353] softirq: Check preemption after reenabling interrupts
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6579f9ecfcef785fc35ce7acf717bd9f547b409d
+Subject: [PATCH 119/354] softirq: Check preemption after reenabling interrupts
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0b06984086f713cd3540d96dac538966491a912d
 
 raise_softirq_irqoff() disables interrupts and wakes the softirq
 daemon, but after reenabling interrupts there is no preemption check,
@@ -49,7 +49,7 @@ index 15c1f5e12eb8..1628277885a1 100644
  EXPORT_SYMBOL(__blk_complete_request);
  
 diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index b7fe717eb1f4..9984f2b75b73 100644
+index 22829223534b..8dc7800151f0 100644
 --- a/include/linux/preempt.h
 +++ b/include/linux/preempt.h
 @@ -187,8 +187,10 @@ do { \
@@ -116,7 +116,7 @@ index 86a709954f5a..9c069ef83d6d 100644
  	return 0;
  }
 diff --git a/net/core/dev.c b/net/core/dev.c
-index a9c8660a2570..b7ccaaebe4bb 100644
+index 0f9214fb36e0..554590fc29f5 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
 @@ -2727,6 +2727,7 @@ static void __netif_reschedule(struct Qdisc *q)
@@ -166,7 +166,7 @@ index a9c8660a2570..b7ccaaebe4bb 100644
  }
  EXPORT_SYMBOL(__napi_schedule);
  
-@@ -9531,6 +9537,7 @@ static int dev_cpu_dead(unsigned int oldcpu)
+@@ -9523,6 +9529,7 @@ static int dev_cpu_dead(unsigned int oldcpu)
  
  	raise_softirq_irqoff(NET_TX_SOFTIRQ);
  	local_irq_enable();

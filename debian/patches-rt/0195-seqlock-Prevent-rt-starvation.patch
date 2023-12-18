@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Wed, 22 Feb 2012 12:03:30 +0100
-Subject: [PATCH 195/353] seqlock: Prevent rt starvation
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6dcbd604a4d753929fabbdcee32426dec907b370
+Subject: [PATCH 195/354] seqlock: Prevent rt starvation
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ef27a68a3d731f711b1f6c1283ac0013e9356971
 
 If a low prio writer gets preempted while holding the seqlock write
 locked, a high prio reader spins forever on RT.

@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 14 May 2019 17:07:44 +0200
-Subject: [PATCH 266/353] arm: imx6: cpuidle: Use raw_spinlock_t
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6be67cccc18e07bb11d2103d9b90cfd7463ae0d0
+Subject: [PATCH 266/354] arm: imx6: cpuidle: Use raw_spinlock_t
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=7a023c974aca7eb2905d4cbbf011a6d6e38ae204
 
 [ Upstream commit 40d0332ec8312e9c090f0a5414d9c90e12b13611 ]
 

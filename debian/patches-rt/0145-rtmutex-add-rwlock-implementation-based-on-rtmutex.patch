@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 12 Oct 2017 17:18:06 +0200
-Subject: [PATCH 145/353] rtmutex: add rwlock implementation based on rtmutex
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e1b238653e2733ccfdd3329017fc905ef38a27fa
+Subject: [PATCH 145/354] rtmutex: add rwlock implementation based on rtmutex
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d3007eeeeac85d05402d624187c71253d49ce06d
 
 The implementation is bias-based, similar to the rwsem implementation.
 

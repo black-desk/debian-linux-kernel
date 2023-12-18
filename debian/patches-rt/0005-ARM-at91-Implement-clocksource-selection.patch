@@ -1,7 +1,7 @@
 From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Date: Thu, 13 Sep 2018 13:30:22 +0200
-Subject: [PATCH 005/353] ARM: at91: Implement clocksource selection
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=263d4a0de33ec004d16e3d61ba87e7f67961f4f5
+Subject: [PATCH 005/354] ARM: at91: Implement clocksource selection
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=eb0bd500e9407e54281c18732edb0644b1c67a9d
 
 Allow selecting and unselecting the PIT clocksource driver so it doesn't
 have to be compile when unused.

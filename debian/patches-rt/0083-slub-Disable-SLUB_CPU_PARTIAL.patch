@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 15 Apr 2015 19:00:47 +0200
-Subject: [PATCH 083/353] slub: Disable SLUB_CPU_PARTIAL
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=7c1d70d7c65b301f9a33b45c0d2cd67a7b24681d
+Subject: [PATCH 083/354] slub: Disable SLUB_CPU_PARTIAL
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f2fb09eab7e16bcde4150ab3982beba315b53143
 
 |BUG: sleeping function called from invalid context at kernel/locking/rtmutex.c:915
 |in_atomic(): 1, irqs_disabled(): 0, pid: 87, name: rcuop/7

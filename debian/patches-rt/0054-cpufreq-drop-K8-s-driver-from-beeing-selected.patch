@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 9 Apr 2015 15:23:01 +0200
-Subject: [PATCH 054/353] cpufreq: drop K8's driver from beeing selected
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0963eb087baa414f4143f90279c1495940660b0f
+Subject: [PATCH 054/354] cpufreq: drop K8's driver from beeing selected
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3181bcb0d089e7cc917a4071a877c8125080c9ab
 
 Ralf posted a picture of a backtrace from
 

@@ -1,7 +1,7 @@
 From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Date: Thu, 13 Sep 2018 13:30:24 +0200
-Subject: [PATCH 007/353] ARM: configs: at91: unselect PIT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0ed8316a0cba3484914275e850ccd463783e4ea6
+Subject: [PATCH 007/354] ARM: configs: at91: unselect PIT
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=534e56d6536004e65dca7f19f7999aba04978f81
 
 The PIT is not required anymore to successfully boot and may actually harm
 in case preempt-rt is used because the PIT interrupt is shared.

@@ -1,7 +1,7 @@
 From: kbuild test robot <lkp@intel.com>
 Date: Sat, 13 Apr 2019 11:22:51 +0800
-Subject: [PATCH 268/353] pci/switchtec: fix stream_open.cocci warnings
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=fc9c42b0e2ccf75b981f3419fde9e0a8f822f577
+Subject: [PATCH 268/354] pci/switchtec: fix stream_open.cocci warnings
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=68c35340ef291c887a0077bf859d89bd1ba1f2ef
 
 [ Upstream commit 9462c69e29307adc95c289f50839d5d683973891 ]
 

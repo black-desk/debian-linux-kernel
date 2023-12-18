@@ -1,11 +1,11 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 4 Apr 2017 12:50:16 +0200
-Subject: [PATCH 026/353] kernel: sched: Provide a pointer to the valid CPU
+Subject: [PATCH 026/354] kernel: sched: Provide a pointer to the valid CPU
  mask
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=df3824235d856733c8ecdfe654dda7023a4bca24
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b16c75ca7f52fa0134dbc827db225b2da0bab7b2
 
 In commit 4b53a3412d66 ("sched/core: Remove the tsk_nr_cpus_allowed()
 wrapper") the tsk_nr_cpus_allowed() wrapper was removed. There was not

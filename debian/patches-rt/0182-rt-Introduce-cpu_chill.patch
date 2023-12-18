@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Wed, 7 Mar 2012 20:51:03 +0100
-Subject: [PATCH 182/353] rt: Introduce cpu_chill()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=33bbac7c90310f6beae5023eb84d929590e145ce
+Subject: [PATCH 182/354] rt: Introduce cpu_chill()
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=80a12123cc879555b076a328573daaea2b7686b8
 
 Retry loops on RT might loop forever when the modifying side was
 preempted. Add cpu_chill() to replace cpu_relax(). cpu_chill()

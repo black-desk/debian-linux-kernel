@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 12 Oct 2017 17:34:38 +0200
-Subject: [PATCH 148/353] rtmutex: add ww_mutex addon for mutex-rt
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=851661a83a57c6233e42a0abdd48ccc7b2b10152
+Subject: [PATCH 148/354] rtmutex: add ww_mutex addon for mutex-rt
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=8a31db66c6080e3e2193b7dd30084c305d5f7ea4
 
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 ---

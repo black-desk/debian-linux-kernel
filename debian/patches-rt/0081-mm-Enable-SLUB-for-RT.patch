@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 25 Oct 2012 10:32:35 +0100
-Subject: [PATCH 081/353] mm: Enable SLUB for RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=27a576c0dac89a83ff8d6af7d3cfb66bbbb0b17d
+Subject: [PATCH 081/354] mm: Enable SLUB for RT
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=37654773ea6f245dc775e759f47a1ac673284be8
 
 Avoid the memory allocation in IRQ section
 

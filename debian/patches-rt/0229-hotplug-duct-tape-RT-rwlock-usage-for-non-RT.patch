@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 4 Aug 2017 18:31:00 +0200
-Subject: [PATCH 229/353] hotplug: duct-tape RT-rwlock usage for non-RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=69e8240441b61f19abbf1da8ac08c102366b0364
+Subject: [PATCH 229/354] hotplug: duct-tape RT-rwlock usage for non-RT
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=1d1acb769d60fd855f9ad16d69d9be57e910915c
 
 This type is only available on -RT. We need to craft something for
 non-RT. Since the only migrate_disable() user is -RT only, there is no

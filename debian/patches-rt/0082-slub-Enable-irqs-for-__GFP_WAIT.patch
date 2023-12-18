@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Wed, 9 Jan 2013 12:08:15 +0100
-Subject: [PATCH 082/353] slub: Enable irqs for __GFP_WAIT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=5c004d80a079d4492a32afc5308b215ca2c9b707
+Subject: [PATCH 082/354] slub: Enable irqs for __GFP_WAIT
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=53db3d0423b01792a9f213af256f138cbf2cd396
 
 SYSTEM_RUNNING might be too late for enabling interrupts. Allocations
 with GFP_WAIT can happen before that. So use this as an indicator.

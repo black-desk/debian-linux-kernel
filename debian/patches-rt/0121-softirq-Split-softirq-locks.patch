@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 4 Oct 2012 14:20:47 +0100
-Subject: [PATCH 121/353] softirq: Split softirq locks
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=814889793c7dca0727a6f2655d7102ed853635d7
+Subject: [PATCH 121/354] softirq: Split softirq locks
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=528daffaba4a99e09a3f51407e40c2ee19680ac5
 
 The 3.x RT series removed the split softirq implementation in favour
 of pushing softirq processing into the context of the thread which
@@ -135,7 +135,7 @@ index eec4bec454b5..cf9860d49d57 100644
  	struct hrtimer		timer;
  	struct tasklet_struct	tasklet;
 diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index 9984f2b75b73..27c3176d88d2 100644
+index 8dc7800151f0..c196866734d3 100644
 --- a/include/linux/preempt.h
 +++ b/include/linux/preempt.h
 @@ -51,7 +51,11 @@

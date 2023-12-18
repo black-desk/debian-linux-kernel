@@ -1,8 +1,8 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 3 Jul 2018 11:25:41 +0200
-Subject: [PATCH 098/353] hrtimer: consolidate hrtimer_init() +
+Subject: [PATCH 098/354] hrtimer: consolidate hrtimer_init() +
  hrtimer_init_sleeper() calls
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f021b98469bf5ca7b380b2781594f4da8909379b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3da59b74ec0ba79a88f867f42187a7b8811d5f5a
 
 hrtimer_init_sleeper() calls require a prior initialisation of the
 hrtimer object with hrtimer_init(). Lets make the initialisation of
@@ -263,7 +263,7 @@ index 8512f06f0ebe..23c89873bf60 100644
  
  	if (likely(t.task))
 diff --git a/net/core/pktgen.c b/net/core/pktgen.c
-index 3714cd9e3111..2cea192b1475 100644
+index 3ade60ec4512..8aac00b6d491 100644
 --- a/net/core/pktgen.c
 +++ b/net/core/pktgen.c
 @@ -2160,7 +2160,8 @@ static void spin(struct pktgen_dev *pkt_dev, ktime_t spin_until)

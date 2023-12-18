@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 12 Jul 2011 15:38:34 +0200
-Subject: [PATCH 197/353] net: Use skbufhead with raw lock
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=beb3a3cc100dc98ce1fcb19f679ce54020c2a756
+Subject: [PATCH 197/354] net: Use skbufhead with raw lock
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=769effc379090c1fe7217d6c248a6b777d212b9b
 
 Use the rps lock as rawlock so we can keep irq-off regions. It looks low
 latency. However we can't kfree() from this context therefore we defer this
@@ -15,10 +15,10 @@ Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
  3 files changed, 28 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 7e9df3854420..8a8f5aa5dba1 100644
+index ac87fcc4d44b..77209c1c2e7e 100644
 --- a/include/linux/netdevice.h
 +++ b/include/linux/netdevice.h
-@@ -2991,6 +2991,7 @@ struct softnet_data {
+@@ -2998,6 +2998,7 @@ struct softnet_data {
  	unsigned int		dropped;
  	struct sk_buff_head	input_pkt_queue;
  	struct napi_struct	backlog;
@@ -52,7 +52,7 @@ index f97734f34746..3ede4f0eac10 100644
  		struct lock_class_key *class)
  {
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 4fd75278ccea..379465a5c4ef 100644
+index c6c45f663539..97c74c2e500e 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
 @@ -219,14 +219,14 @@ static inline struct hlist_head *dev_index_hash(struct net *net, int ifindex)
@@ -115,7 +115,7 @@ index 4fd75278ccea..379465a5c4ef 100644
  	for (;;) {
  		struct napi_struct *n;
  
-@@ -9549,10 +9559,13 @@ static int dev_cpu_dead(unsigned int oldcpu)
+@@ -9541,10 +9551,13 @@ static int dev_cpu_dead(unsigned int oldcpu)
  		netif_rx_ni(skb);
  		input_queue_head_incr(oldsd);
  	}
@@ -130,7 +130,7 @@ index 4fd75278ccea..379465a5c4ef 100644
  
  	return 0;
  }
-@@ -9863,8 +9876,9 @@ static int __init net_dev_init(void)
+@@ -9855,8 +9868,9 @@ static int __init net_dev_init(void)
  
  		INIT_WORK(flush, flush_backlog);
  

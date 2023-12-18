@@ -1,8 +1,8 @@
 From: "Paul E. McKenney" <paulmck@linux.ibm.com>
 Date: Mon, 29 Oct 2018 11:53:01 +0100
-Subject: [PATCH 023/353] EXP rcu: Revert expedited GP parallelization
+Subject: [PATCH 023/354] EXP rcu: Revert expedited GP parallelization
  cleverness
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=13988f89868566f99452f1c5d40b2f7198641deb
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=db77ab525f78dc36d748c23bf324d465960ea7b0
 
 (Commit 258ba8e089db23f760139266c232f01bad73f85c from linux-rcu)
 

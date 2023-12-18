@@ -1,8 +1,8 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 24 Oct 2022 10:17:22 +0200
-Subject: [PATCH 345/353] timers: Don't block on ->expiry_lock for
+Subject: [PATCH 345/354] timers: Don't block on ->expiry_lock for
  TIMER_IRQSAFE timers
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3dc9404a2f4889bc30bee2af855f7ec8e3413498
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=25ac7776ff1ac8a487c35f48743793ffeba967e9
 
 Upstream commit c725dafc95f1b37027840aaeaa8b7e4e9cd20516
 

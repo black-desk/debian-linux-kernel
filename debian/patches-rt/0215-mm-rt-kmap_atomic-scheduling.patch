@@ -1,7 +1,7 @@
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Thu, 28 Jul 2011 10:43:51 +0200
-Subject: [PATCH 215/353] mm, rt: kmap_atomic scheduling
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=905e5e5671b4eb1c7a47c4aa5a6d812119ca051f
+Subject: [PATCH 215/354] mm, rt: kmap_atomic scheduling
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c540dde51594c249c3d21d3a2f85e56208b24ff9
 
 In fact, with migrate_disable() existing one could play games with
 kmap_atomic. You could save/restore the kmap_atomic slots on context

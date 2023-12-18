@@ -1,7 +1,7 @@
 From: Davidlohr Bueso <dave@stgolabs.net>
 Date: Tue, 18 Aug 2020 09:20:53 -0700
-Subject: [PATCH 331/353] net: xfrm: fix compress vs decompress serialization
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=dbb5e24b6ce48c7dcd39afac23440d0cb6560d9f
+Subject: [PATCH 331/354] net: xfrm: fix compress vs decompress serialization
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0460eb111d9da895a112875eb55c6d632692a78e
 
 A crash was seen in xfrm when running ltp's 'tcp4_ipsec06' stresser on v4.x
 based RT kernels.

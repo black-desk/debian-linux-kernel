@@ -1,8 +1,8 @@
 From: Corey Minyard <cminyard@mvista.com>
 Date: Thu, 9 May 2019 14:33:20 -0500
-Subject: [PATCH 264/353] sched/completion: Fix a lockup in
+Subject: [PATCH 264/354] sched/completion: Fix a lockup in
  wait_for_completion()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e49b4eebe68c0ad91275beb2c6a81db3cd86214b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=71a3e63757b159a29efa12c474bfb6c29ba4d6f5
 
 Consider following race:
 

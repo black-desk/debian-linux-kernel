@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Mon, 6 Jun 2011 12:12:51 +0200
-Subject: [PATCH 106/353] sched: Limit the number of task migrations per batch
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=50859d5966546b8bc00095cc57cf511d29c5da6b
+Subject: [PATCH 106/354] sched: Limit the number of task migrations per batch
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=5a1208dd1aee2856ebfd9d8b8ab1115632345f68
 
 Put an upper limit on the number of tasks which are migrated per batch
 to avoid large latencies.

@@ -1,7 +1,7 @@
 From: Clark Williams <williams@redhat.com>
 Date: Sat, 30 Jul 2011 21:55:53 -0500
-Subject: [PATCH 214/353] sysfs: Add /sys/kernel/realtime entry
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=0e7754a3adc8ba921e5bcac25ec008ff10eab623
+Subject: [PATCH 214/354] sysfs: Add /sys/kernel/realtime entry
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e8c6c44529d50f3859a5d69a75297fd75ec9b85b
 
 Add a /sys/kernel entry to indicate that the kernel is a
 realtime kernel.

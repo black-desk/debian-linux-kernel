@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 26 Jul 2018 15:06:10 +0200
-Subject: [PATCH 018/353] efi: Allow efi=runtime
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b442b41d7387bccdf8c98db916d6022fde8c5895
+Subject: [PATCH 018/354] efi: Allow efi=runtime
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c5b5290bf3f7a1030a0e69757e03d2f91de77c36
 
 In case the option "efi=noruntime" is default at built-time, the user
 could overwrite its sate by `efi=runtime' and allow it again.

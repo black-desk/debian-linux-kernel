@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 14 Feb 2013 22:36:59 +0100
-Subject: [PATCH 031/353] timekeeping: Split jiffies seqlock
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=94865c559477bc3ec2ad1a643bc14e5676bc4456
+Subject: [PATCH 031/354] timekeeping: Split jiffies seqlock
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=fa779d38e94ed3a5677ff259af06af261490e3bc
 
 Replace jiffies_lock seqlock with a simple seqcounter and a rawlock so
 it can be taken in atomic context on RT.

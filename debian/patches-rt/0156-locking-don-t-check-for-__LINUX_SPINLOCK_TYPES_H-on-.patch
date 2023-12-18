@@ -1,8 +1,8 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 4 Aug 2017 17:40:42 +0200
-Subject: [PATCH 156/353] locking: don't check for __LINUX_SPINLOCK_TYPES_H on
+Subject: [PATCH 156/354] locking: don't check for __LINUX_SPINLOCK_TYPES_H on
  -RT archs
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=7dc2a0985769b7f570cd56edeb016fb84b2a5290
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=58455945dab22820eaf69538a84f85316a0ff698
 
 Upstream uses arch_spinlock_t within spinlock_t and requests that
 spinlock_types.h header file is included first.

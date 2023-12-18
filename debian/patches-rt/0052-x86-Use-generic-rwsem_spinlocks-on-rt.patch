@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Sun, 26 Jul 2009 02:21:32 +0200
-Subject: [PATCH 052/353] x86: Use generic rwsem_spinlocks on -rt
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d5482e1a231d13555b351d1e01b56bc38e6b6c50
+Subject: [PATCH 052/354] x86: Use generic rwsem_spinlocks on -rt
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=005a67b634c2f5ddab69d2880bdb0a7aed70bc36
 
 Simplifies the separation of anon_rw_semaphores and rw_semaphores for
 -rt.

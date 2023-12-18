@@ -1,10 +1,10 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 29 Aug 2013 11:48:57 +0200
-Subject: [PATCH 055/353] md: disable bcache
+Subject: [PATCH 055/354] md: disable bcache
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=454759049c50507f444560c0e9fbf6f71cbc90ee
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=2f4247f612fad92ca0d3fe169d6db614f7c1277b
 
 It uses anon semaphores
 |drivers/md/bcache/request.c: In function ‘cached_dev_write_complete’:

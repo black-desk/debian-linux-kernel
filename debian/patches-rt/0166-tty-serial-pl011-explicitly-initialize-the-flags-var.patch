@@ -1,11 +1,11 @@
 From: Kurt Kanzenbach <kurt@linutronix.de>
 Date: Mon, 24 Sep 2018 10:29:01 +0200
-Subject: [PATCH 166/353] tty: serial: pl011: explicitly initialize the flags
+Subject: [PATCH 166/354] tty: serial: pl011: explicitly initialize the flags
  variable
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e5c17cea22d6ab61386a363b7a309da10c6f3c29
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ac08de4773e339eba54fafffa4ae16246a5f58ef
 
 Silence the following gcc warning:
 

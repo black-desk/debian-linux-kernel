@@ -1,8 +1,8 @@
 From: Liu Haitao <haitao.liu@windriver.com>
 Date: Fri, 27 Sep 2019 16:22:30 +0800
-Subject: [PATCH 305/353] kmemleak: Change the lock of kmemleak_object to
+Subject: [PATCH 305/354] kmemleak: Change the lock of kmemleak_object to
  raw_spinlock_t
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e716d67f153422e48f2daf17e7af39f18606f542
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d8b3b23c44498d19a941f07e78ba1ffa84dcbceb
 
 [ Upstream commit 217847f57119b5fdd377bfa3d344613ddb98d9fc ]
 

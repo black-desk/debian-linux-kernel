@@ -1,8 +1,8 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 17 Jul 2018 18:25:31 +0200
-Subject: [PATCH 013/353] x86/ioapic: Don't let setaffinity unmask threaded EOI
+Subject: [PATCH 013/354] x86/ioapic: Don't let setaffinity unmask threaded EOI
  interrupt too early
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e187ef4de0b298d3080350a004013b9b23c06cdb
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=87a73623e2a9d3e53bcc315b44925c5a8029082f
 
 There is an issue with threaded interrupts which are marked ONESHOT
 and using the fasteoi handler.

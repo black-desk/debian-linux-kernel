@@ -1,11 +1,11 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 31 Aug 2016 17:21:56 +0200
-Subject: [PATCH 202/353] net: add back the missing serialization in
+Subject: [PATCH 202/354] net: add back the missing serialization in
  ip_send_unicast_reply()
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=25b005a19e5a414f6b432cdea5dff531ba8a362f
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=02eaf52167de474998304776c04b4cbe0580e4f4
 
 Some time ago Sami Pietikäinen reported a crash on -RT in
 ip_send_unicast_reply() which was later fixed by Nicholas Mc Guire

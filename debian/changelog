@@ -865,8 +865,10 @@ linux (4.19.299-1) UNRELEASED; urgency=medium
     - btrfs: use u64 for buffer sizes in the tree search ioctls
 
   [ Ben Hutchings ]
-  * [rt] Update to 4.19.295-rt129
   * Bump ABI to 26
+  * [rt] Update to 4.19.299-rt130:
+    - Revert "sched/rt: Provide migrate_disable/enable() inlines" from
+      4.19.299
 
  -- Ben Hutchings <benh@debian.org>  Sun, 24 Sep 2023 20:12:37 +0200
 

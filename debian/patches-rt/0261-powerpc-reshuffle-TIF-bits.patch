@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 22 Mar 2019 17:15:58 +0100
-Subject: [PATCH 261/353] powerpc: reshuffle TIF bits
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b31e4b17298d333d8b9228107d6f2b016dc3e56e
+Subject: [PATCH 261/354] powerpc: reshuffle TIF bits
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=6a10aa98c8d2b2c38202ce014949c30231bcdb71
 
 Powerpc32/64 does not compile because TIF_SYSCALL_TRACE's bit is higher
 than 15 and the assembly instructions don't expect that.

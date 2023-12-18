@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 26 Oct 2012 18:50:54 +0100
-Subject: [PATCH 236/353] sched: Add support for lazy preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=407d4f8bb32018a7c26d7f2a5f24993f25ec7cdc
+Subject: [PATCH 236/354] sched: Add support for lazy preemption
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=e5e6f0acfa52555b2cddae5e79b2ee88d0fc4575
 
 It has become an obsession to mitigate the determinism vs. throughput
 loss of RT. Looking at the mainline semantics of preemption points
@@ -69,7 +69,7 @@ Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
  13 files changed, 228 insertions(+), 29 deletions(-)
 
 diff --git a/include/linux/preempt.h b/include/linux/preempt.h
-index ed8413e7140f..9c74a019bf57 100644
+index 302f491b05ec..29ecd13afdda 100644
 --- a/include/linux/preempt.h
 +++ b/include/linux/preempt.h
 @@ -180,6 +180,20 @@ extern void preempt_count_sub(int val);

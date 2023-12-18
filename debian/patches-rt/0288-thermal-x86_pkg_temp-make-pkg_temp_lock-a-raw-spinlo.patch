@@ -1,8 +1,8 @@
 From: Clark Williams <williams@redhat.com>
 Date: Mon, 15 Jul 2019 15:25:00 -0500
-Subject: [PATCH 288/353] thermal/x86_pkg_temp: make pkg_temp_lock a raw
+Subject: [PATCH 288/354] thermal/x86_pkg_temp: make pkg_temp_lock a raw
  spinlock
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=a47d28c326bfe531eec29b5ecaf373edd4017e13
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f655abc3893790af5fabac9b450139f5135f8e6c
 
 [ Upstream commit 8b03bb3ea7861b70b506199a69b1c8f81fe2d4d0 ]
 

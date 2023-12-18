@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 21 Mar 2014 20:19:05 +0100
-Subject: [PATCH 044/353] rcu: make RCU_BOOST default on RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9c23b5ee94380d3fc716dd98677cddbe24677c00
+Subject: [PATCH 044/354] rcu: make RCU_BOOST default on RT
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=151e0cdfa738aa35296f557ee93922577f724b3a
 
 Since it is no longer invoked from the softirq people run into OOM more
 often if the priority of the RCU thread is too low. Making boosting

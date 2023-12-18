@@ -1,8 +1,8 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 25 Jul 2018 14:02:38 +0200
-Subject: [PATCH 212/353] arm64: fpsimd: use preemp_disable in addition to
+Subject: [PATCH 212/354] arm64: fpsimd: use preemp_disable in addition to
  local_bh_disable()
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=8015cd67db03645a02ae943ebc1ed7a2b5fccf47
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=4748aa059d95ad3a3f423f2024c65a3b36897b99
 
 In v4.16-RT I noticed a number of warnings from task_fpsimd_load(). The
 code disables BH and expects that it is not preemptible. On -RT the
