@@ -91,6 +91,7 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
     - netfilter: add helper function to set up the nfnetlink header and use it
     - netfilter: nf_tables: use net_generic infra for transaction data
     - netfilter: nf_tables: incorrect error path handling with NFT_MSG_NEWRULE
+      (CVE-2023-3390)
     - netfilter: nf_tables: add NFT_TRANS_PREPARE_ERROR to deal with bound set/
       chain
     - netfilter: nf_tables: reject unbound anonymous set before commit phase
