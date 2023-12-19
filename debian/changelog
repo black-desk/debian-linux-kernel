@@ -979,6 +979,7 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
     - btrfs: send: ensure send_fd is writable
     - [x86] Input: xpad - add HyperX Clutch Gladiate Support
     - ipv4: igmp: fix refcnt uaf issue when receiving igmp query packet
+      (CVE-2023-6932)
     - smb3: fix touch -h of symlink
     - [x86] mtd: cfi_cmdset_0001: Support the absence of protection registers
     - ima: annotate iint mutex to avoid lockdep false positive warnings
