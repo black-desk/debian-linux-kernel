@@ -1023,7 +1023,7 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
     - tracing: Fix incomplete locking when disabling buffered events
     - tracing: Fix a possible race when disabling buffered events
     - perf/core: Add a new read format to get a number of lost samples
-    - perf: Fix perf_event_validate_size()
+    - perf: Fix perf_event_validate_size() (CVE-2023-6931)
     - gpiolib: sysfs: Fix error handling on failed export
     - usb: gadget: f_hid: fix report descriptor allocation (regression in
       4.19.270)
