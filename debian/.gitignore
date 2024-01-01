@@ -27,6 +27,8 @@
 /files
 /generated.*/
 /linux-*
+!/linux-cpupower.*
+!/linux-perf.*
 /rules.gen
 /tests/control
 

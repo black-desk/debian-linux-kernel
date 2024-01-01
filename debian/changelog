@@ -1,7 +1,11 @@
 linux (6.6.8-2) UNRELEASED; urgency=medium
 
+  [ Harry 88 ]
   * [arm64] udeb: Include sun8i-drm-hdmi module in installer
     (Closes: #1050315)
+
+  [ Bastian Blank ]
+  * Replace dh-exec with static files everywhere.
 
  -- Harry 88 <harry88@gmx.ph>  Thu, 28 Dec 2023 20:22:45 +0000
 
