@@ -1,8 +1,8 @@
-From a2b0f720a1da96e338ff129067929613bd9e5ae8 Mon Sep 17 00:00:00 2001
+From 267b1086437ac0cca8ca59197e5cc8cbe8fc6a83 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 9 Mar 2021 09:42:15 +0100
-Subject: [PATCH 143/321] PCI: hv: Use tasklet_disable_in_atomic()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 143/323] PCI: hv: Use tasklet_disable_in_atomic()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 The hv_compose_msi_msg() callback in irq_chip::irq_compose_msi_msg is
 invoked via irq_chip_compose_msi_msg(), which itself is always invoked from
@@ -42,5 +42,5 @@ index 2d6c77dcc815..7daba964f54e 100644
  	/*
  	 * Since this function is called with IRQ locks held, can't
 -- 
-2.41.0
+2.43.0
 

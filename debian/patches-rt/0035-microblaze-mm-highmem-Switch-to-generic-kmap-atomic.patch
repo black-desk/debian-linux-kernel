@@ -1,8 +1,8 @@
-From 8db788b02c6b0ee585a5c230975b9a16eda17222 Mon Sep 17 00:00:00 2001
+From bfdad55346f7206cf980bbd6cbc264082c54ae0c Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 3 Nov 2020 10:27:24 +0100
-Subject: [PATCH 035/321] microblaze/mm/highmem: Switch to generic kmap atomic
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 035/323] microblaze/mm/highmem: Switch to generic kmap atomic
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 No reason having the same code in every architecture.
 
@@ -193,5 +193,5 @@ index 45da639bd22c..1f4b5b34e600 100644
  
  static void highmem_setup(void)
 -- 
-2.41.0
+2.43.0
 

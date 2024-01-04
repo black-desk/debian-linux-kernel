@@ -1,8 +1,8 @@
-From 298cc65745db7819d576ec5476b81eb83900ced5 Mon Sep 17 00:00:00 2001
+From 79fca819370ecec3ce47fe9cb5f70efbacb613ad Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Wed, 29 Jun 2011 19:34:01 +0200
-Subject: [PATCH 163/321] locking/spinlock: Split the lock types header
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 163/323] locking/spinlock: Split the lock types header
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Split raw_spinlock into its own file and the remaining spinlock_t into
 its own non-RT header. The non-RT header will be replaced later by sleeping
@@ -249,5 +249,5 @@ index 000000000000..1d4a180e983d
 +
 +#endif
 -- 
-2.41.0
+2.43.0
 

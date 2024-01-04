@@ -1,8 +1,8 @@
-From a3456d984672bcc07e9fdc05d6a1de3e64cb1c87 Mon Sep 17 00:00:00 2001
+From 3e75dc5bbc430b2a1db27fe101ed508b067af7b0 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 1 Nov 2012 11:03:47 +0100
-Subject: [PATCH 260/321] x86: Support for lazy preemption
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 260/323] x86: Support for lazy preemption
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Implement the x86 pieces for lazy preempt.
 
@@ -17,10 +17,10 @@ Signed-off-by: Luis Claudio R. Goncalves <lgoncalv@redhat.com>
  5 files changed, 48 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index d8c53d52069a..889934e5a8ac 100644
+index c72d66a0e840..b9f68b01a8c8 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -212,6 +212,7 @@ config X86
+@@ -213,6 +213,7 @@ config X86
  	select HAVE_PCI
  	select HAVE_PERF_REGS
  	select HAVE_PERF_USER_STACK_DUMP
@@ -167,5 +167,5 @@ index f32250adb681..cdf97ea30b4c 100644
  
  #ifdef ARCH_RT_DELAYS_SIGNAL_SEND
 -- 
-2.41.0
+2.43.0
 

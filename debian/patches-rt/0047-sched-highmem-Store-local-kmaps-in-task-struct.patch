@@ -1,8 +1,8 @@
-From c425801f2be15f7e4af472e33a26e6bab4e1bfd6 Mon Sep 17 00:00:00 2001
+From 7aa261f53a405c0862f4857b46ef3344bbe6385f Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 3 Nov 2020 10:27:36 +0100
-Subject: [PATCH 047/321] sched: highmem: Store local kmaps in task struct
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 047/323] sched: highmem: Store local kmaps in task struct
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Instead of storing the map per CPU provide and use per task storage. That
 prepares for local kmaps which are preemptible.
@@ -52,7 +52,7 @@ index 6ceed907b14e..c5a22177db85 100644
  
  #ifdef CONFIG_HIGHMEM
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index d846b0d1427d..08b5804c29ec 100644
+index bff48e9f32db..82de1ab42497 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
 @@ -34,6 +34,7 @@
@@ -106,10 +106,10 @@ index 09f58853f692..e6a66de1202a 100644
  	lockdep_sys_exit();
  }
 diff --git a/kernel/fork.c b/kernel/fork.c
-index c6a289317e89..58fc874f9f3b 100644
+index 633b0af1d1a7..32b9d7205ac1 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
-@@ -934,6 +934,7 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
+@@ -942,6 +942,7 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
  	account_kernel_stack(tsk, 1);
  
  	kcov_task_init(tsk);
@@ -118,7 +118,7 @@ index c6a289317e89..58fc874f9f3b 100644
  #ifdef CONFIG_FAULT_INJECTION
  	tsk->fail_nth = 0;
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index b12ea31dff14..780517055359 100644
+index 8a6135a0b2ee..390b51366f5e 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -4092,6 +4092,22 @@ static inline void finish_lock_switch(struct rq *rq)
@@ -305,5 +305,5 @@ index 54bd233846c9..d7a1c80001d0 100644
  
  #if defined(HASHED_PAGE_VIRTUAL)
 -- 
-2.41.0
+2.43.0
 

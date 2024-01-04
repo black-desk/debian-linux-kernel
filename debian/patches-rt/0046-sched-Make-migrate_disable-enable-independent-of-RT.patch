@@ -1,9 +1,9 @@
-From 3c342106d01eb55886408f043980eb1fe1a5a3cf Mon Sep 17 00:00:00 2001
+From 2a81a49976b336ce93ef823a5db96ce960096478 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 3 Nov 2020 10:27:35 +0100
-Subject: [PATCH 046/321] sched: Make migrate_disable/enable() independent of
+Subject: [PATCH 046/323] sched: Make migrate_disable/enable() independent of
  RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Now that the scheduler can deal with migrate disable properly, there is no
 real compelling reason to make it only available for RT.
@@ -150,7 +150,7 @@ index 8b43922e65df..6df63cbe8bb0 100644
  
  #endif /* __LINUX_PREEMPT_H */
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 343d2f13345a..d846b0d1427d 100644
+index 7ca1f3e740dd..bff48e9f32db 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
 @@ -727,7 +727,7 @@ struct task_struct {
@@ -163,7 +163,7 @@ index 343d2f13345a..d846b0d1427d 100644
  #endif
  	unsigned short			migration_flags;
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index f763c4225f78..b12ea31dff14 100644
+index c1e52319669d..8a6135a0b2ee 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -1710,8 +1710,6 @@ void check_preempt_curr(struct rq *rq, struct task_struct *p, int flags)
@@ -213,7 +213,7 @@ index f763c4225f78..b12ea31dff14 100644
  
  static void
  ttwu_stat(struct task_struct *p, int cpu, int wake_flags)
-@@ -7907,6 +7899,39 @@ void __cant_sleep(const char *file, int line, int preempt_offset)
+@@ -7902,6 +7894,39 @@ void __cant_sleep(const char *file, int line, int preempt_offset)
  	add_taint(TAINT_WARN, LOCKDEP_STILL_OK);
  }
  EXPORT_SYMBOL_GPL(__cant_sleep);
@@ -254,7 +254,7 @@ index f763c4225f78..b12ea31dff14 100644
  
  #ifdef CONFIG_MAGIC_SYSRQ
 diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index ff6825921999..159d92a8452d 100644
+index 69ef7cac3d29..c26b1c7009f4 100644
 --- a/kernel/sched/sched.h
 +++ b/kernel/sched/sched.h
 @@ -1058,7 +1058,7 @@ struct rq {
@@ -289,5 +289,5 @@ index dbb96ebf661f..0c0c42b14370 100644
  		goto out;
  #endif
 -- 
-2.41.0
+2.43.0
 

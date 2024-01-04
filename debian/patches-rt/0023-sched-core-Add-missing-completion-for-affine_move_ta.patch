@@ -1,9 +1,9 @@
-From e6bf7882f64d06e61fe82d76690b1d400b0efe57 Mon Sep 17 00:00:00 2001
+From 5188e4c01f37c8c179cf88261297d546f5d2502e Mon Sep 17 00:00:00 2001
 From: Valentin Schneider <valentin.schneider@arm.com>
 Date: Fri, 13 Nov 2020 11:24:14 +0000
-Subject: [PATCH 023/321] sched/core: Add missing completion for
+Subject: [PATCH 023/323] sched/core: Add missing completion for
  affine_move_task() waiters
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Qian reported that some fuzzer issuing sched_setaffinity() ends up stuck on
 a wait_for_completion(). The problematic pattern seems to be:
@@ -44,7 +44,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 949733522a7f..f763c4225f78 100644
+index 7d67a0e03f9a..c1e52319669d 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -1941,7 +1941,7 @@ static int migration_cpu_stop(void *data)
@@ -75,5 +75,5 @@ index 949733522a7f..f763c4225f78 100644
  		 * When this was migrate_enable() but we no longer have an
  		 * @pending, a concurrent SCA 'fixed' things and we should be
 -- 
-2.41.0
+2.43.0
 

@@ -1,8 +1,8 @@
-From 2e536f81feb0dedd5bb9bdad7cf28629713858d6 Mon Sep 17 00:00:00 2001
+From d9780d88d268b12562427ef709de6ab2b8c85188 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 15 Dec 2020 15:16:49 +0100
-Subject: [PATCH 075/321] doc: Use CONFIG_PREEMPTION
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 075/323] doc: Use CONFIG_PREEMPTION
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 CONFIG_PREEMPTION is selected by CONFIG_PREEMPT and by CONFIG_PREEMPT_RT.
 Both PREEMPT and PREEMPT_RT require the same functionality which today
@@ -246,5 +246,5 @@ index fb3ff76c3e73..3b2b1479fd0f 100644
  		read-side critical sections.  It also permits
  		spinlocks blocking while in RCU read-side critical
 -- 
-2.41.0
+2.43.0
 

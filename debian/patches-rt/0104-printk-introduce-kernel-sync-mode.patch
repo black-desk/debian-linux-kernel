@@ -1,8 +1,8 @@
-From 2b15efcf3bf528402c58121e5a9e670041653126 Mon Sep 17 00:00:00 2001
+From fcf68eb3d589c57f73e4a79b7df2f6ec8080b1ce Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Mon, 30 Nov 2020 01:42:06 +0106
-Subject: [PATCH 104/321] printk: introduce kernel sync mode
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 104/323] printk: introduce kernel sync mode
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 When the kernel performs an OOPS, enter into "sync mode":
 
@@ -306,5 +306,5 @@ index 2bc9904fd8ab..8a0af76b6f69 100644
  	list_for_each_entry_rcu(dumper, &dump_list, list) {
  		enum kmsg_dump_reason max_reason = dumper->max_reason;
 -- 
-2.41.0
+2.43.0
 

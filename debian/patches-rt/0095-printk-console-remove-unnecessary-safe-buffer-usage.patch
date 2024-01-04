@@ -1,8 +1,8 @@
-From 68d1b3e3417e4c644952e21ca74b850c670d5503 Mon Sep 17 00:00:00 2001
+From 259c5c359d06d8bbbddebc6cc12fc2abc6bb2783 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Wed, 17 Feb 2021 18:28:05 +0100
-Subject: [PATCH 095/321] printk: console: remove unnecessary safe buffer usage
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 095/323] printk: console: remove unnecessary safe buffer usage
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Upon registering a console, safe buffers are activated when setting
 up the sequence number to replay the log. However, these are already
@@ -44,5 +44,5 @@ index c553b235d068..aebc9e31b36a 100644
  	console_unlock();
  	console_sysfs_notify();
 -- 
-2.41.0
+2.43.0
 

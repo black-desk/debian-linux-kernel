@@ -1,9 +1,9 @@
-From 195986d2c9452a483d1fc0f10c7cbd128cbcbff9 Mon Sep 17 00:00:00 2001
+From 0472803e0c929a5b0c4cb02a1e667d745e12fc51 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 12 Oct 2017 16:36:39 +0200
-Subject: [PATCH 168/321] locking/rtmutex: export lockdep-less version of
+Subject: [PATCH 168/323] locking/rtmutex: export lockdep-less version of
  rt_mutex's lock, trylock and unlock
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Required for lock implementation ontop of rtmutex.
 
@@ -126,5 +126,5 @@ index b5a2affa59d5..9d1e974ca9c3 100644
  				     struct hrtimer_sleeper *timeout,
  				     enum rtmutex_chainwalk chwalk,
 -- 
-2.41.0
+2.43.0
 

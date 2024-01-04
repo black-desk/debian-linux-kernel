@@ -1,9 +1,9 @@
-From eac07f493eed1b653c52c8f544e8694fa831fc95 Mon Sep 17 00:00:00 2001
+From c363a86a2fab38d43a50a8841e2b6d64b87ae69b Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 12 Oct 2017 17:17:03 +0200
-Subject: [PATCH 172/321] locking/rtmutex: add mutex implementation based on
+Subject: [PATCH 172/323] locking/rtmutex: add mutex implementation based on
  rtmutex
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
@@ -381,5 +381,5 @@ index 000000000000..2b849e6b9b4a
 +}
 +EXPORT_SYMBOL(atomic_dec_and_mutex_lock);
 -- 
-2.41.0
+2.43.0
 

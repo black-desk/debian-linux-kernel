@@ -1,8 +1,8 @@
-From 3da993a0d0746d30f8e9a742ee545b23d4159888 Mon Sep 17 00:00:00 2001
+From ebdec06c58c4330925d5603649542827bf7bff25 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Mon, 30 Nov 2020 01:42:05 +0106
-Subject: [PATCH 103/321] printk: change @console_seq to atomic64_t
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 103/323] printk: change @console_seq to atomic64_t
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 In preparation for atomic printing, change @console_seq to atomic
 so that it can be accessed without requiring @console_sem.
@@ -128,5 +128,5 @@ index 0ae184675e86..2bc9904fd8ab 100644
  	}
  	console_unlock();
 -- 
-2.41.0
+2.43.0
 

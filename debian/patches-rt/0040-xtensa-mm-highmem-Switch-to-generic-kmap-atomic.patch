@@ -1,8 +1,8 @@
-From 5ad0e4464ce4c7b906627640437f3a3777ac2770 Mon Sep 17 00:00:00 2001
+From 716b526a73eff1c6b44a898c5e66ee2569f7280d Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 3 Nov 2020 10:27:29 +0100
-Subject: [PATCH 040/321] xtensa/mm/highmem: Switch to generic kmap atomic
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 040/323] xtensa/mm/highmem: Switch to generic kmap atomic
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 No reason having the same code in every architecture
 
@@ -162,5 +162,5 @@ index 673196fe862e..0735ca5e8f86 100644
  	kmap_waitqueues_init();
  }
 -- 
-2.41.0
+2.43.0
 

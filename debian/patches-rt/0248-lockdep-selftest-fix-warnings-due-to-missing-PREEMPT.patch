@@ -1,9 +1,9 @@
-From 7c213a48364e77a57c3ea633290893817e406b3a Mon Sep 17 00:00:00 2001
+From c10790e859050b8a0a251e2e57b7fffb9ffa75df Mon Sep 17 00:00:00 2001
 From: Josh Cartwright <josh.cartwright@ni.com>
 Date: Wed, 28 Jan 2015 13:08:45 -0600
-Subject: [PATCH 248/321] lockdep: selftest: fix warnings due to missing
+Subject: [PATCH 248/323] lockdep: selftest: fix warnings due to missing
  PREEMPT_RT conditionals
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 "lockdep: Selftest: Only do hardirq context test for raw spinlock"
 disabled the execution of certain tests with PREEMPT_RT, but did
@@ -145,5 +145,5 @@ index 663c071bc445..98c376b02dff 100644
   * read-lock / write-lock recursion that is unsafe.
   */
 -- 
-2.41.0
+2.43.0
 

@@ -1,9 +1,9 @@
-From a6725336aa06dbcb48dd117f18efe35140bed7b4 Mon Sep 17 00:00:00 2001
+From bbb0b6e29c89355e0fb77bef3b06badef0ccc946 Mon Sep 17 00:00:00 2001
 From: Josh Cartwright <joshc@ni.com>
 Date: Thu, 11 Feb 2016 11:54:01 -0600
-Subject: [PATCH 270/321] KVM: arm/arm64: downgrade preempt_disable()d region
+Subject: [PATCH 270/323] KVM: arm/arm64: downgrade preempt_disable()d region
  to migrate_disable()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 kvm_arch_vcpu_ioctl_run() disables the use of preemption when updating
 the vgic and timer states to prevent the calling task from migrating to
@@ -55,5 +55,5 @@ index 4d63fcd7574b..06fced951e75 100644
  		/*
  		 * The ARMv8 architecture doesn't give the hypervisor
 -- 
-2.41.0
+2.43.0
 

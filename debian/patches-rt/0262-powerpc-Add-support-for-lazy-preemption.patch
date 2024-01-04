@@ -1,8 +1,8 @@
-From 7c62140a5d6d76ad3ef78ea28d102a992533540b Mon Sep 17 00:00:00 2001
+From 8e5e88a7528b5f0b0f2b9835deaf8b6db693500f Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Thu, 1 Nov 2012 10:14:11 +0100
-Subject: [PATCH 262/321] powerpc: Add support for lazy preemption
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 262/323] powerpc: Add support for lazy preemption
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Implement the powerpc pieces for lazy preempt.
 
@@ -263,5 +263,5 @@ index 310bcd768cd5..ae3212dcf562 100644
  		}
  
 -- 
-2.41.0
+2.43.0
 

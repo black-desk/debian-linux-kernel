@@ -1,8 +1,8 @@
-From 7290493fd5311c8d2b46adcb9a4f2ba7126ccf3a Mon Sep 17 00:00:00 2001
+From 1e2be8ee6d91630326a3a3bc32925205b41d73a5 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 9 Mar 2021 09:42:08 +0100
-Subject: [PATCH 136/321] tasklets: Replace spin wait in tasklet_unlock_wait()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 136/323] tasklets: Replace spin wait in tasklet_unlock_wait()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 tasklet_unlock_wait() spin waits for TASKLET_STATE_RUN to be cleared. This
 is wasting CPU cycles in a tight loop which is especially painful in a
@@ -86,5 +86,5 @@ index d5bfd5e661fc..06bca024ce45 100644
  {
  	int cpu;
 -- 
-2.41.0
+2.43.0
 

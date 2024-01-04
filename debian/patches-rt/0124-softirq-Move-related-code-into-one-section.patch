@@ -1,8 +1,8 @@
-From 3d54d5bbf4a817e92b72b20ff39317e103c2ef0f Mon Sep 17 00:00:00 2001
+From e40ca378bfbd05514961947d57b163831bdc3bbe Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 13 Nov 2020 15:02:18 +0100
-Subject: [PATCH 124/321] softirq: Move related code into one section
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 124/323] softirq: Move related code into one section
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 To prepare for adding a RT aware variant of softirq serialization and
 processing move related code into one section so the necessary #ifdeffery
@@ -165,5 +165,5 @@ index 09229ad82209..617009ccd82c 100644
  {
  #ifdef CONFIG_NO_HZ_COMMON
 -- 
-2.41.0
+2.43.0
 

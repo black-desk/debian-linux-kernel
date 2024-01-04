@@ -1,9 +1,9 @@
-From fd80a706948e1e4f49c3f00e56f04a2b20e34bb3 Mon Sep 17 00:00:00 2001
+From 63884dc87002ed5187007558a7356e7a4f570e75 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 7 Jul 2020 12:25:11 +0200
-Subject: [PATCH 254/321] drm/i915/gt: Only disable interrupts for the timeline
+Subject: [PATCH 254/323] drm/i915/gt: Only disable interrupts for the timeline
  lock on !force-threaded
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 According to commit
     d67739268cf0e ("drm/i915/gt: Mark up the nested engine-pm timeline lock as irqsafe")
@@ -48,5 +48,5 @@ index f7b2e07e2229..313d8a28e776 100644
  
  #else
 -- 
-2.41.0
+2.43.0
 

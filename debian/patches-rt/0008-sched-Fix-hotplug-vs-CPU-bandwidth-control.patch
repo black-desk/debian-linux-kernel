@@ -1,8 +1,8 @@
-From afd20089b3580a2e558c75de3b2db87096c0eae6 Mon Sep 17 00:00:00 2001
+From 36d2d778f786cb7fd55c549911a6055d6b6f40ef Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Fri, 23 Oct 2020 12:12:05 +0200
-Subject: [PATCH 008/321] sched: Fix hotplug vs CPU bandwidth control
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 008/323] sched: Fix hotplug vs CPU bandwidth control
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Since we now migrate tasks away before DYING, we should also move
 bandwidth unthrottle, otherwise we can gain tasks from unthrottle
@@ -25,10 +25,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  3 files changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 27df1e4098a1..49a1f2d77a1a 100644
+index a26a82c3e939..c5d5576c67fb 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -6984,6 +6984,8 @@ int sched_cpu_activate(unsigned int cpu)
+@@ -6979,6 +6979,8 @@ int sched_cpu_activate(unsigned int cpu)
  
  int sched_cpu_deactivate(unsigned int cpu)
  {
@@ -37,7 +37,7 @@ index 27df1e4098a1..49a1f2d77a1a 100644
  	int ret;
  
  	set_cpu_active(cpu, false);
-@@ -6998,6 +7000,14 @@ int sched_cpu_deactivate(unsigned int cpu)
+@@ -6993,6 +6995,14 @@ int sched_cpu_deactivate(unsigned int cpu)
  
  	balance_push_set(cpu, true);
  
@@ -52,7 +52,7 @@ index 27df1e4098a1..49a1f2d77a1a 100644
  #ifdef CONFIG_SCHED_SMT
  	/*
  	 * When going down, decrement the number of cores with SMT present.
-@@ -7079,10 +7089,6 @@ int sched_cpu_dying(unsigned int cpu)
+@@ -7074,10 +7084,6 @@ int sched_cpu_dying(unsigned int cpu)
  	sched_tick_stop(cpu);
  
  	rq_lock_irqsave(rq, &rf);
@@ -64,10 +64,10 @@ index 27df1e4098a1..49a1f2d77a1a 100644
  	rq_unlock_irqrestore(rq, &rf);
  
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index f59cb3e8a613..c3babac0c8c5 100644
+index d91295d3059f..af8569dbdc9c 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -565,7 +565,7 @@ static int push_dl_task(struct rq *rq);
+@@ -566,7 +566,7 @@ static int push_dl_task(struct rq *rq);
  
  static inline bool need_pull_dl_task(struct rq *rq, struct task_struct *prev)
  {
@@ -90,5 +90,5 @@ index f690f901b6cc..fdcce04913db 100644
  
  static inline int rt_overloaded(struct rq *rq)
 -- 
-2.41.0
+2.43.0
 

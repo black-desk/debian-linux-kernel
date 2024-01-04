@@ -1,9 +1,9 @@
-From 2e02b366f94a28a6500e212e11b687fe0d3500a9 Mon Sep 17 00:00:00 2001
+From cf4bb976aef7af85b7134aa7cffdfa8e058dc5c6 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 24 Nov 2021 17:12:19 +0100
-Subject: [PATCH 307/321] irq_work: Allow irq_work_sync() to sleep if
+Subject: [PATCH 307/323] irq_work: Allow irq_work_sync() to sleep if
  irq_work() no IRQ support.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 irq_work() triggers instantly an interrupt if supported by the
 architecture. Otherwise the work will be processed on the next timer
@@ -96,5 +96,5 @@ index 8183d30e1bb1..8969aff790e2 100644
  	while (atomic_read(&work->flags) & IRQ_WORK_BUSY)
  		cpu_relax();
 -- 
-2.41.0
+2.43.0
 

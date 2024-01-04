@@ -1,8 +1,8 @@
-From 6935dfcc4ff824bb5f7f84f53fd432a105a78840 Mon Sep 17 00:00:00 2001
+From 6c6afc933fea370e5c90a34ed6b622bcc274af5a Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 26 Jul 2018 15:03:16 +0200
-Subject: [PATCH 192/321] efi: Disable runtime services on RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 192/323] efi: Disable runtime services on RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Based on meassurements the EFI functions get_variable /
 get_next_variable take up to 2us which looks okay.
@@ -42,5 +42,5 @@ index 332739f3eded..8d390091203f 100644
  {
  	disable_runtime = true;
 -- 
-2.41.0
+2.43.0
 

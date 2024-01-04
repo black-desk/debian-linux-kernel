@@ -1,8 +1,8 @@
-From e56c566cfca1de5669a6034233737494020f3ac1 Mon Sep 17 00:00:00 2001
+From 4795907a92ad1bf9383b0c748facb436cac71e36 Mon Sep 17 00:00:00 2001
 From: Ingo Molnar <mingo@elte.hu>
 Date: Fri, 3 Jul 2009 08:29:57 -0500
-Subject: [PATCH 285/321] genirq: Disable irqpoll on -rt
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 285/323] genirq: Disable irqpoll on -rt
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Creates long latencies for no value
 
@@ -39,5 +39,5 @@ index f865e5f4d382..dc7311dd74b1 100644
  	printk(KERN_WARNING "Misrouted IRQ fixup and polling support "
  				"enabled\n");
 -- 
-2.41.0
+2.43.0
 

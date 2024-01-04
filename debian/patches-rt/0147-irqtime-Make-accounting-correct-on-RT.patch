@@ -1,8 +1,8 @@
-From a5a2e702264bb38d31a3c737928eb6ec47662bf8 Mon Sep 17 00:00:00 2001
+From a4b2fa58f0b8dabae3f30be80fe317da32c5b121 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 9 Mar 2021 09:55:54 +0100
-Subject: [PATCH 147/321] irqtime: Make accounting correct on RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 147/323] irqtime: Make accounting correct on RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 vtime_account_irq and irqtime_account_irq() base checks on preempt_count()
 which fails on RT because preempt_count() does not contain the softirq
@@ -50,5 +50,5 @@ index 02a7932c7383..02a5aa60fe7e 100644
  	if (pc & HARDIRQ_OFFSET) {
  		vtime_account_hardirq(tsk);
 -- 
-2.41.0
+2.43.0
 

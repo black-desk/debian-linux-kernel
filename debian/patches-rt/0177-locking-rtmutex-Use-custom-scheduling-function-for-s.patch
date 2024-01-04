@@ -1,9 +1,9 @@
-From 3f6a2c1e2f0576fa8cac946d3f542dba1de5e1f3 Mon Sep 17 00:00:00 2001
+From 0a34a9993d2798ba232792f998e5ae5fe7519730 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 6 Oct 2020 13:07:17 +0200
-Subject: [PATCH 177/321] locking/rtmutex: Use custom scheduling function for
+Subject: [PATCH 177/323] locking/rtmutex: Use custom scheduling function for
  spin-schedule()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 PREEMPT_RT builds the rwsem, mutex, spinlock and rwlock typed locks on
 top of a rtmutex lock. While blocked task->pi_blocked_on is set
@@ -133,7 +133,7 @@ index 1ee16b8fedd7..16be7111aae7 100644
  		raw_spin_lock_irqsave(&m->wait_lock, flags);
  
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index f9d2fcf150f9..71df612bd960 100644
+index be5d41ed6ff2..aaeed4b14278 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -5001,7 +5001,7 @@ pick_next_task(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
@@ -239,5 +239,5 @@ index f9d2fcf150f9..71df612bd960 100644
  		sched_preempt_enable_no_resched();
  	} while (need_resched());
 -- 
-2.41.0
+2.43.0
 

@@ -1,8 +1,8 @@
-From fb2f788ddee8eccdcf9b8340894f198511d4e8b4 Mon Sep 17 00:00:00 2001
+From 599ec4565144185541405febb71e81cf36cad908 Mon Sep 17 00:00:00 2001
 From: Salvatore Bonaccorso <carnil@debian.org>
 Date: Fri, 20 Jan 2023 19:23:03 +0100
-Subject: [PATCH 316/321] rt: arm64: make _TIF_WORK_MASK bits contiguous
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 316/323] rt: arm64: make _TIF_WORK_MASK bits contiguous
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 As same as in commit 870d16757ba8 ("arm64: make _TIF_WORK_MASK bits
 contiguous") in mainline, we need to make the bits of _TIF_WORK_MASK to
@@ -53,5 +53,5 @@ index 6eb36a2126e8..2afd9ceb66c9 100644
  #define TIF_FREEZE		19
  #define TIF_RESTORE_SIGMASK	20
 -- 
-2.41.0
+2.43.0
 

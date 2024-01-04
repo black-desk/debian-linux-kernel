@@ -1,8 +1,8 @@
-From d8598d833b2bfa214480678dd493d0f2195632e0 Mon Sep 17 00:00:00 2001
+From 2b742ac53e22db703a46b21ff3817c797b7cb071 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 29 Aug 2013 18:21:04 +0200
-Subject: [PATCH 223/321] ptrace: fix ptrace vs tasklist_lock race
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 223/323] ptrace: fix ptrace vs tasklist_lock race
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 As explained by Alexander Fyodorov <halcy@yandex.ru>:
 
@@ -31,7 +31,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  3 files changed, 68 insertions(+), 7 deletions(-)
 
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 3634b00c3662..46bc6101b8ee 100644
+index d259126f46cf..bd0c9c633438 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
 @@ -112,12 +112,8 @@ struct io_uring_task;
@@ -47,7 +47,7 @@ index 3634b00c3662..46bc6101b8ee 100644
  #ifdef CONFIG_DEBUG_ATOMIC_SLEEP
  
  /*
-@@ -1884,6 +1880,51 @@ static inline int test_tsk_need_resched(struct task_struct *tsk)
+@@ -1886,6 +1882,51 @@ static inline int test_tsk_need_resched(struct task_struct *tsk)
  	return unlikely(test_tsk_thread_flag(tsk,TIF_NEED_RESCHED));
  }
  
@@ -120,7 +120,7 @@ index aab480e24bd6..71acb6341e63 100644
  	}
  	spin_unlock_irq(&task->sighand->siglock);
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 28acd6114827..7d7002b4e2d1 100644
+index 2f689b4fa68b..8ac1f0526476 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -2587,6 +2587,18 @@ int migrate_swap(struct task_struct *cur, struct task_struct *p,
@@ -162,5 +162,5 @@ index 28acd6114827..7d7002b4e2d1 100644
  		task_rq_unlock(rq, p, &rf);
  
 -- 
-2.41.0
+2.43.0
 

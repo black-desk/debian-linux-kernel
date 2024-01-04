@@ -1,8 +1,8 @@
-From 29120dac4a9fa04f3e443012c48729f8c6e75af8 Mon Sep 17 00:00:00 2001
+From aeadd35a13f446ec84a832549b2815fc3de30917 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 14 Sep 2016 14:35:49 +0200
-Subject: [PATCH 184/321] fs/dcache: use swait_queue instead of waitqueue
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 184/323] fs/dcache: use swait_queue instead of waitqueue
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 __d_lookup_done() invokes wake_up_all() while holding a hlist_bl_lock()
 which disables preemption. As a workaround convert it to swait.
@@ -99,7 +99,7 @@ index ea0485861d93..1f4255ef8722 100644
  	hlist_bl_unlock(b);
  	INIT_HLIST_NODE(&dentry->d_u.d_alias);
 diff --git a/fs/fuse/readdir.c b/fs/fuse/readdir.c
-index d5294e663df5..ee8846818b34 100644
+index 14e99ffa57af..eb899feaf82d 100644
 --- a/fs/fuse/readdir.c
 +++ b/fs/fuse/readdir.c
 @@ -160,7 +160,7 @@ static int fuse_direntplus_link(struct file *file,
@@ -112,7 +112,7 @@ index d5294e663df5..ee8846818b34 100644
  	if (!o->nodeid) {
  		/*
 diff --git a/fs/namei.c b/fs/namei.c
-index 3d98db9802a7..1b097bc147ef 100644
+index 3ff954a2bbd1..01e3f8195ee1 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
 @@ -1532,7 +1532,7 @@ static struct dentry *__lookup_slow(const struct qstr *name,
@@ -178,7 +178,7 @@ index b27ebdccef70..f86c98a7ed04 100644
  	status = -EBUSY;
  	spin_lock(&dentry->d_lock);
 diff --git a/fs/proc/base.c b/fs/proc/base.c
-index 5d52aea8d7e7..d89526cfedf2 100644
+index 712948e97991..585d0afd1af6 100644
 --- a/fs/proc/base.c
 +++ b/fs/proc/base.c
 @@ -96,6 +96,7 @@
@@ -189,7 +189,7 @@ index 5d52aea8d7e7..d89526cfedf2 100644
  #include <trace/events/oom.h>
  #include "internal.h"
  #include "fd.h"
-@@ -2038,7 +2039,7 @@ bool proc_fill_cache(struct file *file, struct dir_context *ctx,
+@@ -2066,7 +2067,7 @@ bool proc_fill_cache(struct file *file, struct dir_context *ctx,
  
  	child = d_hash_and_lookup(dir, &qname);
  	if (!child) {
@@ -199,7 +199,7 @@ index 5d52aea8d7e7..d89526cfedf2 100644
  		if (IS_ERR(child))
  			goto end_instantiate;
 diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 682f2bf2e525..67435cd6fed3 100644
+index aff9593feb73..d1a29668bff8 100644
 --- a/fs/proc/proc_sysctl.c
 +++ b/fs/proc/proc_sysctl.c
 @@ -684,7 +684,7 @@ static bool proc_sys_fill_cache(struct file *file,
@@ -259,5 +259,5 @@ index e1c655f928c7..f230b1ac7f91 100644
  	list_splice_init(&q->task_list, &tmp);
  	while (!list_empty(&tmp)) {
 -- 
-2.41.0
+2.43.0
 

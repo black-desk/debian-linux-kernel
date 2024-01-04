@@ -1,8 +1,8 @@
-From e55ec33cf7a3a3a8278d175faf9acf340df0530c Mon Sep 17 00:00:00 2001
+From fd840c98e310adf2a03ee242969a9597a909a672 Mon Sep 17 00:00:00 2001
 From: Xie Yongji <xieyongji@bytedance.com>
 Date: Mon, 13 Sep 2021 19:19:28 +0800
-Subject: [PATCH 312/321] aio: Fix incorrect usage of eventfd_signal_allowed()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 312/323] aio: Fix incorrect usage of eventfd_signal_allowed()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 commit 4b3749865374899e115aa8c48681709b086fe6d3 upstream.
 
@@ -34,5 +34,5 @@ index e1181dc37be1..e88fd9b58f3f 100644
  			INIT_WORK(&req->work, aio_poll_put_work);
  			schedule_work(&req->work);
 -- 
-2.41.0
+2.43.0
 

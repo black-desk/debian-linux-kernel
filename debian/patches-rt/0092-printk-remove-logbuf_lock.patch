@@ -1,8 +1,8 @@
-From cf86cbdea9a0e6dc21bb0027e8b319221ccae714 Mon Sep 17 00:00:00 2001
+From 74a8c8a0d6b64df822c5946a582ca3adeec24e63 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Tue, 26 Jan 2021 17:43:19 +0106
-Subject: [PATCH 092/321] printk: remove logbuf_lock
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 092/323] printk: remove logbuf_lock
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Since the ringbuffer is lockless, there is no need for it to be
 protected by @logbuf_lock. Remove @logbuf_lock.
@@ -482,5 +482,5 @@ index 2e9e3ed7d63e..7df8a88d4115 100644
  		return vprintk_nmi(fmt, args);
  
 -- 
-2.41.0
+2.43.0
 

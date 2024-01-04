@@ -1,8 +1,8 @@
-From bcb0da7320b1e0327fe55768bc552e8bb9a7c86f Mon Sep 17 00:00:00 2001
+From a996bcbd8188409882599175697a464fa6265193 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 14 Sep 2016 17:36:35 +0200
-Subject: [PATCH 186/321] net/Qdisc: use a seqlock instead seqcount
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 186/323] net/Qdisc: use a seqlock instead seqcount
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 The seqcount disables preemption on -RT while it is held which can't
 remove. Also we don't want the reader to spin for ages if the writer is
@@ -250,7 +250,7 @@ index e491b083b348..ef432cea2e10 100644
  			 struct gnet_stats_basic_cpu __percpu *cpu,
  			 struct gnet_stats_basic_packed *b)
 diff --git a/net/sched/sch_api.c b/net/sched/sch_api.c
-index fb50e3f3283f..fc281783303f 100644
+index 5c2d230790db..a5430619ca5f 100644
 --- a/net/sched/sch_api.c
 +++ b/net/sched/sch_api.c
 @@ -1275,7 +1275,7 @@ static struct Qdisc *qdisc_create(struct net_device *dev,
@@ -295,5 +295,5 @@ index ecdd9e83f2f4..73b5aa797645 100644
  	sch->ops = ops;
  	sch->flags = ops->static_flags;
 -- 
-2.41.0
+2.43.0
 

@@ -1,9 +1,9 @@
-From 2fd7f9e2ff3a8624f8d2514b21b684f32f5d55a4 Mon Sep 17 00:00:00 2001
+From 6e1b154dfc59c96068eafef9fafbda28b723d3e6 Mon Sep 17 00:00:00 2001
 From: Chao Qin <chao.qin@intel.com>
 Date: Mon, 19 Jul 2021 10:26:50 +0800
-Subject: [PATCH 296/321] printk: Enhance the condition check of msleep in
+Subject: [PATCH 296/323] printk: Enhance the condition check of msleep in
  pr_flush()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 [ Upstream commit 83e9288d9c4295d1195e9d780fcbc42c72ba4a83 ]
 
@@ -44,5 +44,5 @@ index 14cb111fe9f0..d2205872304d 100644
  	seq = prb_next_seq(prb);
  
 -- 
-2.41.0
+2.43.0
 

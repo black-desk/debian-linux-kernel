@@ -1,9 +1,9 @@
-From 06e591ef73c80f093dcc549d17d7db37d9dc427b Mon Sep 17 00:00:00 2001
+From b4a9c84408720dd6da0cdb52fc3e7070aef9c4fe Mon Sep 17 00:00:00 2001
 From: Mike Galbraith <efault@gmx.de>
 Date: Tue, 24 Aug 2021 13:08:14 +0200
-Subject: [PATCH 298/321] mm, zsmalloc: Convert zsmalloc_handle.lock to
+Subject: [PATCH 298/323] mm, zsmalloc: Convert zsmalloc_handle.lock to
  spinlock_t
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 local_lock_t becoming a synonym of spinlock_t had consequences for the RT
 mods to zsmalloc, which were taking a mutex while holding a local_lock,
@@ -78,5 +78,5 @@ index 7dad2ff3e778..16ce2b05df90 100644
  	bit_spin_unlock(HANDLE_PIN_BIT, (unsigned long *)handle);
  #endif
 -- 
-2.41.0
+2.43.0
 

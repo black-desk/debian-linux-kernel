@@ -1,8 +1,8 @@
-From c16389c4400a7e754d3e4e5bee4536472988f0a6 Mon Sep 17 00:00:00 2001
+From a021f069828ba9181d19f5ee9a977cf305ddaf19 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Mon, 30 Nov 2020 01:42:01 +0106
-Subject: [PATCH 099/321] console: add write_atomic interface
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 099/323] console: add write_atomic interface
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Add a write_atomic() callback to the console. This is an optional
 function for console drivers. The function must be atomic (including
@@ -159,5 +159,5 @@ index 57f3b8d7f35c..8768473712b2 100644
 +}
 +EXPORT_SYMBOL(console_atomic_unlock);
 -- 
-2.41.0
+2.43.0
 

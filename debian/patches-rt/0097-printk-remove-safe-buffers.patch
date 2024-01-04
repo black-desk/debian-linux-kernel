@@ -1,8 +1,8 @@
-From c188e43b52365a76bebe97288e1f51279af49478 Mon Sep 17 00:00:00 2001
+From c0ee407b7db3b7ac5c24337a9d365a35450c233b Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Mon, 30 Nov 2020 01:42:00 +0106
-Subject: [PATCH 097/321] printk: remove safe buffers
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 097/323] printk: remove safe buffers
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 With @logbuf_lock removed, the high level printk functions for
 storing messages are lockless. Messages can be stored from any
@@ -83,7 +83,7 @@ index 344f6da3d4c3..c6bb48f0134c 100644
  
  extern int kptr_restrict;
 diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index 7a8104d48997..40accae09616 100644
+index 3a37fc62dc95..78a1fd9c3c8a 100644
 --- a/kernel/kexec_core.c
 +++ b/kernel/kexec_core.c
 @@ -978,7 +978,6 @@ void crash_kexec(struct pt_regs *regs)
@@ -873,5 +873,5 @@ index 8abe1870dba4..b09a490f5f70 100644
  	put_cpu();
  }
 -- 
-2.41.0
+2.43.0
 

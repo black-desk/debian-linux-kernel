@@ -1,9 +1,9 @@
-From 1b1d1986b390b0bc24fb878e30a727838d01561d Mon Sep 17 00:00:00 2001
+From 922cda1ee8d183c2e98429cdabf907a92df72465 Mon Sep 17 00:00:00 2001
 From: John Ogness <john.ogness@linutronix.de>
 Date: Wed, 13 Jan 2021 11:29:53 +0106
-Subject: [PATCH 085/321] printk: consolidate
+Subject: [PATCH 085/323] printk: consolidate
  kmsg_dump_get_buffer/syslog_print_all code
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 The logic for finding records to fit into a buffer is the same for
 kmsg_dump_get_buffer() and syslog_print_all(). Introduce a helper
@@ -143,5 +143,5 @@ index ad7edcb693d4..1f710a2a40b6 100644
  	/*
  	 * Next kmsg_dump_get_buffer() invocation will dump block of
 -- 
-2.41.0
+2.43.0
 

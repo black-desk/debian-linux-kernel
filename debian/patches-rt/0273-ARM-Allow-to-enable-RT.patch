@@ -1,8 +1,8 @@
-From 3de3de6f0d8a2ed9825d1ca47c8d4864c11ddd94 Mon Sep 17 00:00:00 2001
+From 98a5d5b92ddcd0df7aa708accc20a07b6008d86a Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 11 Oct 2019 13:14:29 +0200
-Subject: [PATCH 273/321] ARM: Allow to enable RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 273/323] ARM: Allow to enable RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Allow to select RT.
 
@@ -12,10 +12,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 811db3bbb1ba..a2807218113d 100644
+index 73c55cb2f296..adf9347724ed 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
-@@ -31,6 +31,7 @@ config ARM
+@@ -32,6 +32,7 @@ config ARM
  	select ARCH_OPTIONAL_KERNEL_RWX if ARCH_HAS_STRICT_KERNEL_RWX
  	select ARCH_OPTIONAL_KERNEL_RWX_DEFAULT if CPU_V7
  	select ARCH_SUPPORTS_ATOMIC_RMW
@@ -23,7 +23,7 @@ index 811db3bbb1ba..a2807218113d 100644
  	select ARCH_USE_BUILTIN_BSWAP
  	select ARCH_USE_CMPXCHG_LOCKREF
  	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT if MMU
-@@ -122,6 +123,7 @@ config ARM
+@@ -123,6 +124,7 @@ config ARM
  	select OLD_SIGSUSPEND3
  	select PCI_SYSCALL if PCI
  	select PERF_USE_VMALLOC
@@ -32,5 +32,5 @@ index 811db3bbb1ba..a2807218113d 100644
  	select SET_FS
  	select SYS_SUPPORTS_APM_EMULATION
 -- 
-2.41.0
+2.43.0
 

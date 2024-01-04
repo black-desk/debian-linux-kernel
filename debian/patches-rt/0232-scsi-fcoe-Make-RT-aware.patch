@@ -1,8 +1,8 @@
-From cdb48948b0b04504d1bd8fd7608f2c2c54264904 Mon Sep 17 00:00:00 2001
+From a2eaf0c262e1151f5978da03d033819e82104cce Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Sat, 12 Nov 2011 14:00:48 +0100
-Subject: [PATCH 232/321] scsi/fcoe: Make RT aware.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 232/323] scsi/fcoe: Make RT aware.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Do not disable preemption while taking sleeping locks. All user look safe
 for migrate_diable() only.
@@ -73,10 +73,10 @@ index 30afcbbe1f86..4ae5b8152ece 100644
  }
  
 diff --git a/drivers/scsi/fcoe/fcoe_ctlr.c b/drivers/scsi/fcoe/fcoe_ctlr.c
-index bbc5d6b9be73..8f9a02912938 100644
+index a2d60ad2a683..3fdc403bc7d8 100644
 --- a/drivers/scsi/fcoe/fcoe_ctlr.c
 +++ b/drivers/scsi/fcoe/fcoe_ctlr.c
-@@ -828,7 +828,7 @@ static unsigned long fcoe_ctlr_age_fcfs(struct fcoe_ctlr *fip)
+@@ -830,7 +830,7 @@ static unsigned long fcoe_ctlr_age_fcfs(struct fcoe_ctlr *fip)
  
  	INIT_LIST_HEAD(&del_list);
  
@@ -85,7 +85,7 @@ index bbc5d6b9be73..8f9a02912938 100644
  
  	list_for_each_entry_safe(fcf, next, &fip->fcfs, list) {
  		deadline = fcf->time + fcf->fka_period + fcf->fka_period / 2;
-@@ -864,7 +864,7 @@ static unsigned long fcoe_ctlr_age_fcfs(struct fcoe_ctlr *fip)
+@@ -866,7 +866,7 @@ static unsigned long fcoe_ctlr_age_fcfs(struct fcoe_ctlr *fip)
  				sel_time = fcf->time;
  		}
  	}
@@ -112,5 +112,5 @@ index 4261380af97b..65160eaaa929 100644
  	/* peek cache of free slot */
  	if (pool->left != FC_XID_UNKNOWN) {
 -- 
-2.41.0
+2.43.0
 

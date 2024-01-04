@@ -1,9 +1,9 @@
-From 9538416aad7ec53397c2ff7d18a14616eb8ec89c Mon Sep 17 00:00:00 2001
+From 8f4c53c804fbc30a305bf13376f5748a55ec4944 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 9 Mar 2021 09:55:57 +0100
-Subject: [PATCH 150/321] tick/sched: Prevent false positive softirq pending
+Subject: [PATCH 150/323] tick/sched: Prevent false positive softirq pending
  warnings on RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 On RT a task which has soft interrupts disabled can block on a lock and
 schedule out to idle while soft interrupts are pending. This triggers the
@@ -67,10 +67,10 @@ index ed13f6097de8..c9adc5c46248 100644
  {
  	unsigned long flags;
 diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index d07de3ff42ac..cb1c1a985878 100644
+index fc79b04b5947..fb10be8e5e92 100644
 --- a/kernel/time/tick-sched.c
 +++ b/kernel/time/tick-sched.c
-@@ -963,7 +963,7 @@ static bool can_stop_idle_tick(int cpu, struct tick_sched *ts)
+@@ -982,7 +982,7 @@ static bool can_stop_idle_tick(int cpu, struct tick_sched *ts)
  	if (unlikely(local_softirq_pending())) {
  		static int ratelimit;
  
@@ -80,5 +80,5 @@ index d07de3ff42ac..cb1c1a985878 100644
  			pr_warn("NOHZ tick-stop error: Non-RCU local softirq work is pending, handler #%02x!!!\n",
  				(unsigned int) local_softirq_pending());
 -- 
-2.41.0
+2.43.0
 

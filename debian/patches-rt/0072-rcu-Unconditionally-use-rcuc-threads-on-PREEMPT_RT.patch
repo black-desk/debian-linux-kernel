@@ -1,8 +1,8 @@
-From 7847037481cc0af82b0225ebec0d964706461df2 Mon Sep 17 00:00:00 2001
+From 8cc685c333f0deef6d724211a7f0ff37648d24c7 Mon Sep 17 00:00:00 2001
 From: Scott Wood <swood@redhat.com>
 Date: Tue, 15 Dec 2020 15:16:46 +0100
-Subject: [PATCH 072/321] rcu: Unconditionally use rcuc threads on PREEMPT_RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 072/323] rcu: Unconditionally use rcuc threads on PREEMPT_RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 PREEMPT_RT systems have long used the rcutree.use_softirq kernel
 boot parameter to avoid use of RCU_SOFTIRQ handlers, which can disrupt
@@ -31,10 +31,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 1f4a0523dc1a..93f0c21623f5 100644
+index f1f7c068cf65..c2afb3304825 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4170,6 +4170,10 @@
+@@ -4191,6 +4191,10 @@
  			value, meaning that RCU_SOFTIRQ is used by default.
  			Specify rcutree.use_softirq=0 to use rcuc kthreads.
  
@@ -46,10 +46,10 @@ index 1f4a0523dc1a..93f0c21623f5 100644
  			Disable autobalancing of the rcu_node combining
  			tree.  This is used by rcutorture, and might
 diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index eec8e2f7537e..be990eb72456 100644
+index 06bfe61d3cd3..39b3b56ad92d 100644
 --- a/kernel/rcu/tree.c
 +++ b/kernel/rcu/tree.c
-@@ -100,8 +100,10 @@ static struct rcu_state rcu_state = {
+@@ -101,8 +101,10 @@ static struct rcu_state rcu_state = {
  static bool dump_tree;
  module_param(dump_tree, bool, 0444);
  /* By default, use RCU_SOFTIRQ instead of rcuc kthreads. */
@@ -62,5 +62,5 @@ index eec8e2f7537e..be990eb72456 100644
  static bool rcu_fanout_exact;
  module_param(rcu_fanout_exact, bool, 0444);
 -- 
-2.41.0
+2.43.0
 

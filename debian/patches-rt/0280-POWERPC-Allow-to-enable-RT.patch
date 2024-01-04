@@ -1,8 +1,8 @@
-From 810af5649e6d0dc3e3df36b8d9d536c927897fad Mon Sep 17 00:00:00 2001
+From 934b061dd0089023163d44f7670bc3b0a4ebb7b1 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 11 Oct 2019 13:14:41 +0200
-Subject: [PATCH 280/321] POWERPC: Allow to enable RT
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 280/323] POWERPC: Allow to enable RT
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Allow to select RT.
 
@@ -32,5 +32,5 @@ index 6d8ce54ad6dd..065ed526be1a 100644
  	select IOMMU_HELPER			if PPC64
  	select IRQ_DOMAIN
 -- 
-2.41.0
+2.43.0
 

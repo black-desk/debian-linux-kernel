@@ -1,9 +1,9 @@
-From 4fbcdebe15b26af71065533563c547ed69b86c0a Mon Sep 17 00:00:00 2001
+From 61ebefbbf2500f6ade2182806061526bbde76a28 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 23 Oct 2020 12:12:04 +0200
-Subject: [PATCH 007/321] sched/hotplug: Consolidate task migration on CPU
+Subject: [PATCH 007/323] sched/hotplug: Consolidate task migration on CPU
  unplug
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 With the new mechanism which kicks tasks off the outgoing CPU at the end of
 schedule() the situation on an outgoing CPU right before the stopper thread
@@ -39,10 +39,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  4 files changed, 46 insertions(+), 120 deletions(-)
 
 diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index cb87247da5ba..3b25a084f971 100644
+index f5a5df3a8cfd..daf39c04a552 100644
 --- a/include/linux/cpuhotplug.h
 +++ b/include/linux/cpuhotplug.h
-@@ -153,6 +153,7 @@ enum cpuhp_state {
+@@ -155,6 +155,7 @@ enum cpuhp_state {
  	CPUHP_AP_ONLINE,
  	CPUHP_TEARDOWN_CPU,
  	CPUHP_AP_ONLINE_IDLE,
@@ -66,10 +66,10 @@ index 9a62ffdd296f..412cdaba33eb 100644
  #endif
  
 diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 008b50da2224..65daa7ec0f23 100644
+index abf717c4f57c..f8280edb679f 100644
 --- a/kernel/cpu.c
 +++ b/kernel/cpu.c
-@@ -1668,7 +1668,7 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+@@ -1674,7 +1674,7 @@ static struct cpuhp_step cpuhp_hp_states[] = {
  		.name			= "ap:online",
  	},
  	/*
@@ -78,7 +78,7 @@ index 008b50da2224..65daa7ec0f23 100644
  	 * this itself.
  	 */
  	[CPUHP_TEARDOWN_CPU] = {
-@@ -1677,6 +1677,13 @@ static struct cpuhp_step cpuhp_hp_states[] = {
+@@ -1683,6 +1683,13 @@ static struct cpuhp_step cpuhp_hp_states[] = {
  		.teardown.single	= takedown_cpu,
  		.cant_stop		= true,
  	},
@@ -93,10 +93,10 @@ index 008b50da2224..65daa7ec0f23 100644
  	[CPUHP_AP_SMPBOOT_THREADS] = {
  		.name			= "smpboot/threads:online",
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index a319e888eb51..27df1e4098a1 100644
+index b902755615d7..a26a82c3e939 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -6746,120 +6746,6 @@ void idle_task_exit(void)
+@@ -6741,120 +6741,6 @@ void idle_task_exit(void)
  	/* finish_cpu(), as ran on the BP, will clean up the active_mm state */
  }
  
@@ -217,7 +217,7 @@ index a319e888eb51..27df1e4098a1 100644
  static int __balance_push_cpu_stop(void *arg)
  {
  	struct task_struct *p = arg;
-@@ -7130,10 +7016,6 @@ int sched_cpu_deactivate(unsigned int cpu)
+@@ -7125,10 +7011,6 @@ int sched_cpu_deactivate(unsigned int cpu)
  		return ret;
  	}
  	sched_domains_numa_masks_clear(cpu);
@@ -228,7 +228,7 @@ index a319e888eb51..27df1e4098a1 100644
  	return 0;
  }
  
-@@ -7153,6 +7035,41 @@ int sched_cpu_starting(unsigned int cpu)
+@@ -7148,6 +7030,41 @@ int sched_cpu_starting(unsigned int cpu)
  }
  
  #ifdef CONFIG_HOTPLUG_CPU
@@ -270,7 +270,7 @@ index a319e888eb51..27df1e4098a1 100644
  int sched_cpu_dying(unsigned int cpu)
  {
  	struct rq *rq = cpu_rq(cpu);
-@@ -7166,7 +7083,6 @@ int sched_cpu_dying(unsigned int cpu)
+@@ -7161,7 +7078,6 @@ int sched_cpu_dying(unsigned int cpu)
  		BUG_ON(!cpumask_test_cpu(cpu, rq->rd->span));
  		set_rq_offline(rq);
  	}
@@ -279,5 +279,5 @@ index a319e888eb51..27df1e4098a1 100644
  	rq_unlock_irqrestore(rq, &rf);
  
 -- 
-2.41.0
+2.43.0
 

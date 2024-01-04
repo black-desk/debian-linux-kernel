@@ -1,8 +1,8 @@
-From 04888d515f0f7983e20594cc2a1127668f376f49 Mon Sep 17 00:00:00 2001
+From edd5c644d78fbd912f6386c97ed2b4eaf2b58b47 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 3 Nov 2020 10:27:33 +0100
-Subject: [PATCH 044/321] Documentation/io-mapping: Remove outdated blurb
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 044/323] Documentation/io-mapping: Remove outdated blurb
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 The implementation details in the documentation are outdated and not really
 helpful. Remove them.
@@ -44,5 +44,5 @@ index a966239f04e4..e33b88268554 100644
 -performs an IPI to inform all processors about the new mapping. This results
 -in a significant performance penalty.
 -- 
-2.41.0
+2.43.0
 

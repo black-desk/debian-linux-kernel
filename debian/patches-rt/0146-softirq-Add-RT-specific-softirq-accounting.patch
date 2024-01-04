@@ -1,8 +1,8 @@
-From a8b794c4e248713b4aea3b98ca62a7b2b687012d Mon Sep 17 00:00:00 2001
+From a69df864da6d43ae3de6a4d995eaebca51a582b4 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Tue, 9 Mar 2021 09:55:53 +0100
-Subject: [PATCH 146/321] softirq: Add RT specific softirq accounting
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 146/323] softirq: Add RT specific softirq accounting
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 RT requires the softirq processing and local bottomhalf disabled regions to
 be preemptible. Using the normal preempt count based serialization is
@@ -57,7 +57,7 @@ index 69cc8b64aa3a..9881eac0698f 100644
  
  /*
 diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 08b5804c29ec..2ab01dab5346 100644
+index 82de1ab42497..d31da4867bb2 100644
 --- a/include/linux/sched.h
 +++ b/include/linux/sched.h
 @@ -1046,6 +1046,9 @@ struct task_struct {
@@ -71,5 +71,5 @@ index 08b5804c29ec..2ab01dab5346 100644
  #ifdef CONFIG_LOCKDEP
  # define MAX_LOCK_DEPTH			48UL
 -- 
-2.41.0
+2.43.0
 

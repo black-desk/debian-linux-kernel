@@ -1,8 +1,8 @@
-From 74fd3823736954160c2848a25821f979852ef3db Mon Sep 17 00:00:00 2001
+From 4d8e6962b3b3f9acc509359631d4396d9b729064 Mon Sep 17 00:00:00 2001
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Fri, 13 Nov 2020 15:02:16 +0100
-Subject: [PATCH 122/321] irqstat: Move declaration into asm-generic/hardirq.h
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 122/323] irqstat: Move declaration into asm-generic/hardirq.h
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Move the declaration of the irq_cpustat per cpu variable to
 asm-generic/hardirq.h and remove the now empty linux/irq_cpustat.h header.
@@ -62,5 +62,5 @@ index 78fb2de3ea4d..000000000000
 -
 -#endif	/* __irq_cpustat_h */
 -- 
-2.41.0
+2.43.0
 

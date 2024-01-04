@@ -1,8 +1,8 @@
-From 790c5c74f4f5f66301dc1119005f9e1706040292 Mon Sep 17 00:00:00 2001
+From 3e2ecd3c09d77800b53b99090c6b6372af1922e7 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 9 Mar 2021 09:42:13 +0100
-Subject: [PATCH 141/321] ath9k: Use tasklet_disable_in_atomic()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 141/323] ath9k: Use tasklet_disable_in_atomic()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 All callers of ath9k_beacon_ensure_primary_slot() are preemptible /
 acquire a mutex except for this callchain:
@@ -44,5 +44,5 @@ index 71e2ada86793..72e2e71aac0e 100644
  	/* Find first taken slot. */
  	for (slot = 0; slot < ATH_BCBUF; slot++) {
 -- 
-2.41.0
+2.43.0
 

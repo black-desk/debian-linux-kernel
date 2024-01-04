@@ -1,8 +1,8 @@
-From 1eaa86d3e44a68ca3c0c9caac5204f7d3e1841d2 Mon Sep 17 00:00:00 2001
+From 8b4906578ce683b9bce7df984b4179519152345f Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Fri, 23 Oct 2020 12:12:15 +0200
-Subject: [PATCH 018/321] sched: Add migrate_disable() tracepoints
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 018/323] sched: Add migrate_disable() tracepoints
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 XXX write a tracer:
 
@@ -46,7 +46,7 @@ index c96a4337afe6..e48f584abf5f 100644
  
  /* This part must be outside protection */
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 8e59db48d9e9..11a0ccf6fad7 100644
+index 452fc1dfb143..b5f35b512577 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
 @@ -1742,6 +1742,8 @@ void migrate_disable(void)
@@ -68,10 +68,10 @@ index 8e59db48d9e9..11a0ccf6fad7 100644
  EXPORT_SYMBOL_GPL(migrate_enable);
  
 diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 5ca7a8031fd9..748fd6b2b220 100644
+index 7cf3248894a9..fcf546cd2eac 100644
 --- a/kernel/sched/deadline.c
 +++ b/kernel/sched/deadline.c
-@@ -2281,6 +2281,7 @@ static void pull_dl_task(struct rq *this_rq)
+@@ -2282,6 +2282,7 @@ static void pull_dl_task(struct rq *this_rq)
  				goto skip;
  
  			if (is_migration_disabled(p)) {
@@ -106,5 +106,5 @@ index c25e35f41555..c5038d680c2c 100644
  			} else {
  				deactivate_task(src_rq, p, 0);
 -- 
-2.41.0
+2.43.0
 

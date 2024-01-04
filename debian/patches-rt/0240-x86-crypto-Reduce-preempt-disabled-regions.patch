@@ -1,8 +1,8 @@
-From 89b9681d18a2b70659327a8f8cd6ea04d8f27764 Mon Sep 17 00:00:00 2001
+From 523f64f1a87e6454e46f5e25ae797b6a7050a6a8 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Mon, 14 Nov 2011 18:19:27 +0100
-Subject: [PATCH 240/321] x86: crypto: Reduce preempt disabled regions
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.186-rt91.tar.xz
+Subject: [PATCH 240/323] x86: crypto: Reduce preempt disabled regions
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/5.10/older/patches-5.10.204-rt100.tar.xz
 
 Restrict the preempt disabled regions to the actual floating point
 operations and enable preemption for the administrative actions.
@@ -114,5 +114,5 @@ index be891fdf8d17..29c716ed103f 100644
  	return err;
  }
 -- 
-2.41.0
+2.43.0
 
