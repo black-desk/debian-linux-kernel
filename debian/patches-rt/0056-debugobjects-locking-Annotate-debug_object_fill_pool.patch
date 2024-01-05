@@ -1,9 +1,9 @@
-From cb175c492fb0ab0a37a943664806a98afccf0952 Mon Sep 17 00:00:00 2001
+From c082e5d28e56252dca01b53c553bba5cd152fec1 Mon Sep 17 00:00:00 2001
 From: Peter Zijlstra <peterz@infradead.org>
 Date: Tue, 25 Apr 2023 17:03:13 +0200
-Subject: [PATCH 57/64] debugobjects,locking: Annotate debug_object_fill_pool()
+Subject: [PATCH 56/62] debugobjects,locking: Annotate debug_object_fill_pool()
  wait type violation
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 There is an explicit wait-type violation in debug_object_fill_pool()
 for PREEMPT_RT=n kernels which allows them to more easily fill the
@@ -83,7 +83,7 @@ index d22430840b53..59f4fb1626ea 100644
  };
  
 diff --git a/kernel/locking/lockdep.c b/kernel/locking/lockdep.c
-index 0224b0329d01..ae95486830af 100644
+index 3b38303ed27b..a046e03c7ead 100644
 --- a/kernel/locking/lockdep.c
 +++ b/kernel/locking/lockdep.c
 @@ -2245,6 +2245,9 @@ static inline bool usage_match(struct lock_list *entry, void *mask)
@@ -119,7 +119,7 @@ index 0224b0329d01..ae95486830af 100644
  }
  
  /*
-@@ -4744,7 +4749,8 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
+@@ -4745,7 +4750,8 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
  
  	for (; depth < curr->lockdep_depth; depth++) {
  		struct held_lock *prev = curr->held_locks + depth;
@@ -129,7 +129,7 @@ index 0224b0329d01..ae95486830af 100644
  
  		if (prev_inner) {
  			/*
-@@ -4754,6 +4760,14 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
+@@ -4755,6 +4761,14 @@ static int check_wait_context(struct task_struct *curr, struct held_lock *next)
  			 * Also due to trylocks.
  			 */
  			curr_inner = min(curr_inner, prev_inner);
@@ -173,5 +173,5 @@ index dacb80c22c4f..3c9e00e207dc 100644
  
  static void
 -- 
-2.41.0
+2.43.0
 

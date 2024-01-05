@@ -344,7 +344,7 @@ CONFIG_HOTPLUG_PCI_IBM=m
 CONFIG_I82365=m
 
 ##
-## file: drivers/platform/x86/Kconfig
+## file: drivers/platform/x86/hp/Kconfig
 ##
 CONFIG_TC1100_WMI=m
 

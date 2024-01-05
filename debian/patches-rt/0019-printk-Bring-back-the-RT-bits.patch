@@ -1,8 +1,8 @@
-From 9a952b320d3ddfb609b0ff33bb492708430ca639 Mon Sep 17 00:00:00 2001
+From dd4e52ae061806da556008ca819481befcff0fd3 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Tue, 19 Jul 2022 20:08:01 +0200
-Subject: [PATCH 19/64] printk: Bring back the RT bits.
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 19/62] printk: Bring back the RT bits.
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 This is a revert of the commits:
 | 07a22b61946f0 Revert "printk: add functions to prefer direct printing"
@@ -22,17 +22,19 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  kernel/hung_task.c          |  11 +-
  kernel/panic.c              |   4 +
  kernel/printk/internal.h    |   2 +
- kernel/printk/printk.c      | 592 ++++++++++++++++++++++++++++++++----
+ kernel/printk/printk.c      | 586 ++++++++++++++++++++++++++++++++----
  kernel/printk/printk_safe.c |  32 ++
  kernel/rcu/tree_stall.h     |   2 +
  kernel/reboot.c             |  16 +-
  kernel/watchdog.c           |   4 +
  kernel/watchdog_hld.c       |   4 +
- 12 files changed, 636 insertions(+), 65 deletions(-)
+ 12 files changed, 636 insertions(+), 59 deletions(-)
 
+diff --git a/drivers/tty/sysrq.c b/drivers/tty/sysrq.c
+index 248067197287..0db9dad8c99f 100644
 --- a/drivers/tty/sysrq.c
 +++ b/drivers/tty/sysrq.c
-@@ -581,6 +581,7 @@
+@@ -582,6 +582,7 @@ void __handle_sysrq(int key, bool check_mask)
  
  	rcu_sysrq_start();
  	rcu_read_lock();
@@ -40,7 +42,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	/*
  	 * Raise the apparent loglevel to maximum so that the sysrq header
  	 * is shown to provide the user with positive feedback.  We do not
-@@ -622,6 +623,7 @@
+@@ -623,6 +624,7 @@ void __handle_sysrq(int key, bool check_mask)
  		pr_cont("\n");
  		console_loglevel = orig_log_level;
  	}
@@ -48,6 +50,8 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	rcu_read_unlock();
  	rcu_sysrq_end();
  
+diff --git a/include/linux/console.h b/include/linux/console.h
+index 8c1686e2c233..143653090c48 100644
 --- a/include/linux/console.h
 +++ b/include/linux/console.h
 @@ -16,6 +16,7 @@
@@ -58,7 +62,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  struct vc_data;
  struct console_font_op;
-@@ -153,6 +154,22 @@
+@@ -153,6 +154,22 @@ struct console {
  	uint	ospeed;
  	u64	seq;
  	unsigned long dropped;
@@ -81,9 +85,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	void	*data;
  	struct	 console *next;
  };
+diff --git a/include/linux/printk.h b/include/linux/printk.h
+index 8c81806c2e99..f8c4e4fa6d7d 100644
 --- a/include/linux/printk.h
 +++ b/include/linux/printk.h
-@@ -168,6 +168,9 @@
+@@ -168,6 +168,9 @@ extern void __printk_safe_exit(void);
   */
  #define printk_deferred_enter __printk_safe_enter
  #define printk_deferred_exit __printk_safe_exit
@@ -93,7 +99,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  /*
   * Please don't use printk_ratelimit(), because it shares ratelimiting state
-@@ -219,6 +222,18 @@
+@@ -219,6 +222,18 @@ static inline void printk_deferred_exit(void)
  {
  }
  
@@ -112,9 +118,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  static inline int printk_ratelimit(void)
  {
  	return 0;
+diff --git a/kernel/hung_task.c b/kernel/hung_task.c
+index c71889f3f3fc..e2d2344cb9f4 100644
 --- a/kernel/hung_task.c
 +++ b/kernel/hung_task.c
-@@ -128,6 +128,8 @@
+@@ -127,6 +127,8 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
  	 * complain:
  	 */
  	if (sysctl_hung_task_warnings) {
@@ -123,7 +131,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		if (sysctl_hung_task_warnings > 0)
  			sysctl_hung_task_warnings--;
  		pr_err("INFO: task %s:%d blocked for more than %ld seconds.\n",
-@@ -144,6 +146,8 @@
+@@ -142,6 +144,8 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
  
  		if (sysctl_hung_task_all_cpu_backtrace)
  			hung_task_show_all_bt = true;
@@ -132,7 +140,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	touch_nmi_watchdog();
-@@ -214,12 +218,17 @@
+@@ -212,12 +216,17 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
  	}
   unlock:
  	rcu_read_unlock();
@@ -151,9 +159,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	if (hung_task_call_panic)
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 63e94f3bd8dc..88cd873c7c30 100644
 --- a/kernel/panic.c
 +++ b/kernel/panic.c
-@@ -653,6 +653,8 @@
+@@ -653,6 +653,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
  {
  	disable_trace_on_warning();
  
@@ -162,7 +172,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	if (file)
  		pr_warn("WARNING: CPU: %d PID: %d at %s:%d %pS\n",
  			raw_smp_processor_id(), current->pid, file, line,
-@@ -681,6 +683,8 @@
+@@ -681,6 +683,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
  
  	/* Just a warning, don't kill lockdep. */
  	add_taint(taint, LOCKDEP_STILL_OK);
@@ -171,9 +181,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  #ifndef __WARN_FLAGS
+diff --git a/kernel/printk/internal.h b/kernel/printk/internal.h
+index d947ca6c84f9..e7d8578860ad 100644
 --- a/kernel/printk/internal.h
 +++ b/kernel/printk/internal.h
-@@ -20,6 +20,8 @@
+@@ -20,6 +20,8 @@ enum printk_info_flags {
  	LOG_CONT	= 8,	/* text is a fragment of a continuation line */
  };
  
@@ -182,12 +194,15 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  __printf(4, 0)
  int vprintk_store(int facility, int level,
  		  const struct dev_printk_info *dev_info,
+diff --git a/kernel/printk/printk.c b/kernel/printk/printk.c
+index cc53fb77f77c..e9f9b66608a0 100644
 --- a/kernel/printk/printk.c
 +++ b/kernel/printk/printk.c
-@@ -221,6 +221,36 @@
+@@ -220,6 +220,36 @@ int devkmsg_sysctl_set_loglvl(struct ctl_table *table, int write,
+ }
  #endif /* CONFIG_PRINTK && CONFIG_SYSCTL */
  
- /*
++/*
 + * Used to synchronize printing kthreads against direct printing via
 + * console_trylock/console_unlock.
 + *
@@ -217,11 +232,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 +/* Block console kthreads to avoid processing new messages. */
 +bool block_console_kthreads;
 +
-+/*
+ /*
   * Helper macros to handle lockdep when locking/unlocking console_sem. We use
   * macros instead of functions so that _RET_IP_ contains useful information.
-  */
-@@ -268,14 +298,49 @@
+@@ -268,14 +298,49 @@ static bool panic_in_progress(void)
  }
  
  /*
@@ -278,7 +292,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  /*
   *	Array of consoles built from command line options (console=)
-@@ -358,7 +423,75 @@
+@@ -358,7 +423,75 @@ static int console_msg_format = MSG_FORMAT_DEFAULT;
  /* syslog_lock protects syslog_* variables and write access to clear_seq. */
  static DEFINE_MUTEX(syslog_lock);
  
@@ -354,7 +368,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  DECLARE_WAIT_QUEUE_HEAD(log_wait);
  /* All 3 protected by @syslog_lock. */
  /* the next printk record to read by syslog(READ) or /proc/kmsg */
-@@ -2249,10 +2382,10 @@
+@@ -2249,10 +2382,10 @@ asmlinkage int vprintk_emit(int facility, int level,
  	printed_len = vprintk_store(facility, level, dev_info, fmt, args);
  
  	/* If called from the scheduler, we can not call up(). */
@@ -367,7 +381,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		 * printing of all remaining records to all consoles so that
  		 * this context can return as soon as possible. Hopefully
  		 * another printk() caller will take over the printing.
-@@ -2300,6 +2433,8 @@
+@@ -2300,6 +2433,8 @@ EXPORT_SYMBOL(_printk);
  static bool pr_flush(int timeout_ms, bool reset_on_progress);
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress);
  
@@ -376,7 +390,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  #else /* CONFIG_PRINTK */
  
  #define CONSOLE_LOG_MAX		0
-@@ -2334,6 +2469,8 @@
+@@ -2334,6 +2469,8 @@ static void call_console_driver(struct console *con, const char *text, size_t le
  static bool suppress_message_printing(int level) { return false; }
  static bool pr_flush(int timeout_ms, bool reset_on_progress) { return true; }
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress) { return true; }
@@ -385,7 +399,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  #endif /* CONFIG_PRINTK */
  
-@@ -2552,6 +2689,14 @@
+@@ -2552,6 +2689,14 @@ static int console_cpu_notify(unsigned int cpu)
  		/* If trylock fails, someone else is doing the printing */
  		if (console_trylock())
  			console_unlock();
@@ -400,7 +414,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  	return 0;
  }
-@@ -2594,7 +2739,7 @@
+@@ -2594,7 +2739,7 @@ void console_lock(void)
  	down_console_sem();
  	if (console_suspended)
  		return;
@@ -409,7 +423,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	console_may_schedule = 1;
  }
  EXPORT_SYMBOL(console_lock);
-@@ -2618,30 +2763,36 @@
+@@ -2618,15 +2763,30 @@ int console_trylock(void)
  		up_console_sem();
  		return 0;
  	}
@@ -442,12 +456,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  EXPORT_SYMBOL(is_console_locked);
  
--/*
-- * Check if the given console is currently capable and allowed to print
-- * records.
-- *
-- * Requires the console_lock.
-- */
+@@ -2636,12 +2796,9 @@ EXPORT_SYMBOL(is_console_locked);
+  *
+  * Requires the console_lock.
+  */
 -static inline bool console_is_usable(struct console *con)
 +static inline bool __console_is_usable(short flags)
  {
@@ -459,7 +471,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		return false;
  
  	/*
-@@ -2650,15 +2801,43 @@
+@@ -2650,15 +2807,43 @@ static inline bool console_is_usable(struct console *con)
  	 * cope (CON_ANYTIME) don't call them until this CPU is officially up.
  	 */
  	if (!cpu_online(raw_smp_processor_id()) &&
@@ -505,7 +517,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	up_console_sem();
  }
  
-@@ -2676,17 +2855,19 @@
+@@ -2676,17 +2861,19 @@ static void __console_unlock(void)
   *
   * @handover will be set to true if a printk waiter has taken over the
   * console_lock, in which case the caller is no longer holding the
@@ -530,7 +542,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	struct printk_info info;
  	struct printk_record r;
  	unsigned long flags;
-@@ -2695,7 +2876,8 @@
+@@ -2695,7 +2882,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
  
  	prb_rec_init_rd(&r, &info, text, CONSOLE_LOG_MAX);
  
@@ -540,7 +552,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	if (!prb_read_valid(prb, con->seq, &r))
  		return false;
-@@ -2703,7 +2885,8 @@
+@@ -2703,7 +2891,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
  	if (con->seq != r.info->seq) {
  		con->dropped += r.info->seq - con->seq;
  		con->seq = r.info->seq;
@@ -550,7 +562,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  			suppress_panic_printk = 1;
  			pr_warn_once("Too many dropped messages. Suppress messages on non-panic CPUs to prevent livelock.\n");
  		}
-@@ -2725,32 +2908,62 @@
+@@ -2725,31 +2914,61 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
  		len = record_print_text(&r, console_msg_format & MSG_FORMAT_SYSLOG, printk_time);
  	}
  
@@ -601,7 +613,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	return true;
  }
  
- /*
++/*
 + * Print a record for a given console, but allow another printk() caller to
 + * take over the console_lock and continue printing.
 + *
@@ -625,11 +637,10 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 +	return __console_emit_next_record(con, text, ext_text, dropped_text, handover);
 +}
 +
-+/*
+ /*
   * Print out all remaining records to all consoles.
   *
-  * @do_cond_resched is set by the caller. It can be true only in schedulable
-@@ -2768,8 +2981,8 @@
+@@ -2768,8 +2987,8 @@ static bool console_emit_next_record(struct console *con, char *text, char *ext_
   * were flushed to all usable consoles. A returned false informs the caller
   * that everything was not flushed (either there were no usable consoles or
   * another context has taken over printing or it is a panic situation and this
@@ -640,7 +651,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
   *
   * Requires the console_lock.
   */
-@@ -2786,6 +2999,10 @@
+@@ -2786,6 +3005,10 @@ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handove
  	*handover = false;
  
  	do {
@@ -651,7 +662,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		any_progress = false;
  
  		for_each_console(con) {
-@@ -2797,13 +3014,11 @@
+@@ -2797,13 +3020,11 @@ static bool console_flush_all(bool do_cond_resched, u64 *next_seq, bool *handove
  
  			if (con->flags & CON_EXTENDED) {
  				/* Extended consoles do not print "dropped messages". */
@@ -669,7 +680,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  			}
  			if (*handover)
  				return false;
-@@ -2918,10 +3133,13 @@
+@@ -2918,10 +3139,13 @@ void console_unblank(void)
  	if (oops_in_progress) {
  		if (down_trylock_console_sem() != 0)
  			return;
@@ -684,7 +695,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	console_may_schedule = 0;
  	for_each_console(c)
  		if ((c->flags & CON_ENABLED) && c->unblank)
-@@ -3197,6 +3415,10 @@
+@@ -3197,6 +3421,10 @@ void register_console(struct console *newcon)
  	}
  
  	newcon->dropped = 0;
@@ -695,7 +706,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	if (newcon->flags & CON_PRINTBUFFER) {
  		/* Get a consistent copy of @syslog_seq. */
  		mutex_lock(&syslog_lock);
-@@ -3206,6 +3428,10 @@
+@@ -3206,6 +3434,10 @@ void register_console(struct console *newcon)
  		/* Begin with next message. */
  		newcon->seq = prb_next_seq(prb);
  	}
@@ -706,7 +717,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	console_unlock();
  	console_sysfs_notify();
  
-@@ -3229,6 +3455,7 @@
+@@ -3229,6 +3461,7 @@ EXPORT_SYMBOL(register_console);
  
  int unregister_console(struct console *console)
  {
@@ -714,7 +725,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	struct console *con;
  	int res;
  
-@@ -3266,7 +3493,20 @@
+@@ -3266,7 +3499,20 @@ int unregister_console(struct console *console)
  		console_drivers->flags |= CON_CONSDEV;
  
  	console->flags &= ~CON_ENABLED;
@@ -735,7 +746,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	console_sysfs_notify();
  
  	if (console->exit)
-@@ -3362,6 +3602,20 @@
+@@ -3362,6 +3608,20 @@ static int __init printk_late_init(void)
  }
  late_initcall(printk_late_init);
  
@@ -756,7 +767,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  #if defined CONFIG_PRINTK
  /* If @con is specified, only wait for that console. Otherwise wait for all. */
  static bool __pr_flush(struct console *con, int timeout_ms, bool reset_on_progress)
-@@ -3444,11 +3698,208 @@
+@@ -3444,11 +3704,208 @@ static bool pr_flush(int timeout_ms, bool reset_on_progress)
  	return __pr_flush(NULL, timeout_ms, reset_on_progress);
  }
  
@@ -967,7 +978,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  static DEFINE_PER_CPU(int, printk_pending);
  
-@@ -3456,10 +3907,14 @@
+@@ -3456,10 +3913,14 @@ static void wake_up_klogd_work_func(struct irq_work *irq_work)
  {
  	int pending = this_cpu_xchg(printk_pending, 0);
  
@@ -983,7 +994,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	if (pending & PRINTK_PENDING_WAKEUP)
-@@ -3484,10 +3939,11 @@
+@@ -3484,10 +3945,11 @@ static void __wake_up_klogd(int val)
  	 * prepare_to_wait_event(), which is called after ___wait_event() adds
  	 * the waiter but before it has checked the wait condition.
  	 *
@@ -997,7 +1008,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		this_cpu_or(printk_pending, val);
  		irq_work_queue(this_cpu_ptr(&wake_up_klogd_work));
  	}
-@@ -3527,7 +3983,17 @@
+@@ -3527,7 +3989,17 @@ void defer_console_output(void)
  	 * New messages may have been added directly to the ringbuffer
  	 * using vprintk_store(), so wake any waiters as well.
  	 */
@@ -1016,6 +1027,8 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  void printk_trigger_flush(void)
+diff --git a/kernel/printk/printk_safe.c b/kernel/printk/printk_safe.c
+index 6d10927a07d8..8e8fd2fb0a5b 100644
 --- a/kernel/printk/printk_safe.c
 +++ b/kernel/printk/printk_safe.c
 @@ -8,7 +8,9 @@
@@ -1028,7 +1041,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  #include "internal.h"
  
-@@ -45,3 +47,33 @@
+@@ -45,3 +47,33 @@ asmlinkage int vprintk(const char *fmt, va_list args)
  	return vprintk_default(fmt, args);
  }
  EXPORT_SYMBOL(vprintk);
@@ -1062,9 +1075,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 +		timeout_ms -= 1;
 +	}
 +}
+diff --git a/kernel/rcu/tree_stall.h b/kernel/rcu/tree_stall.h
+index 7d15b5b5a235..7b411d663e8f 100644
 --- a/kernel/rcu/tree_stall.h
 +++ b/kernel/rcu/tree_stall.h
-@@ -642,6 +642,7 @@
+@@ -648,6 +648,7 @@ static void print_cpu_stall(unsigned long gps)
  	 * See Documentation/RCU/stallwarn.rst for info on how to debug
  	 * RCU CPU stall warnings.
  	 */
@@ -1072,7 +1087,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	trace_rcu_stall_warning(rcu_state.name, TPS("SelfDetected"));
  	pr_err("INFO: %s self-detected stall on CPU\n", rcu_state.name);
  	raw_spin_lock_irqsave_rcu_node(rdp->mynode, flags);
-@@ -676,6 +677,7 @@
+@@ -682,6 +683,7 @@ static void print_cpu_stall(unsigned long gps)
  	 */
  	set_tsk_need_resched(current);
  	set_preempt_need_resched();
@@ -1080,9 +1095,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  static void check_cpu_stall(struct rcu_data *rdp)
+diff --git a/kernel/reboot.c b/kernel/reboot.c
+index 6ebef11c8876..23a8cfed1a72 100644
 --- a/kernel/reboot.c
 +++ b/kernel/reboot.c
-@@ -82,6 +82,7 @@
+@@ -83,6 +83,7 @@ void kernel_restart_prepare(char *cmd)
  {
  	blocking_notifier_call_chain(&reboot_notifier_list, SYS_RESTART, cmd);
  	system_state = SYSTEM_RESTART;
@@ -1090,7 +1107,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -282,6 +283,7 @@
+@@ -283,6 +284,7 @@ static void kernel_shutdown_prepare(enum system_states state)
  	blocking_notifier_call_chain(&reboot_notifier_list,
  		(state == SYSTEM_HALT) ? SYS_HALT : SYS_POWER_OFF, NULL);
  	system_state = state;
@@ -1098,7 +1115,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	usermodehelper_disable();
  	device_shutdown();
  }
-@@ -836,9 +838,11 @@
+@@ -837,9 +839,11 @@ static int __orderly_reboot(void)
  	ret = run_cmd(reboot_cmd);
  
  	if (ret) {
@@ -1110,7 +1127,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	return ret;
-@@ -851,6 +855,7 @@
+@@ -852,6 +856,7 @@ static int __orderly_poweroff(bool force)
  	ret = run_cmd(poweroff_cmd);
  
  	if (ret && force) {
@@ -1118,7 +1135,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		pr_warn("Failed to start orderly shutdown: forcing the issue\n");
  
  		/*
-@@ -860,6 +865,7 @@
+@@ -861,6 +866,7 @@ static int __orderly_poweroff(bool force)
  		 */
  		emergency_sync();
  		kernel_power_off();
@@ -1126,7 +1143,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	return ret;
-@@ -917,6 +923,8 @@
+@@ -918,6 +924,8 @@ EXPORT_SYMBOL_GPL(orderly_reboot);
   */
  static void hw_failure_emergency_poweroff_func(struct work_struct *work)
  {
@@ -1135,7 +1152,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	/*
  	 * We have reached here after the emergency shutdown waiting period has
  	 * expired. This means orderly_poweroff has not been able to shut off
-@@ -933,6 +941,8 @@
+@@ -934,6 +942,8 @@ static void hw_failure_emergency_poweroff_func(struct work_struct *work)
  	 */
  	pr_emerg("Hardware protection shutdown failed. Trying emergency restart\n");
  	emergency_restart();
@@ -1144,7 +1161,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  
  static DECLARE_DELAYED_WORK(hw_failure_emergency_poweroff_work,
-@@ -971,11 +981,13 @@
+@@ -972,11 +982,13 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
  {
  	static atomic_t allow_proceed = ATOMIC_INIT(1);
  
@@ -1159,7 +1176,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  
  	/*
  	 * Queue a backup emergency shutdown in the event of
-@@ -983,6 +995,8 @@
+@@ -984,6 +996,8 @@ void hw_protection_shutdown(const char *reason, int ms_until_forced)
  	 */
  	hw_failure_emergency_poweroff(ms_until_forced);
  	orderly_poweroff(true);
@@ -1168,9 +1185,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  }
  EXPORT_SYMBOL_GPL(hw_protection_shutdown);
  
+diff --git a/kernel/watchdog.c b/kernel/watchdog.c
+index 45693fb3e08d..f366008298ac 100644
 --- a/kernel/watchdog.c
 +++ b/kernel/watchdog.c
-@@ -424,6 +424,8 @@
+@@ -431,6 +431,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
  		/* Start period for the next softlockup warning. */
  		update_report_ts();
  
@@ -1179,7 +1198,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		pr_emerg("BUG: soft lockup - CPU#%d stuck for %us! [%s:%d]\n",
  			smp_processor_id(), duration,
  			current->comm, task_pid_nr(current));
-@@ -442,6 +444,8 @@
+@@ -449,6 +451,8 @@ static enum hrtimer_restart watchdog_timer_fn(struct hrtimer *hrtimer)
  		add_taint(TAINT_SOFTLOCKUP, LOCKDEP_STILL_OK);
  		if (softlockup_panic)
  			panic("softlockup: hung tasks");
@@ -1188,9 +1207,11 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  	}
  
  	return HRTIMER_RESTART;
+diff --git a/kernel/watchdog_hld.c b/kernel/watchdog_hld.c
+index 1e8a49dc956e..7c977b945c92 100644
 --- a/kernel/watchdog_hld.c
 +++ b/kernel/watchdog_hld.c
-@@ -135,6 +135,8 @@
+@@ -135,6 +135,8 @@ static void watchdog_overflow_callback(struct perf_event *event,
  		if (__this_cpu_read(hard_watchdog_warn) == true)
  			return;
  
@@ -1199,7 +1220,7 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		pr_emerg("Watchdog detected hard LOCKUP on cpu %d\n",
  			 this_cpu);
  		print_modules();
-@@ -155,6 +157,8 @@
+@@ -155,6 +157,8 @@ static void watchdog_overflow_callback(struct perf_event *event,
  		if (hardlockup_panic)
  			nmi_panic(regs, "Hard LOCKUP");
  
@@ -1208,3 +1229,6 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  		__this_cpu_write(hard_watchdog_warn, true);
  		return;
  	}
+-- 
+2.43.0
+

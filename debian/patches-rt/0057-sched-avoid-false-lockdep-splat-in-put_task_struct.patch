@@ -1,8 +1,8 @@
-From f073b895b11d1304d92b81209f605faf787477ae Mon Sep 17 00:00:00 2001
+From 5c27e6fdf46d68180a46fdf7944aa7e4668680c3 Mon Sep 17 00:00:00 2001
 From: Wander Lairson Costa <wander@redhat.com>
 Date: Wed, 14 Jun 2023 09:23:22 -0300
-Subject: [PATCH 58/64] sched: avoid false lockdep splat in put_task_struct()
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 57/62] sched: avoid false lockdep splat in put_task_struct()
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 In put_task_struct(), a spin_lock is indirectly acquired under the kernel
 stock. When running the kernel in real-time (RT) configuration, the
@@ -26,45 +26,27 @@ Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 (cherry picked from commit a5e446e728e89d5f5c5e427cc919bc7813c64c28)
 Signed-off-by: Clark Williams <clark.williams@gmail.com>
 ---
- include/linux/sched/task.h | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ include/linux/sched/task.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/sched/task.h b/include/linux/sched/task.h
-index 7291fb6399d2..08ddeb0dcfc7 100644
+index 7291fb6399d2..de7ebd2bf3ba 100644
 --- a/include/linux/sched/task.h
 +++ b/include/linux/sched/task.h
-@@ -119,6 +119,19 @@ static inline void put_task_struct(struct task_struct *t)
- 	if (!refcount_dec_and_test(&t->usage))
- 		return;
- 
-+	/*
-+	 * In !RT, it is always safe to call __put_task_struct().
-+	 * Under RT, we can only call it in preemptible context.
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible()) {
-+		static DEFINE_WAIT_OVERRIDE_MAP(put_task_map, LD_WAIT_SLEEP);
-+
-+		lock_map_acquire_try(&put_task_map);
-+		__put_task_struct(t);
-+		lock_map_release(&put_task_map);
-+		return;
-+	}
-+
- 	/*
- 	 * under PREEMPT_RT, we can't call put_task_struct
- 	 * in atomic context because it will indirectly
-@@ -139,10 +152,7 @@ static inline void put_task_struct(struct task_struct *t)
- 	 * when it fails to fork a process. Therefore, there is no
- 	 * way it can conflict with put_task_struct().
+@@ -141,8 +141,12 @@ static inline void put_task_struct(struct task_struct *t)
  	 */
--	if (IS_ENABLED(CONFIG_PREEMPT_RT) && !preemptible())
--		call_rcu(&t->rcu, __put_task_struct_rcu_cb);
+ 	if (IS_ENABLED(CONFIG_PREEMPT_RT) && !preemptible())
+ 		call_rcu(&t->rcu, __put_task_struct_rcu_cb);
 -	else
--		__put_task_struct(t);
-+	call_rcu(&t->rcu, __put_task_struct_rcu_cb);
++	else {
++		static DEFINE_WAIT_OVERRIDE_MAP(put_task_map, LD_WAIT_SLEEP);
++		lock_map_acquire_try(&put_task_map);
+ 		__put_task_struct(t);
++		lock_map_release(&put_task_map);
++	}
  }
  
  static inline void put_task_struct_many(struct task_struct *t, int nr)
 -- 
-2.41.0
+2.43.0
 

@@ -1,8 +1,8 @@
-From 387d111ccbf377e0d85bbdeab3508b95cd18d934 Mon Sep 17 00:00:00 2001
+From ae3e63c4320c0c2d3865ba8ecff64a6d03948ce7 Mon Sep 17 00:00:00 2001
 From: Frederic Weisbecker <frederic@kernel.org>
 Date: Tue, 5 Apr 2022 03:07:52 +0200
-Subject: [PATCH 14/64] tick: Fix timer storm since introduction of timersd
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 14/62] tick: Fix timer storm since introduction of timersd
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 If timers are pending while the tick is reprogrammed on nohz_mode, the
 next expiry is not armed to fire now, it is delayed one jiffy forward
@@ -48,10 +48,10 @@ Link: https://lkml.kernel.org/r/20220405010752.1347437-2-frederic@kernel.org
  3 files changed, 14 insertions(+), 7 deletions(-)
 
 diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 0c30cc307da9..bf82980f569d 100644
+index f459b0f27c94..a5091ac97fc6 100644
 --- a/include/linux/interrupt.h
 +++ b/include/linux/interrupt.h
-@@ -607,9 +607,16 @@ extern void raise_softirq(unsigned int nr);
+@@ -611,9 +611,16 @@ extern void raise_softirq(unsigned int nr);
  
  #ifdef CONFIG_PREEMPT_RT
  DECLARE_PER_CPU(struct task_struct *, timersd);
@@ -68,7 +68,7 @@ index 0c30cc307da9..bf82980f569d 100644
  #else
  static inline void raise_timer_softirq(void)
  {
-@@ -620,6 +627,11 @@ static inline void raise_hrtimer_softirq(void)
+@@ -624,6 +631,11 @@ static inline void raise_hrtimer_softirq(void)
  {
  	raise_softirq_irqoff(HRTIMER_SOFTIRQ);
  }
@@ -112,5 +112,5 @@ index 798e1841d286..b52e1861b913 100644
  
  static ktime_t tick_nohz_next_event(struct tick_sched *ts, int cpu)
 -- 
-2.41.0
+2.43.0
 

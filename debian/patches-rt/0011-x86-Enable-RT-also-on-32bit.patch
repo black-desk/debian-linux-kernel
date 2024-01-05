@@ -1,8 +1,8 @@
-From a8b8a9e8c4898f53b6984f02f821c1eb7691064a Mon Sep 17 00:00:00 2001
+From 28dbe0fc30a2d3e519fac1ffe18fe7427f1f49b3 Mon Sep 17 00:00:00 2001
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Thu, 7 Nov 2019 17:49:20 +0100
-Subject: [PATCH 11/64] x86: Enable RT also on 32bit
-Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.54-rt15.tar.xz
+Subject: [PATCH 11/62] x86: Enable RT also on 32bit
+Origin: https://www.kernel.org/pub/linux/kernel/projects/rt/6.1/older/patches-6.1.69-rt21.tar.xz
 
 Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
@@ -31,5 +31,5 @@ index f7f81e3012cc..c9bed9c69423 100644
  	select ARCH_USE_MEMTEST
  	select ARCH_USE_QUEUED_RWLOCKS
 -- 
-2.41.0
+2.43.0
 
