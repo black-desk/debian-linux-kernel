@@ -5,7 +5,7 @@ Subject: [PATCH 026/354] kernel: sched: Provide a pointer to the valid CPU
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b16c75ca7f52fa0134dbc827db225b2da0bab7b2
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=118cce869ba59f58717eb40f3ac2a72e4e97e71e
 
 In commit 4b53a3412d66 ("sched/core: Remove the tsk_nr_cpus_allowed()
 wrapper") the tsk_nr_cpus_allowed() wrapper was removed. There was not

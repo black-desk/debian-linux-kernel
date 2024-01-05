@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Wed, 29 May 2019 18:52:27 +0200
 Subject: [PATCH 284/354] workqueue: rework
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=3fe2820ca974badc82c09b12836fbdd4c6cd55bd
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f331f53f8783ce6f1a36700c65f3760236ded195
 
 [ Upstream commit d15a862f24df983458533aebd6fa207ecdd1095a ]
 
@@ -364,7 +364,7 @@ index ab64a3c261bc..dded9ca916eb 100644
  	 * If a worker went to sleep, notify and ask workqueue whether
  	 * it wants to wake up a task to maintain concurrency.
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 6e19604eaa00..92ee6cf49c24 100644
+index fb28793cb87b..089c74ff0511 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -748,29 +748,6 @@ static void hrtimer_switch_to_hres(void)

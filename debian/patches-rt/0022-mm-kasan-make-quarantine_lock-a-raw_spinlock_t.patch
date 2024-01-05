@@ -1,7 +1,7 @@
 From: Clark Williams <williams@redhat.com>
 Date: Tue, 18 Sep 2018 10:29:31 -0500
 Subject: [PATCH 022/354] mm/kasan: make quarantine_lock a raw_spinlock_t
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=07519ff0320205ebd00be53c3cf0e527fb63d4e6
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b8e41588ab5abaf6ae8c3725d84dcbe8d350ba74
 
 The static lock quarantine_lock is used in quarantine.c to protect the
 quarantine queue datastructures. It is taken inside quarantine queue

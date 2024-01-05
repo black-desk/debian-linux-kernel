@@ -1068,7 +1068,7 @@ linux (4.19.303-1) UNRELEASED; urgency=medium
 
   [ Ben Hutchings ]
   * Bump ABI to 26
-  * [rt] Update to 4.19.299-rt130:
+  * [rt] Update to 4.19.302-rt131:
     - Revert "sched/rt: Provide migrate_disable/enable() inlines" from
       4.19.299
 

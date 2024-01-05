@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Mon, 18 Jul 2011 17:08:34 +0200
 Subject: [PATCH 050/354] powerpc: Disable highmem on RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=bc9e2e282740438e6321666a3727fc3c1664c5ed
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=36e07675ce9495c0f1fd8450b52c92e0c15a5823
 
 The current highmem handling on -RT is not compatible and needs fixups.
 

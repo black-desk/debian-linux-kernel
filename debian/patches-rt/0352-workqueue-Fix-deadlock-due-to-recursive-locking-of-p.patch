@@ -2,7 +2,7 @@ From: "Brennan Lamoreaux (VMware)" <brennanlamoreaux@gmail.com>
 Date: Tue, 28 Feb 2023 14:49:38 -0800
 Subject: [PATCH 352/354] workqueue: Fix deadlock due to recursive locking of
  pool->lock
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=32c9a50559db4032f15e52268f439eefcf1a7339
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=8ddf6c4f69cacbc7afe70679003327744ecf8e39
 
 Upstream commit d8bb65ab70f7 ("workqueue: Use rcuwait for wq_manager_wait")
 replaced the waitqueue with rcuwait in the workqueue code. This change

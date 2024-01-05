@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 24 Jun 2019 19:39:06 +0200
 Subject: [PATCH 270/354] timers: Redo the notification of canceling timers on
  -RT
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c4e937e84b46890b5a252ea68db01d8313fa13c3
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=f3beb62163e553487a4e1edb78d0409869cbde42
 
 [ Upstream commit c71273154c2ad12e13333aada340ff30e826a11b ]
 
@@ -57,7 +57,7 @@ index 82d0f52414a6..f845093466be 100644
  
  	/*
 diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index 082147c07831..aee31b1f0cc3 100644
+index f8b4818e6e08..5112913e419f 100644
 --- a/include/linux/hrtimer.h
 +++ b/include/linux/hrtimer.h
 @@ -22,7 +22,6 @@
@@ -148,7 +148,7 @@ index dec68f9dab7b..85c7f4a6b9c1 100644
  }
  EXPORT_SYMBOL_GPL(alarm_cancel);
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 1992f107599e..6e19604eaa00 100644
+index 8f315ad08cd1..fb28793cb87b 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -981,33 +981,16 @@ u64 hrtimer_forward(struct hrtimer *timer, ktime_t now, ktime_t interval)

@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 19 Aug 2022 11:24:42 +0200
 Subject: [PATCH 344/354] timers: Keep interrupts disabled for TIMER_IRQSAFE
  timer.
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=94719d2494c48005d1364e77401aaa42004aa12b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d24ad5ccbf32a6ae6e175958ff2ee5b5bf40e630
 
 Keep interrupts disabled across callback invocation for the
 TIMER_IRQSAFE as expected.

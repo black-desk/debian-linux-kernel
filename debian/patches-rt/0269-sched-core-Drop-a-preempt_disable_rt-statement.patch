@@ -1,7 +1,7 @@
 From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Mon, 24 Jun 2019 19:33:16 +0200
 Subject: [PATCH 269/354] sched/core: Drop a preempt_disable_rt() statement
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=92b36a8402b3af87e30925bf0e13a8c6807adb0c
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=d82baed9d4cf7eb11be5cb47d403acb450781e11
 
 [ Upstream commit 761126efdcbe3fa3e99c9079fa0ad6eca2f251f2 ]
 

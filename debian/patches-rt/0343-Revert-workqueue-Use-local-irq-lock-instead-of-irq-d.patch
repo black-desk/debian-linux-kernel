@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 21 Oct 2022 16:15:56 +0200
 Subject: [PATCH 343/354] Revert "workqueue: Use local irq lock instead of irq
  disable regions"
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=30a8512a695ec61dc7efdb12c0861f16cef5eb4b
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=2fe895f00f08cac8f1bbbdc146b489b821d5347f
 
 This reverts the PREEMPT_RT related changes to workqueue. It reverts the
 usage of local_locks() and cpu_chill().

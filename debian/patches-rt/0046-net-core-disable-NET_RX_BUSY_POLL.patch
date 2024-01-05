@@ -4,7 +4,7 @@ Subject: [PATCH 046/354] net/core: disable NET_RX_BUSY_POLL
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=39ad86adbc4fd2a3ea4a92dbe82763ce57610a82
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=4eec6dbe20db90fc9b5f39d1a97cc07bba43a39e
 
 sk_busy_loop() does preempt_disable() followed by a few operations which can
 take sleeping locks and may get long.

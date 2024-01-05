@@ -1,7 +1,7 @@
 From: Thomas Gleixner <tglx@linutronix.de>
 Date: Sun, 17 Jul 2011 21:56:42 +0200
 Subject: [PATCH 116/354] trace: Add migrate-disabled counter to tracing output
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=893a0020c7fa8f96aa9051fa8c21ea2bf4809163
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=686984a694ba79b89fbe3839fe563036cf9428af
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 ---
@@ -25,7 +25,7 @@ index 93a1b5497bdf..963c19f03bef 100644
  
  #define TRACE_EVENT_TYPE_MAX						\
 diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
-index f44c8f1fd3ec..923c131e5f80 100644
+index b43d681b072f..61fdbe0ddeb1 100644
 --- a/kernel/trace/trace.c
 +++ b/kernel/trace/trace.c
 @@ -2165,6 +2165,8 @@ tracing_generic_entry_update(struct trace_entry *entry, unsigned long flags,
@@ -37,7 +37,7 @@ index f44c8f1fd3ec..923c131e5f80 100644
  }
  EXPORT_SYMBOL_GPL(tracing_generic_entry_update);
  
-@@ -3374,9 +3376,10 @@ static void print_lat_help_header(struct seq_file *m)
+@@ -3373,9 +3375,10 @@ static void print_lat_help_header(struct seq_file *m)
  		    "#                | / _----=> need-resched    \n"
  		    "#                || / _---=> hardirq/softirq \n"
  		    "#                ||| / _--=> preempt-depth   \n"

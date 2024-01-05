@@ -2,7 +2,7 @@ From: Juri Lelli <juri.lelli@redhat.com>
 Date: Wed, 31 Jul 2019 12:37:15 +0200
 Subject: [PATCH 287/354] sched/deadline: Ensure inactive_timer runs in hardirq
  context
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=8f0e69b4b97404d079fd1d1f6b5f585990264851
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=015cef02b3a90264f060ee3459f1b0593f459110
 
 [ Upstream commit ba94e7aed7405c58251b1380e6e7d73aa8284b41 ]
 

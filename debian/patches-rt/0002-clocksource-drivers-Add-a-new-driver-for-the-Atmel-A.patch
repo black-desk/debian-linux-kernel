@@ -2,7 +2,7 @@ From: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Date: Thu, 13 Sep 2018 13:30:19 +0200
 Subject: [PATCH 002/354] clocksource/drivers: Add a new driver for the Atmel
  ARM TC blocks
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=696635bf809d63323d78e59b60c5423205e8b529
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=22b86bcd097361e683ce2156edc1b6f845fcb8ea
 
 Add a driver for the Atmel Timer Counter Blocks. This driver provides a
 clocksource and two clockevent devices.

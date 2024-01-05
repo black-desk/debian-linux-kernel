@@ -2,7 +2,7 @@ From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Date: Fri, 3 Jul 2009 08:44:31 -0500
 Subject: [PATCH 100/354] hrtimer: by timers by default into the softirq
  context
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=de433b7dc7ed8f9fbd421ee438c1d5b72a0efc0e
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=9e206d0caa6d175533fd2973ecbb54d48c6f1bd1
 
 We can't have hrtimers callbacks running in hardirq context on RT. Therefore
 the timers are deferred to the softirq context by default.
@@ -41,7 +41,7 @@ index 256b00f456e6..83c3421499aa 100644
  
  	/*
 diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index 8714f1a37d84..082147c07831 100644
+index 684241f87e4d..f8b4818e6e08 100644
 --- a/include/linux/hrtimer.h
 +++ b/include/linux/hrtimer.h
 @@ -42,6 +42,7 @@ enum hrtimer_mode {
@@ -65,7 +65,7 @@ index 8714f1a37d84..082147c07831 100644
  
  /*
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 3c8eb5d84214..39e34ed4affd 100644
+index 4182e265176d..daeff994ae9c 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
 @@ -1108,7 +1108,7 @@ static void __perf_mux_hrtimer_init(struct perf_cpu_context *cpuctx, int cpu)
@@ -77,7 +77,7 @@ index 3c8eb5d84214..39e34ed4affd 100644
  	timer->function = perf_mux_hrtimer_handler;
  }
  
-@@ -9342,7 +9342,7 @@ static void perf_swevent_init_hrtimer(struct perf_event *event)
+@@ -9372,7 +9372,7 @@ static void perf_swevent_init_hrtimer(struct perf_event *event)
  	if (!is_sampling_event(event))
  		return;
  
@@ -144,7 +144,7 @@ index 0768ba9d2860..41e73baf41ab 100644
  }
  
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index ab38b51a96cc..beb81024c287 100644
+index 478ff82abd33..764c360568f1 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -1202,7 +1202,9 @@ void hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,

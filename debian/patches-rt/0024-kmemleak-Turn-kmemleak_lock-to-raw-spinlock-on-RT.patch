@@ -4,7 +4,7 @@ Subject: [PATCH 024/354] kmemleak: Turn kmemleak_lock to raw spinlock on RT
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=2cfc24278af7688b789d968823ecd33c8dfe2c8a
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=aaca0331f02dfc36b0ca67ea9c0da7300a9daa4f
 
 kmemleak_lock, as a rwlock on RT, can possibly be held in atomic context and
 causes the follow BUG.

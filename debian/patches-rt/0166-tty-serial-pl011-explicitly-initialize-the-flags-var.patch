@@ -5,7 +5,7 @@ Subject: [PATCH 166/354] tty: serial: pl011: explicitly initialize the flags
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ac08de4773e339eba54fafffa4ae16246a5f58ef
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=28e7bbd2ceab19819d33534f5ab2e3818fdd1fef
 
 Silence the following gcc warning:
 

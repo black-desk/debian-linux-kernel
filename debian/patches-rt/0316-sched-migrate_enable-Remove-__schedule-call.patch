@@ -1,7 +1,7 @@
 From: Scott Wood <swood@redhat.com>
 Date: Fri, 24 Jan 2020 06:11:47 -0500
 Subject: [PATCH 316/354] sched: migrate_enable: Remove __schedule() call
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=245e36e84a03311d634d5b1b5949238e3d6e7b16
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=c61a1d147ace3541a44386351841dc46be6ba897
 
 [ Upstream commit b8162e61e9a33bd1de6452eb838fbf50a93ddd9a ]
 

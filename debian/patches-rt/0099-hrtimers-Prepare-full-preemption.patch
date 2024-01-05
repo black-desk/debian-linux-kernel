@@ -1,7 +1,7 @@
 From: Ingo Molnar <mingo@elte.hu>
 Date: Fri, 3 Jul 2009 08:29:34 -0500
 Subject: [PATCH 099/354] hrtimers: Prepare full preemption
-Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=b51eba53ef6ccb0217fc7579bbc02da4d0b5a975
+Origin: https://git.kernel.org/cgit/linux/kernel/git/rt/linux-stable-rt.git/commit?id=ea1a57d171dca96fde02fae81ca8d97eb756b8c6
 
 Make cancellation of a running callback in softirq context safe
 against preemption.
@@ -35,7 +35,7 @@ index d69ad801eb80..82d0f52414a6 100644
  
  	/*
 diff --git a/include/linux/hrtimer.h b/include/linux/hrtimer.h
-index cbd041b22088..8714f1a37d84 100644
+index 4b7ef1c6decb..684241f87e4d 100644
 --- a/include/linux/hrtimer.h
 +++ b/include/linux/hrtimer.h
 @@ -22,6 +22,7 @@
@@ -107,7 +107,7 @@ index 56af8a97cf2d..dec68f9dab7b 100644
  }
  EXPORT_SYMBOL_GPL(alarm_cancel);
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 23c89873bf60..ab38b51a96cc 100644
+index 1b2aeab41c0b..478ff82abd33 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
 @@ -957,6 +957,33 @@ u64 hrtimer_forward(struct hrtimer *timer, ktime_t now, ktime_t interval)
