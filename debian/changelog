@@ -1,4 +1,4 @@
-linux (4.19.302-1) UNRELEASED; urgency=medium
+linux (4.19.303-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.290
@@ -350,7 +350,6 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
       enabled
     - net: xfrm: Amend XFRMA_SEC_CTX nla_policy structure
     - net: phy: broadcom: stub c45 read/write for 54810
-    - PCI: acpiphp: Reassign resources on bridge if necessary
     - dlm: improve plock logging if interrupted
     - dlm: replace usage of found with dedicated list iterator variable
     - fs: dlm: add pid to debug log
@@ -379,8 +378,6 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
     - batman-adv: Do not get eth header before batadv_check_management_packet
     - batman-adv: Fix TT global entry leak when client roamed back
     - batman-adv: Fix batadv_v_ogm_aggr_send memory leak
-    - PCI: acpiphp: Use pci_assign_unassigned_bridge_resources() only for non-
-      root bus
     - [x86] fpu: Set X86_FEATURE_OSXSAVE feature after enabling OSXSAVE in CR4
       (regression in 4.19.289-2)
     - mmc: block: Fix in_flight[issue_type] value error
@@ -1039,6 +1036,35 @@ linux (4.19.302-1) UNRELEASED; urgency=medium
     - IB/isert: Fix unaligned immediate-data handling
     - devcoredump : Serialize devcd_del work
     - devcoredump: Send uevent once devcd is ready
+    https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.303
+    - atm: solos-pci: Fix potential deadlock on &cli_queue_lock
+    - atm: solos-pci: Fix potential deadlock on &tx_queue_lock
+    - atm: Fix Use-After-Free in do_vcc_ioctl (CVE-2023-51780)
+    - [x86] net/rose: Fix Use-After-Free in rose_ioctl (CVE-2023-51782)
+    - qed: Fix a potential use-after-free in qed_cxt_tables_alloc
+    - net: Remove acked SYN flag from packet in the transmit queue correctly
+    - sign-file: Fix incorrect return values check
+    - vsock/virtio: Fix unsigned integer wrap around in
+      virtio_transport_has_space()
+    - [arm*] net: stmmac: Handle disabled MDIO busses from devicetree
+    - appletalk: Fix Use-After-Free in atalk_ioctl (CVE-2023-51781)
+    - cred: switch to using atomic_long_t
+    - blk-throttle: fix lockdep warning of "cgroup_mutex or RCU read lock
+      required!"
+    - bcache: avoid oversize memory allocation by small stripe_size
+    - bcache: avoid NULL checking to c->root in run_cache_set()
+    - HID: add ALWAYS_POLL quirk for Apple kb
+    - [x86] HID: hid-asus: reset the backlight brightness level on resume
+    - [x86] HID: multitouch: Add quirk for HONOR GLO-GXXX touchpad
+    - asm-generic: qspinlock: fix queued_spin_value_unlocked() implementation
+    - net: usb: qmi_wwan: claim interface 4 for ZTE MF290
+    - perf: Fix perf_event_validate_size() lockdep splat
+    - ext4: prevent the normalized size from exceeding EXT_MAX_BLOCKS
+      (regression in 4.19.284)
+    - [arm64] mm: Always make sw-dirty PTEs hw-dirty in pte_modify
+    - team: Fix use-after-free when an option instance allocation fails
+    - ring-buffer: Fix memory leak of free page
+    - mmc: block: Be sure to wait while busy in CQE error recovery
 
   [ Ben Hutchings ]
   * Bump ABI to 26
