@@ -1,4 +1,4 @@
-linux (4.19.303-1) UNRELEASED; urgency=medium
+linux (4.19.304-1) UNRELEASED; urgency=medium
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.290
@@ -1065,6 +1065,42 @@ linux (4.19.303-1) UNRELEASED; urgency=medium
     - team: Fix use-after-free when an option instance allocation fails
     - ring-buffer: Fix memory leak of free page
     - mmc: block: Be sure to wait while busy in CQE error recovery
+    https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.304
+    - [x86] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
+    - [x86] ALSA: hda/realtek: Enable headset onLenovo M70/M90
+    - [x86] ALSA: hda/realtek: Enable headset on Lenovo M90 Gen5
+    - ksmbd: fix wrong name of SMB2_CREATE_ALLOCATION_SIZE
+    - reset: Fix crash when freeing non-existent optional resets
+    - wifi: mac80211: mesh_plink: fix matches_local logic
+    - net/mlx5: Fix fw tracer first block check
+    - net: sched: ife: fix potential use-after-free
+    - ethernet: atheros: fix a memleak in atl1e_setup_ring_resources
+    - [x86] net/rose: fix races in rose_kill_by_device()
+    - net: check vlan filter feature in vlan_vids_add_by_dev() and
+      vlan_vids_del_by_dev()
+    - afs: Fix the dynamic root's d_delete to always delete unused dentries
+    - net: warn if gso_type isn't set for a GSO SKB
+    - net: check dev->gso_max_size in gso_features_check()
+    - smb: client: fix NULL deref in asn1_ber_decoder()
+    - btrfs: do not allow non subvolume root targets for snapshot
+    - [x86] iio: imu: inv_mpu6050: fix an error code problem in
+      inv_mpu6050_read_raw
+    - scsi: bnx2fc: Fix skb double free in bnx2fc_rcv()
+    - wifi: cfg80211: Add my certificate
+    - wifi: cfg80211: fix certs build to not depend on file order
+    - USB: serial: option: add Quectel EG912Y module support
+    - USB: serial: option: add Foxconn T99W265 with new baseline
+    - USB: serial: option: add Quectel RM500Q R13 firmware support
+    - Bluetooth: hci_event: Fix not checking if HCI_OP_INQUIRY has been sent
+    - net: 9p: avoid freeing uninit memory in p9pdu_vreadf
+    - net: rfkill: gpio: set GPIO direction
+    - [x86] alternatives: Sync core before enabling interrupts
+    - [arm*] usb: musb: fix MUSB_QUIRK_B_DISCONNECT_99 handling (regression in
+      4.19.185)
+    - smb: client: fix OOB in smbCalcSize() (CVE-2023-6606)
+    - dm-integrity: don't modify bio's immutable bio_vec in
+      integrity_metadata()
+    - block: Don't invalidate pagecache for invalid falloc modes
 
   [ Ben Hutchings ]
   * Bump ABI to 26
