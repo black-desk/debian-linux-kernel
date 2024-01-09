@@ -1,4 +1,4 @@
-linux (4.19.304-1) UNRELEASED; urgency=medium
+linux (4.19.304-1) buster-security; urgency=high
 
   * New upstream stable update:
     https://www.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.290
@@ -1108,7 +1108,7 @@ linux (4.19.304-1) UNRELEASED; urgency=medium
     - Revert "sched/rt: Provide migrate_disable/enable() inlines" from
       4.19.299
 
- -- Ben Hutchings <benh@debian.org>  Sun, 24 Sep 2023 20:12:37 +0200
+ -- Ben Hutchings <benh@debian.org>  Tue, 09 Jan 2024 00:13:47 +0000
 
 linux (4.19.289-2) buster-security; urgency=high
 
