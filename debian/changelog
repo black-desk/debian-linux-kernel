@@ -40,6 +40,9 @@ linux (6.7-1~exp2) UNRELEASED; urgency=medium
   [ Zhang Ning ]
   * [arm64] drivers/rtc: Enable RTC_DRV_RS5C372 as module
 
+  [ Bastian Blank ]
+  * Move all files to /usr by hand.
+
  -- Salvatore Bonaccorso <carnil@debian.org>  Tue, 09 Jan 2024 13:52:29 +0100
 
 linux (6.7-1~exp1) experimental; urgency=medium

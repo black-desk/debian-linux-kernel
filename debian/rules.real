@@ -174,15 +174,15 @@ ifeq ($(IMAGE_FILE),vmlinux)
 # This is the unprocessed ELF image, so we need to strip debug symbols
 	$(CROSS_COMPILE)strip --strip-debug $(INSTALL_DIR)/boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
 endif
-	+$(MAKE_CLEAN) -C $(DIR) modules_install DEPMOD='$(CURDIR)/debian/bin/no-depmod' INSTALL_MOD_PATH='$(CURDIR)/$(INSTALL_DIR)' INSTALL_MOD_STRIP=1
+	+$(MAKE_CLEAN) -C $(DIR) modules_install DEPMOD='$(CURDIR)/debian/bin/no-depmod' INSTALL_MOD_PATH='$(CURDIR)/$(INSTALL_DIR)/usr' INSTALL_MOD_STRIP=1
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
 	+$(MAKE_CLEAN) -C $(DIR) dtbs
 	+$(MAKE_CLEAN) -C $(DIR) dtbs_install INSTALL_DTBS_PATH='$(CURDIR)/$(DT_INSTALL_DIR)'
 	# dtbs_install sets the executable bit on dtb[o] files, which they shouldn't have
 	find $(DT_INSTALL_DIR) -type f \( -name '*.dtb' -o -name '*.dtbo' \) -exec chmod 644 {} \;
 endif
-	rm -f $(INSTALL_DIR)/lib/modules/$(REAL_VERSION)/build
-	rm -f $(INSTALL_DIR)/lib/modules/$(REAL_VERSION)/source
+	rm -f $(INSTALL_DIR)/usr/lib/modules/$(REAL_VERSION)/build
+	rm -f $(INSTALL_DIR)/usr/lib/modules/$(REAL_VERSION)/source
 	@$(stamp)
 
 $(STAMPS_DIR)/build-doc: DIR=$(BUILD_DIR)/build-doc
@@ -328,9 +328,9 @@ binary_headers: $(STAMPS_DIR)/build_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	dh_link /usr/lib/$(PACKAGE_NAME_KBUILD)/scripts $(BASE_DIR)/scripts
 	dh_link /usr/lib/$(PACKAGE_NAME_KBUILD)/tools $(BASE_DIR)/tools
 
-	mkdir -p $(DESTDIR)/lib/modules/$(REAL_VERSION)
-	ln -s /usr/src/$(PACKAGE_NAME) $(DESTDIR)/lib/modules/$(REAL_VERSION)/build
-	ln -s /usr/src/$(PACKAGE_NAME_COMMON) $(DESTDIR)/lib/modules/$(REAL_VERSION)/source
+	mkdir -p $(DESTDIR)/usr/lib/modules/$(REAL_VERSION)
+	ln -s /usr/src/$(PACKAGE_NAME) $(DESTDIR)/usr/lib/modules/$(REAL_VERSION)/build
+	ln -s /usr/src/$(PACKAGE_NAME_COMMON) $(DESTDIR)/usr/lib/modules/$(REAL_VERSION)/source
 
 	$(dh_binary_post)
 
@@ -504,8 +504,8 @@ binary_installer: DH_OPTIONS_IMAGE = -p$(IMAGE_PACKAGE_NAME) --sourcedir=$(SOURC
 binary_installer: $(STAMPS_DIR)/install_$(ARCH)_$(FEATURESET)_$(FLAVOUR)
 	$(dh_binary_pre)
 	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.builtin
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.order
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/modules/$(REAL_VERSION)/modules.builtin
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/modules/$(REAL_VERSION)/modules.order
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
 	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/linux-image-$(REAL_VERSION)
 endif

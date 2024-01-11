@@ -57,9 +57,9 @@ binary_image:
 		$(PACKAGE_DIR)/boot/
 	sbattach --attach $(SIGNATURE_DIR)/boot/vmlinuz-$(KERNEL_VERSION).sig \
 		$(PACKAGE_DIR)/boot/vmlinuz-$(KERNEL_VERSION)
-	mkdir -p $(PACKAGE_DIR)/lib/modules/$(KERNEL_VERSION)
-	rsync -a $(addprefix /lib/modules/$(KERNEL_VERSION)/,kernel modules.builtin modules.builtin.modinfo modules.order) \
-		$(PACKAGE_DIR)/lib/modules/$(KERNEL_VERSION)/
+	mkdir -p $(PACKAGE_DIR)/usr/lib/modules/$(KERNEL_VERSION)
+	rsync -a $(addprefix /usr/lib/modules/$(KERNEL_VERSION)/,kernel modules.builtin modules.builtin.modinfo modules.order) \
+		$(PACKAGE_DIR)/usr/lib/modules/$(KERNEL_VERSION)/
 # Copy any device tree files
 	if [ -d /usr/lib/linux-image-$(KERNEL_VERSION) ]; then \
 		mkdir -p $(PACKAGE_DIR)/usr/lib/linux-image-$(KERNEL_VERSION); \
@@ -92,8 +92,8 @@ binary_installer: DH_OPTIONS_IMAGE = -p$(IMAGE_PACKAGE_NAME) --sourcedir=$(SOURC
 binary_installer:
 	$(dh_binary_pre)
 	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install boot/$(IMAGE_INSTALL_STEM)-$(REAL_VERSION)
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.builtin
-	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install lib/modules/$(REAL_VERSION)/modules.order
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/modules/$(REAL_VERSION)/modules.builtin
+	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/modules/$(REAL_VERSION)/modules.order
 ifneq ($(filter arm64 armel armhf mipsel mips64el mipsr6 mipsr6el mips64r6 mips64r6el riscv64,$(ARCH)),)
 	DH_OPTIONS="$(DH_OPTIONS_IMAGE)" dh_install usr/lib/linux-image-$(REAL_VERSION)
 endif
