@@ -21,8 +21,9 @@ from .config_v2 import (
     ConfigMergedFeatureset,
     ConfigMergedFlavour,
 )
+from .dataclasses_deb822 import write_deb822
 from .debian import Changelog, PackageArchitecture, \
-    Version, _ControlFileDict
+    Version, BinaryPackage
 from .utils import Templates
 
 
@@ -35,7 +36,7 @@ class PackagesList(OrderedDict):
             self[package['Package']] = package
 
     def setdefault(self, package) -> Any:
-        return super().setdefault(package['Package'], package)
+        return super().setdefault(package.name, package)
 
 
 class Makefile:
@@ -180,7 +181,7 @@ class PackagesBundle:
         ret = []
         for raw_package in self.templates.get_control(f'{pkgid}.control', replace):
             package = self.packages.setdefault(raw_package)
-            package_name = package['Package']
+            package_name = package.name
             ret.append(package)
 
             package.meta.setdefault('rules-ruleids', {})[ruleid] = makeflags
@@ -211,7 +212,7 @@ class PackagesBundle:
 
     def add_packages(
             self,
-            packages: Iterable[_ControlFileDict],
+            packages: Iterable[BinaryPackage],
             ruleid: Iterable[str],
             makeflags: MakeFlags,
             *,
@@ -273,9 +274,9 @@ class PackagesBundle:
             if ruleids:
                 arches = package.meta.get('architectures')
                 if arches:
-                    package['Architecture'] = arches
+                    package.architecture = arches
                 else:
-                    arches = package.get('Architecture')
+                    arches = package.architecture
 
                 if target_name:
                     for ruleid, makeflags_package in ruleids.items():
@@ -336,21 +337,21 @@ class PackagesBundle:
         for name, package in self.packages.items():
             if name == "source":
                 continue
-            dep = package.get("Build-Depends")
+            dep = package.build_depends
             if not dep:
                 continue
-            del package["Build-Depends"]
-            if package["Architecture"] == arch_all:
-                dep_type = "Build-Depends-Indep"
+            package.build_depends = None
+            if package.architecture == arch_all:
+                dep_type = "build_depends_indep"
             else:
-                dep_type = "Build-Depends-Arch"
+                dep_type = "build_depends_arch"
             for group in dep:
                 for item in group:
-                    if package["Architecture"] != arch_all and not item.arches:
-                        item.arches = package["Architecture"]
-                    if package.get("Build-Profiles") and not item.restrictions:
-                        item.restrictions = package["Build-Profiles"]
-                source.setdefault(dep_type).merge(group)
+                    if package.architecture != arch_all and not item.arches:
+                        item.arches = package.architecture
+                    if package.build_profiles and not item.restrictions:
+                        item.restrictions = package.build_profiles
+                getattr(source, dep_type).merge(group)
 
     def write(self) -> None:
         self.write_control()
@@ -358,18 +359,11 @@ class PackagesBundle:
 
     def write_control(self) -> None:
         with self.open('control') as f:
-            self.write_rfc822(f, self.packages.values())
+            write_deb822(self.packages.values(), f)
 
     def write_makefile(self) -> None:
         with self.open('rules.gen') as f:
             self.makefile.write(f)
-
-    def write_rfc822(self, f: IO, entries: Iterable) -> None:
-        for entry in entries:
-            for key, value in entry.items():
-                if value:
-                    f.write(u"%s: %s\n" % (key, value))
-            f.write('\n')
 
 
 class Gencontrol(object):
@@ -395,9 +389,9 @@ class Gencontrol(object):
         self.write()
 
     def do_source(self) -> None:
-        source = self.templates.get_source_control("source.control", self.vars)[0]
-        if not source.get('Source'):
-            source['Source'] = self.changelog[0].source
+        source = list(self.templates.get_source_control("source.control", self.vars))[0]
+        if not source.name:
+            source.name = self.changelog[0].source
         self.bundle.packages['source'] = source
 
     def do_main(self) -> None:
@@ -645,10 +639,7 @@ class Gencontrol(object):
     ) -> None:
         pass
 
-    def substitute(self, s: str | list | tuple, vars) -> str | list:
-        if isinstance(s, (list, tuple)):
-            return [self.substitute(i, vars) for i in s]
-
+    def substitute(self, s: str, vars) -> str:
         def subst(match) -> str:
             return vars[match.group(1)]
 
