@@ -76,7 +76,6 @@ bugfix/powerpc/powerpc-boot-fix-missing-crc32poly.h-when-building-with-kernel_xz
 bugfix/arm64/arm64-acpi-Add-fixup-for-HPE-m400-quirks.patch
 bugfix/x86/x86-32-disable-3dnow-in-generic-config.patch
 bugfix/x86/platform-x86-toshiba_haps-Fix-missing-newline-in-pr_.patch
-bugfix/mips/Revert-MIPS-Loongson64-Enable-DMA-noncoherent-suppor.patch
 
 # Arch features
 features/arm64/arm64-dts-rockchip-Add-basic-support-for-Kobol-s-Hel.patch
@@ -95,6 +94,8 @@ bugfix/all/fs-add-module_softdep-declarations-for-hard-coded-cr.patch
 debian/makefile-do-not-check-for-libelf-when-building-oot-module.patch
 bugfix/all/partially-revert-net-socket-implement-64-bit-timestamps.patch
 bugfix/all/wireguard-ignore-config_android.patch
+bugfix/all/stddef-Introduce-DECLARE_FLEX_ARRAY-helper.patch
+bugfix/all/smb3-Replace-smb2pdu-1-element-arrays-with-flex-arra.patch
 
 # Miscellaneous features
 
@@ -116,7 +117,7 @@ debian/i386-686-pae-pci-set-pci-nobios-by-default.patch
 debian/ntfs-mark-it-as-broken.patch
 bugfix/all/vfs-move-cap_convert_nscap-call-into-vfs_setxattr.patch
 bugfix/all/ovl-fail-on-invalid-uid-gid-mapping-at-copy-up.patch
-bugfix/all/netfilter-nf_tables-skip-set-commit-for-deleted-dest.patch
+bugfix/all/netfilter-nf_tables-reject-QUEUE-DROP-verdict-parame.patch
 
 # Fix exported symbol versions
 bugfix/all/module-disable-matching-missing-version-crc.patch
